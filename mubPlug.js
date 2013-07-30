@@ -703,7 +703,7 @@ function chatCommand(value){
 API.on(API.CHAT, recieveMessage);
 function recieveMessage(data){
     $("#chat-messages").scrollTop(99999999);
-    if(data.fromID == myID || derpID){
+    if(data.fromID === myID || data.fromID === derpID){
         switch(data.message){
             case "!mubPlugPeepz":
                 API.sendChat("I'm running mubPlug version "+version);
