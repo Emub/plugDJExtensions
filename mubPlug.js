@@ -1,13 +1,10 @@
-var version = "1.891";
+var version = "1.892";
 var customGreen = "#5bd708";
 function initialize(){
 
     var css = $('<link>');
     css.attr("href", "https://dl.dropboxusercontent.com/s/odraom8lt6dtzqu/mubPlug.css").attr("rel", "stylesheet").attr("type", "text/css");
-
-    var jQuery = document.createElement("script");
-    jQuery.setAttribute("src", "http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js");
-    $("head").append(jQuery).append(css);
+    $("head").append(css);
 
     var chatPosition = $("#chat").position();
     var chatPositionLeft = chatPosition.left;
@@ -722,6 +719,7 @@ $("#userListDiv").css("height", windowHeight - 97 + "px");
 $("#mubPlug-userlist").css("height", windowHeight + "px");
 
 sendChatUpdate("Running mubPlug version "+version, "green", "black");
+sendChatUpdate("Made exclusively by Emub and DerpTheBass", "", "#58FAF4");
 sendChatUpdate("Click to see available commands", "", "yellow", "commandsLink", "", "pointer", false, false);
 
 $("#commandsLink").click(function(){
