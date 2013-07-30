@@ -1,6 +1,6 @@
 var customGreen = "#5bd708";
 function initialize(){
-  
+	
 	var css = $('<link>');
 	css.attr("href", "https://raw.github.com/Emub/plugDJExtensions/master/mubPlug.css").attr("rel", "stylesheet").attr("type", "text/css");
 	
@@ -213,64 +213,78 @@ var fullAccess = false;
 
 // ------------------ AUTO WOOT ------------------
 
-var  autoWoot, autoQueue, historyAlerts, speakingUp, userListShown, myID, upcomingAlerts, curateAlerts;
-autoWoot = true; autoQueue = false; historyAlerts = true; speakingUp = false; userListShown = true; myID = "50aeaf683e083e18fa2d187e"; upcomingAlerts = true; curateAlerts = false;
+var myID = "50aeaf683e083e18fa2d187e";
+
+saveStorage = function(key){
+  localStorage.setItem(key, JSON.stringify(this));
+}
+loadStorage = function(key){
+  JSON.parse(localStorage.getItem(key));
+}
+
+if(typeof localStorage.getItem("mubPlug") !== null){
+	loadStorage();
+}else{
+	mubOptions = {};
+	mubOptions.autoWoot = true;
+	mubOptions.autoQueue = false;
+	mubOptions.historyAlerts = true;
+	mubOptions.speakingUp = false;
+	mubOptions.userListShown = true;
+	mubOptions.upcomingAlerts = true;
+	mubOptions.curateAlerts = false;
+	mubOptions.save = saveStorage(mubPlug);
+	mubOptions.load = loadStorage(mubPlug);
+}
+
+
 
 $("#autoWootButton").click(function(){
-	if(autoWoot==true){
-		autoWoot = false;
+	if(mubOptions.autoWoot == true){
+		mubOptions.autoWoot = false;
 		$(this).html(' - Auto woot');
-		sendChatUpdate("You are no longer auto wooting.", "red", "white");
 	}else{
-		autoWoot = true;
+		mubOptions.autoWoot = true;
 		$(this).html(' + Auto woot');
 		$("#button-vote-positive").click();
-		sendChatUpdate("You are now auto wooting.", "green", "black");
 	}
-	return autoWoot;
-})
+	return mubOptions.autoWoot;
+});
 
 $("#autoQueueButton").click(function(){
-	if(autoQueue==true){
-		autoQueue = false;
+	if(mubOptions.autoQueue == true){
+		mubOptions.autoQueue = false;
 		$(this).html(' - Auto queue');
-		if(($("#button-dj-waitlist-leave").css("display")) == "block"){
-			$("#button-dj-waitlist-leave").click();
-		}else if(($("#button-dj-quit").css("display")) == "block"){
-			$("#button-dj-quit").click();
-		}
-		sendChatUpdate("You will no longer automatically join the DJ waitlist.", "red", "white");
 	}else{
-		autoQueue = true;
+		mubOptions.autoQueue = true;
 		$(this).html(' + Auto queue');
 		if(($("#button-dj-waitlist-join").css("display")) == "block"){
 			$("#button-dj-waitlist-join").click();
 		}
-		sendChatUpdate("You will now automatically join the DJ waitlist.", "green", "black");
 	}
-	return autoQueue;
-})
+	return mubOptions.autoQueue;
+});
 
 $("#speakUpButton").click(function(){
-	if(speakingUp==true){
-		speakingUp = false;
+	if(mubOptions.speakingUp == true){
+		mubOptions.speakingUp = false;
 		$(this).html(" - Tell chat history alerts");
 	}else{
-		speakingUp = true;
+		mubOptions.speakingUp = true;
 		$(this).html(" + Tell chat history alerts");
 	}
-	return speakingUp;
+	return mubOptions.speakingUp;
 })
 
 $("#historyAlertButton").click(function(){
-	if(historyAlerts==true){
-		historyAlerts = false;
+	if(mubOptions.historyAlerts == true){
+		mubOptions.historyAlerts = false;
 		$(this).html(" - History Alerts");
 	}else{
-		historyAlerts = true;
+		mubOptions.historyAlerts = true;
 		$(this).html(" + History Alerts");
 	}
-	return historyAlerts;
+	return mubOptions.historyAlerts;
 })
 
 function sendChatUpdate(text, color, textcolor, id, link, cursor, clickToDelete, cross){
@@ -376,7 +390,7 @@ function colorUserlist(obj){
 }
 
 function assignCurateIcon(obj){
-	if(curateAlerts) sendChatUpdate(obj.user.username + ' Just curated: "' + API.getMedia().title + '"', "", "yellow");
+	if(mubOptions.curateAlerts) sendChatUpdate(obj.user.username + ' Just curated: "' + API.getMedia().title + '"', "", "yellow");
 	updateUserlist();
 }
 
@@ -391,14 +405,14 @@ function checkStuff(obj){
 		$("#button-dj-waitlist-join").click();
 	}
 	
-	if(testHistory() > 1 && historyAlerts){
+	if(testHistory() > 1 && mubOptions.historyAlerts){
 		sendChatUpdate("This song is still in the history!", "red", "white");
-		if(speakingUp){
+		if(mubOptions.speakingUp){
 			API.sendChat("This song is still in the history!");
 		}
 	}
 	
-	if(isInHistory() && upcomingAlerts) sendChatUpdate("The song you are about to play is in the history!", "", "red");
+	if(isInHistory() && mubOptions.upcomingAlerts) sendChatUpdate("The song you are about to play is in the history!", "", "red");
 	updateUserlist();
 	updateWaitlistPara();
 }
@@ -497,8 +511,8 @@ function removeParent(object){
 }
 
 $("#userListButton").click(function(){
-	if(userListShown){
-		userListShown = false;
+	if(mubOptions.userListShown){
+		mubOptions.userListShown = false;
 		$(this).html(" - Show user list");
 		$("#mubPlug-userlist").animate({
 			left: -300
@@ -506,7 +520,7 @@ $("#userListButton").click(function(){
 			$("#mubPlug-userlist").css("display", "none");
 		});
 	}else{
-		userListShown = true;
+		mubOptions.userListShown = true;
 		$("#mubPlug-userlist").css("display", "block");
 		$(this).html(" + Show user list");
 		$("#mubPlug-userlist").animate({
@@ -536,21 +550,21 @@ $("#fixUserlistButton").click(function(){
 })
 
 $("#upcomingAlertsButton").click(function(){
-	if(upcomingAlerts){
-		upcomingAlerts = false;
+	if(mubOptions.upcomingAlerts){
+		mubOptions.upcomingAlerts = false;
 		$(this).html(" - Upcoming alerts");
 	}else{
-		upcomingAlerts = true;
+		mubOptions.upcomingAlerts = true;
 		$(this).html(" + Upcoming alerts");
 	}
 })
 
 $("#curateAlertsButton").click(function(){
-	if(curateAlerts){
-		curateAlerts = false;
+	if(mubOptions.curateAlerts){
+		mubOptions.curateAlerts = false;
 		$(this).html(" - Curate messages");
 	}else{
-		curateAlerts = true;
+		mubOptions.curateAlerts = true;
 		$(this).html(" + Curate messages");
 	}
 })
@@ -672,11 +686,6 @@ function chatCommand(value){
 		case "/curatemessages":
 		case "/cm":
 			$("#curateAlertsButton").click();
-			if(curateAlerts){
-				sendChatUpdate("You will now recieve curate messages in the chat", "", customGreen);
-			}else{
-				sendChatUpdate("You will no longer recieve curate messages in the chat", "", "red");
-			}
 			break;
 			
 		case "/rsb":
