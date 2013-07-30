@@ -2,7 +2,7 @@ var customGreen = "#5bd708";
 function initialize(){
   
 	var css = $('<link>');
-	css.attr("href", "https://dl.dropboxusercontent.com/s/odraom8lt6dtzqu/mubPlug.css").attr("rel", "stylesheet").attr("type", "text/css");
+	css.attr("href", "https://raw.github.com/Emub/plugDJExtensions/master/mubPlug.css").attr("rel", "stylesheet").attr("type", "text/css");
 	
 	var jQuery = document.createElement("script");
 	jQuery.setAttribute("src", "http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js");
