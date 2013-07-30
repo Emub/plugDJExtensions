@@ -1,3 +1,4 @@
+var version = "0.003";
 var botName = API.getUser().username;
 var botNameMention = "@" + botName;
 var command = false;
@@ -22,9 +23,9 @@ tacos[9] = "gross taco";
 
 AP[0] = "50aeaf683e083e18fa2d187e"; //Emub
 AP[1] = "50aeb19a96fba52c3ca07ca4"; //Queen
+AP[2] = "50aeb07e96fba52c3ca04ca8"; // DerpTheBass
 
 HAP[0] = "51f6c5c896fba549233faa8a"; // John
-HAP[1] = "50aeb07e96fba52c3ca04ca8"; // DerpTheBass
 
 swears[0] = "fuck";
 swears[1] = "shit";
@@ -343,4 +344,4 @@ function recieveMessage(data){
 	}
 }
 
-API.sendChat("Running mubBot version 0.003");
+API.sendChat("Running mubBot version "+version);
