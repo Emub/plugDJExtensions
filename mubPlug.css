@@ -107,6 +107,33 @@
 	margin: 4px;
 	margin-top: 3px;
 }
+#firstRun
+{
+	width: 500px;
+	height: 400px;
+	background-color: rgba(10,10,10,0.85);
+  color: #fff;
+  font-size: 22px;
+  font-family: Calibri;
+  line-height: 130%;
+  padding: 10px;
+	border-style: solid;
+	border-color: #2c2c2c;
+	border-width: 3px;
+  margin: 25% auto;
+}
+#firstRunExit
+{
+  position: relative;
+  top: -712px;
+  width: 15px;
+  height: 15px;
+  left: 804px;
+  cursor: pointer;
+  font-size: 25px;
+  font-family: Lucida Console;
+  color: RED;
+}
 
 
 
