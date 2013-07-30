@@ -236,7 +236,7 @@ if(localStorage.getItem("mubPlug") !== null){
 	mubOptions.upcomingAlerts = true;
 	mubOptions.curateAlerts   = false;
 	mubOptions.videoShown     = true;
-    saveStorage();
+	saveStorage();
 	adaptToSettings();
 }
 
@@ -273,6 +273,20 @@ function adaptToSettings(){
         });
         $(this).html(" + Hidden video");
     }
+}
+
+function resetSettings(){
+	mubOptions                = {};
+	mubOptions.autoWoot       = true;
+	mubOptions.autoQueue      = false;
+	mubOptions.historyAlerts  = true;
+	mubOptions.speakingUp     = false;
+	mubOptions.userListShown  = true;
+	mubOptions.upcomingAlerts = true;
+	mubOptions.curateAlerts   = false;
+	mubOptions.videoShown     = true;
+	saveStorage();
+	adaptToSettings();
 }
 
 $("#autoWootButton").click(function(){
