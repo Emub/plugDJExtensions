@@ -225,7 +225,7 @@ function loadStorage(){
 
 if(localStorage.getItem("mubPlug") !== null){
     loadStorage();
-	//adaptToSettings();
+	adaptToSettings();
 }else{
 	mubOptions                = {};
 	mubOptions.autoWoot       = true;
