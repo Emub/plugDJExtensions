@@ -214,10 +214,12 @@ var fullAccess = false;
 var myID = "50aeaf683e083e18fa2d187e";
 var derpID = "50aeb07e96fba52c3ca04ca8";
 
-saveStorage = function(){
+function saveStorage(){
     localStorage.setItem("mubPlug", JSON.stringify(mubOptions));
+	sendChatUpdate("Saved settings.", "", "white");
 };
-loadStorage = function(){
+
+function loadStorage(){
     JSON.parse(localStorage.getItem("mubPlug"));
 };
 
@@ -235,7 +237,7 @@ mubOptions.load           = loadStorage();
 
 if(localStorage.getItem("mubPlug") !== null){
     loadStorage();
-    adaptToSettings();
+	adaptToSettings();
 }else{
     saveStorage();
 	adaptToSettings();
@@ -730,6 +732,10 @@ function chatCommand(value){
         case "/rsb":
             $("#settingsButton").remove();
             break;
+			
+		case "/ss":
+			saveStorage();
+			break;
 
         default:
             sendChatUpdate("This was not recognized as a command!", "", "red");
