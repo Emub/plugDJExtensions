@@ -1,4 +1,4 @@
-var version = "1.892";
+var version = "1.893";
 var customGreen = "#5bd708";
 function initialize(){
 
@@ -214,13 +214,6 @@ var fullAccess = false;
 var myID = "50aeaf683e083e18fa2d187e";
 var derpID = "50aeb07e96fba52c3ca04ca8";
 
-saveStorage = function(){
-    localStorage.setItem("mubPlug", JSON.stringify(mubOptions));
-};
-loadStorage = function(){
-    mubOptions = JSON.parse(localStorage.getItem("mubPlug"));
-};
-
 mubOptions                = {};
 mubOptions.autoWoot       = true;
 mubOptions.autoQueue      = false;
@@ -229,15 +222,17 @@ mubOptions.speakingUp     = false;
 mubOptions.userListShown  = true;
 mubOptions.upcomingAlerts = true;
 mubOptions.curateAlerts   = false;
-mubOptions.videoShown     = true;
-mubOptions.load           = function(){mubOptions = JSON.parse(localStorage.getItem("mubPlug"))};
-mubOptions.save           = function(){localStorage.setItem("mubPlug", JSON.stringify(mubOptions))};
+mubOptions.videoShown     = false;
+
+mubMethods                = {};
+mubMethods.load           = function(){mubOptions = JSON.parse(localStorage.getItem("mubPlug"))};
+mubMethods.save           = function(){localStorage.setItem("mubPlug", JSON.stringify(mubOptions))};
 
 if(localStorage.getItem("mubPlug") !== null){
-    mubOptions.save();
+    mubMethods.load();
     adaptToSettings();
 }else{
-    mubOptions.save();
+    mubMethods.save();
     adaptToSettings();
 }
 
@@ -286,7 +281,7 @@ $("#autoWootButton").click(function(){
         $("#button-vote-positive").click();
     }
     return mubOptions.autoWoot;
-    mubOptions.save();
+    mubMethods.save();
 });
 
 $("#autoQueueButton").click(function(){
@@ -301,7 +296,7 @@ $("#autoQueueButton").click(function(){
         }
     }
     return mubOptions.autoQueue;
-    mubOptions.save();
+    mubMethods.save();
 });
 
 $("#speakUpButton").click(function(){
@@ -313,7 +308,7 @@ $("#speakUpButton").click(function(){
         $(this).html(" + Tell chat history alerts");
     }
     return mubOptions.speakingUp;
-    mubOptions.save();
+    mubMethods.save();
 });
 
 $("#historyAlertButton").click(function(){
@@ -325,7 +320,7 @@ $("#historyAlertButton").click(function(){
         $(this).html(" + History alerts");
     }
     return mubOptions.historyAlerts;
-    mubOptions.save();
+    mubMethods.save();
 });
 
 $("#settingsButton").click(function(){
@@ -344,7 +339,7 @@ $("#settingsWindowCloseButton").click(function(){
     $("#settingsWindow").fadeOut(600, function(){
         $("#settingsWindow").css("display", "none");
     });
-    mubOptions.save();
+    mubMethods.save();
 });
 
 $("#userListButton").click(function(){
@@ -365,7 +360,7 @@ $("#userListButton").click(function(){
         }, 800, function(){
         });
     }
-    mubOptions.save();
+    mubMethods.save();
 });
 
 $("#hideVideoButton").click(function(){
@@ -382,7 +377,7 @@ $("#hideVideoButton").click(function(){
         });
         $(this).html(" - Hidden video");
     }
-    mubOptions.save();
+    mubMethods.save();
 });
 
 $("#fixUserlistButton").click(function(){
@@ -397,7 +392,7 @@ $("#upcomingAlertsButton").click(function(){
         mubOptions.upcomingAlerts = true;
         $(this).html(" + Upcoming alerts");
     }
-    mubOptions.save();
+    mubMethods.save();
 });
 
 $("#curateAlertsButton").click(function(){
@@ -408,7 +403,7 @@ $("#curateAlertsButton").click(function(){
         mubOptions.curateAlerts = true;
         $(this).html(" + Curate messages");
     }
-    mubOptions.save();
+    mubMethods.save();
 });
 
 function sendChatUpdate(text, color, textcolor, id, link, cursor, clickToDelete, cross){
