@@ -1,4 +1,4 @@
-var version = "1.892";
+var version = "1.891";
 var customGreen = "#5bd708";
 function initialize(){
 
@@ -67,34 +67,34 @@ function initialize(){
     settingsButton.html('Settings').attr("id", "settingsButton").attr("class", "divButton");
 
     var autoQueueButton = $('<div>');
-    autoQueueButton.html(' - Auto queue').attr("id", "autoQueueButton").attr("class", "divButton").attr("title", "Toggles the auto waitlist join feature.");
+    autoQueueButton.attr("id", "autoQueueButton").attr("class", "divButton").attr("title", "Toggles the auto waitlist join feature.");
 
     var autoWootButton = $('<div>');
-    autoWootButton.html(' + Auto woot').attr("id", "autoWootButton").attr("class", "divButton").attr("title", "Toggles the auto woot feature.");
+    autoWootButton.attr("id", "autoWootButton").attr("class", "divButton").attr("title", "Toggles the auto woot feature.");
 
     var historyAlertButton = $('<div>');
-    historyAlertButton.html(' + History alerts').attr("id", "historyAlertButton").attr("class", "divButton").attr("title", "Displays a warning in the chat if the song currently playing is in the room history.");
+    historyAlertButton.attr("id", "historyAlertButton").attr("class", "divButton").attr("title", "Displays a warning in the chat if the song currently playing is in the room history.");
 
     var upcomingAlertsButton = $('<div>');
-    upcomingAlertsButton.html(' + Upcoming alerts').attr("id", "upcomingAlertsButton").attr("class", "divButton").attr("title", "Displays a warning in the chat if the song you are going to play is in the room history.");
+    upcomingAlertsButton.attr("id", "upcomingAlertsButton").attr("class", "divButton").attr("title", "Displays a warning in the chat if the song you are going to play is in the room history.");
 
     var curateAlertsButton = $('<div>');
-    curateAlertsButton.html(' - Curate messages').attr("id", "curateAlertsButton").attr("class", "divButton").attr("title", "Shows a message in the chat when someone curates a song.");
+    curateAlertsButton.attr("id", "curateAlertsButton").attr("class", "divButton").attr("title", "Shows a message in the chat when someone curates a song.");
 
     var speakUpButton = $('<div>');
-    speakUpButton.html(' - Tell chat history alerts').attr("id", "speakUpButton").attr("class", "divButton").attr("title", "Sends a message in the chat if the song playing is in the room history.");
+    speakUpButton.attr("id", "speakUpButton").attr("class", "divButton").attr("title", "Sends a message in the chat if the song playing is in the room history.");
 
     var hideVideoButton = $('<div>');
-    hideVideoButton.html(' - Hidden video').attr("id", "hideVideoButton").attr("class", "divButton").attr("title", "Hides or shows the video.");
+    hideVideoButton.attr("id", "hideVideoButton").attr("class", "divButton").attr("title", "Hides or shows the video.");
 
     var userListButton = $('<div>');
-    userListButton.html(' + Userlist').attr("id", "userListButton").attr("class", "divButton").attr("title", "Hides or shows the userlist.");
+    userListButton.attr("id", "userListButton").attr("class", "divButton").attr("title", "Hides or shows the userlist.");
 
     var fixUserListButton = $('<div>');
     fixUserListButton.html(' - Refresh userlist').attr("id", "fixUserlistButton").attr("class", "divButton").attr("title", "Refreshes the userlist.");
 
     var halloButton = $('<div>');
-    halloButton.html('Set Halloween Avatar').attr("id", "setHalloAvatarButton").attr("class", "divButton").attr("title", "Sets your avatar to what you selected.");
+    halloButton.html('Set halloween avatar').attr("id", "setHalloAvatarButton").attr("class", "divButton").attr("title", "Sets your avatar to what you selected.");
 
     var halloSelect = $('<select>');
     halloSelect.attr("id", "halloSelect");
@@ -229,13 +229,51 @@ mubOptions.speakingUp     = false;
 mubOptions.userListShown  = true;
 mubOptions.upcomingAlerts = true;
 mubOptions.curateAlerts   = false;
+mubOptions.videoShown     = true;
 mubOptions.save           = saveStorage();
 mubOptions.load           = loadStorage();
 
 if(localStorage.getItem("mubPlug") !== null){
     loadStorage();
+    adaptToSettings();
 }else{
-    saveSettings();
+    saveStorage();
+	adaptToSettings();
+}
+
+function adaptToSettings(){
+	mubOptions.autoWoot ? $("#autoWootButton").html(" + Auto woot") : $("#autoWootButton").html(" - Auto woot");
+	mubOptions.autoQueue ? $("#autoQueueButton").html(" + Auto queue") : $("#autoQueueButton").html(" - Auto queue");
+	mubOptions.historyAlerts ? $("#historyAlertButton").html(" + History alerts") : $("#historyAlertButton").html(" - History alerts");
+	mubOptions.speakingUp ? $("#speakUpButton").html(" + Tell chat history alerts") : $("#speakUpButton").html(" - Tell chat history alerts");
+	mubOptions.userListShown ? $("#userListButton").html(" + Show user list") : $("#userListButton").html(" - Show user list");
+	mubOptions.upcomingAlerts ? $("#upcomingAlertsButton").html(" + Upcoming alerts") : $("#upcomingAlertsButton").html(" - Upcoming alerts");
+	mubOptions.curateAlerts ? $("#curateAlertsButton").html(" + Curate messages") : $("#curateAlertsButton").html(" - Curate messages");
+	mubOptions.videoShown ? $("#hideVideoButton").html(" - Hidden video") : $("#hideVideoButton").html(" + Hidden video");
+	if(mubOptions.userListShown){
+		$("#mubPlug-userlist").css("display", "block");
+        $("#mubPlug-userlist").animate({
+            left: 0
+        }, 800, function(){
+        });
+    }else{
+        $("#mubPlug-userlist").animate({
+            left: -300
+        }, 800, function(){
+            $("#mubPlug-userlist").css("display", "none");
+        });
+    }
+	if(mubOptions.videoShown){
+        $("#playback-container").fadeIn(600, function(){
+            $("#playback-container").css("display", "block");
+        });
+        $(this).html(" - Hidden video");
+    }else{
+        $("#playback-container").fadeOut(600, function(){
+            $("#playback-container").css("display", "none");
+        });
+        $(this).html(" + Hidden video");
+    }
 }
 
 $("#autoWootButton").click(function(){
@@ -278,12 +316,91 @@ $("#speakUpButton").click(function(){
 $("#historyAlertButton").click(function(){
     if(mubOptions.historyAlerts == true){
         mubOptions.historyAlerts = false;
-        $(this).html(" - History Alerts");
+        $(this).html(" - History alerts");
     }else{
         mubOptions.historyAlerts = true;
-        $(this).html(" + History Alerts");
+        $(this).html(" + History alerts");
     }
     return mubOptions.historyAlerts;
+});
+
+$("#settingsButton").click(function(){
+    $("#overlay-container").fadeIn(400, function(){
+        $("#overlay-container").css("display", "block");
+    });
+    $("#settingsWindow").fadeIn(400, function(){
+        $("#settingsWindow").css("display", "block");
+    });
+});
+
+$("#settingsWindowCloseButton").click(function(){
+    $("#overlay-container").fadeOut(600, function(){
+        $("#overlay-container").css("display", "none");
+    });
+    $("#settingsWindow").fadeOut(600, function(){
+        $("#settingsWindow").css("display", "none");
+    });
+	saveStorage();
+});
+
+$("#userListButton").click(function(){
+    if(mubOptions.userListShown){
+        mubOptions.userListShown = false;
+        $(this).html(" - Show user list");
+        $("#mubPlug-userlist").animate({
+            left: -300
+        }, 800, function(){
+            $("#mubPlug-userlist").css("display", "none");
+        });
+    }else{
+        mubOptions.userListShown = true;
+        $("#mubPlug-userlist").css("display", "block");
+        $(this).html(" + Show user list");
+        $("#mubPlug-userlist").animate({
+            left: 0
+        }, 800, function(){
+        });
+    }
+});
+
+$("#hideVideoButton").click(function(){
+    if(mubOptions.videoShown){
+		mubOptions.videoShown = false;
+        $("#playback-container").fadeOut(600, function(){
+            $("#playback-container").css("display", "none");
+        });
+        $(this).html(" + Hidden video");
+    }else{
+		mubOptions.videoShown = true;
+        $("#playback-container").fadeIn(600, function(){
+            $("#playback-container").css("display", "block");
+        });
+        $(this).html(" - Hidden video");
+    }
+});
+
+$("#fixUserlistButton").click(function(){
+    updateUserlist();
+});
+
+$("#upcomingAlertsButton").click(function(){
+    if(mubOptions.upcomingAlerts){
+        mubOptions.upcomingAlerts = false;
+        $(this).html(" - Upcoming alerts");
+    }else{
+        mubOptions.upcomingAlerts = true;
+        $(this).html(" + Upcoming alerts");
+    }
+});
+
+$("#curateAlertsButton").click(function(){
+    if(mubOptions.curateAlerts){
+        mubOptions.curateAlerts = false;
+        $(this).html(" - Curate messages");
+    }else{
+        mubOptions.curateAlerts = true;
+        $(this).html(" + Curate messages");
+    }
 });
 
 function sendChatUpdate(text, color, textcolor, id, link, cursor, clickToDelete, cross){
@@ -481,24 +598,6 @@ function isInHistory(video){
     }
 }
 
-$("#settingsButton").click(function(){
-    $("#overlay-container").fadeIn(400, function(){
-        $("#overlay-container").css("display", "block");
-    });
-    $("#settingsWindow").fadeIn(400, function(){
-        $("#settingsWindow").css("display", "block");
-    });
-});
-
-$("#settingsWindowCloseButton").click(function(){
-    $("#overlay-container").fadeOut(600, function(){
-        $("#overlay-container").css("display", "none");
-    });
-    $("#settingsWindow").fadeOut(600, function(){
-        $("#settingsWindow").css("display", "none");
-    });
-});
-
 function mentionName(object){
     var name = $(object).html();
     var currentText = $("#chat-input-field").val();
@@ -508,65 +607,6 @@ function mentionName(object){
 function removeParent(object){
     $(object).parent().remove();
 }
-
-$("#userListButton").click(function(){
-    if(mubOptions.userListShown){
-        mubOptions.userListShown = false;
-        $(this).html(" - Show user list");
-        $("#mubPlug-userlist").animate({
-            left: -300
-        }, 800, function(){
-            $("#mubPlug-userlist").css("display", "none");
-        });
-    }else{
-        mubOptions.userListShown = true;
-        $("#mubPlug-userlist").css("display", "block");
-        $(this).html(" + Show user list");
-        $("#mubPlug-userlist").animate({
-            left: 0
-        }, 800, function(){
-        });
-    }
-});
-
-$("#hideVideoButton").click(function(){
-    var visibility = $("#playback-container").css("display");
-    if(visibility == "none"){
-        $("#playback-container").fadeIn(600, function(){
-            $("#playback-container").css("display", "block");
-        });
-        $(this).html(" - Hidden video");
-    }else{
-        $("#playback-container").fadeOut(600, function(){
-            $("#playback-container").css("display", "none");
-        });
-        $(this).html(" + Hidden video");
-    }
-});
-
-$("#fixUserlistButton").click(function(){
-    updateUserlist();
-});
-
-$("#upcomingAlertsButton").click(function(){
-    if(mubOptions.upcomingAlerts){
-        mubOptions.upcomingAlerts = false;
-        $(this).html(" - Upcoming alerts");
-    }else{
-        mubOptions.upcomingAlerts = true;
-        $(this).html(" + Upcoming alerts");
-    }
-});
-
-$("#curateAlertsButton").click(function(){
-    if(mubOptions.curateAlerts){
-        mubOptions.curateAlerts = false;
-        $(this).html(" - Curate messages");
-    }else{
-        mubOptions.curateAlerts = true;
-        $(this).html(" + Curate messages");
-    }
-});
 
 // ------------------ CHAT COMMANDS ------------------
 
