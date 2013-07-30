@@ -223,22 +223,19 @@ function loadStorage(){
     JSON.parse(localStorage.getItem("mubPlug"));
 };
 
-mubOptions                = {};
-mubOptions.autoWoot       = true;
-mubOptions.autoQueue      = false;
-mubOptions.historyAlerts  = true;
-mubOptions.speakingUp     = false;
-mubOptions.userListShown  = true;
-mubOptions.upcomingAlerts = true;
-mubOptions.curateAlerts   = false;
-mubOptions.videoShown     = true;
-mubOptions.save           = saveStorage();
-mubOptions.load           = loadStorage();
-
 if(localStorage.getItem("mubPlug") !== null){
     loadStorage();
 	adaptToSettings();
 }else{
+	mubOptions                = {};
+	mubOptions.autoWoot       = true;
+	mubOptions.autoQueue      = false;
+	mubOptions.historyAlerts  = true;
+	mubOptions.speakingUp     = false;
+	mubOptions.userListShown  = true;
+	mubOptions.upcomingAlerts = true;
+	mubOptions.curateAlerts   = false;
+	mubOptions.videoShown     = true;
     saveStorage();
 	adaptToSettings();
 }
