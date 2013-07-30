@@ -1,0 +1,101 @@
+<html>
+<head>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+<style type="text/css">
+
+  body {
+		font-family: calibri;
+		background-color: #151515;
+	}
+	
+	#main {
+		margin-left:auto;
+		margin-right:auto;
+		position: relative;
+		top: 25px;
+		-moz-box-shadow: 0 0 5px 5px #AAAAAA;
+		-webkit-box-shadow: 0 0 5px 5px #AAAAAA;
+		box-shadow: 0 0 5px 5px #AAAAAA;
+	}
+	
+	#commandDiv {
+		overflow-y: scroll;
+		display: block;
+		height: 415px;
+		border-style: solid;
+		border-width: 2px;
+		border-color: #2c2c2c;
+		background-color: #8F8F8F;
+	}
+	
+	.command {
+		font-size: 28px;
+		text-align: center;
+		margin: 2px;
+		padding: 0px;
+		margin-top: 8px;
+	}
+	
+	.commandDesc {
+		text-align: center;
+		font-size: 20px;
+		margin: 0px;
+		padding: 0px;
+	}
+
+</style>
+
+<script type="text/javascript" language="javascript">
+
+</script>
+
+</head>
+<body onLoad="">
+
+<table id="main">
+	<tr>
+		<td>
+			<div id="imageDiv">
+				<img src="http://i.imgur.com/5LbwrJC.png" width="800" height="150" />
+			</div>
+		</td>
+	</tr>
+	<tr id="commandTR">
+		<td id="commandTD">
+			<div id="commandDiv">
+				<p class="command">/History || /H:</p>
+				<p class="commandDesc">Tests if the current song is in history, if it is in history and you are permitted to skip it, this<br /> command will also skip the song.</p>
+				<p class="command">/Skip || /S:</p>
+				<p class="commandDesc">This command will skip the current song if you are permitted to do so.</p>
+				<p class="command">/Userlist || /U:</p>
+				<p class="commandDesc">Toggles whether the userlist is hidden or shown.</p>
+				<p class="command">/Fix userlist || /UU:</p>
+				<p class="commandDesc">Refreshes the userlist.</p>
+				<p class="command">/Auto woot || /AW:</p>
+				<p class="commandDesc">Toggles the auto woot feature.</p>
+				<p class="command">/Auto join || /AQ:</p>
+				<p class="commandDesc">Toggles the auto join feature.</p>
+				<p class="command">/History alerts || /HA:</p>
+				<p class="commandDesc">Toggles the history alerts feature.</p>
+				<p class="command">/Share history alerts || /SHA:</p>
+				<p class="commandDesc">Toggles whether or not you send a message over the chat when the song playing is in the<br /> history.</p>
+				<p class="command">/Hide || /HV:</p>
+				<p class="commandDesc">Toggles whether the video is hidden or shown.</p>
+				<p class="command">/Settings || /set:</p>
+				<p class="commandDesc">Shows the settings window.</p>
+				<p class="command">/My song || /MS:</p>
+				<p class="commandDesc">Tests whether the song you are about to play is in the rooms history or not.</p>
+				<p class="command">/Boo:</p>
+				<p class="commandDesc">Mehs the current song.</p>
+				<p class="command">/Curate messages || /CM:</p>
+				<p class="commandDesc">Toggles whether you get messages in the chat when someone curates the song or not.</p>
+				<p class="command">/RSB:</p>
+				<p class="commandDesc">Removes the settings button completely. <br />(Note: The only way to undo this is to refresh the page)</p>
+			</div>
+		</td>
+	</tr>
+</table>
+
+</body>
+</html>
