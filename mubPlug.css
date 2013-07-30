@@ -1,5 +1,5 @@
 #mubPlug-userlist {
-  width: 200px;
+	width: 200px;
 	height: 99%;
 	background-color: #191919;
 	border-style: solid;
@@ -59,6 +59,7 @@
 	border-width: 1px;
 	border-color: black;
 	border-style: solid;
+	border-radius: 5px;
 	height: 24px;
 	line-height: 24px;
 	margin: 2px;
