@@ -3,7 +3,7 @@ var botName = API.getUser().username;
 var botNameMention = "@" + botName;
 var command = false;
 var historySkip = true;
-var swearFilter = true; var racismFilter = true;
+var swearFilter = true; var racismFilter = true; var beggerFilter = true;
 var chatCommand, authorized, HA, noAccess;
 var AP = new Array(); // short for authorized people.
 var HAP = new Array(); // short for half authorized people array.
@@ -226,6 +226,10 @@ function recieveMessage(data){
 				racismFilter ? API.sendChat("Racism filter is enabled") : API.sendChat("Racism filter is disabled");
 			break;
 			
+			case "begger filter":
+				beggerFilter ? API.sendChat("Begger filter is enabled") : API.sendChat("Begger filter is disabled");
+			break;
+			
 			case "toggle swearing filter":
 			case "toggle sf":
 			case "tsf":
@@ -242,7 +246,23 @@ function recieveMessage(data){
 				}
 			break;
 			
-			case "toggle racist filter":
+			case "toggle begger filter":
+			case "toggle bf":
+			case "tbf":
+				if(authorized){
+					if(beggerFilter){
+						beggerFilter = false;
+						API.sendChat("Bot will no longer delete messages that include swear words");
+					}else{
+						beggerFilter = true;
+						API.sendChat("Bot will now delete messages that include swear words");
+					}
+				}else{
+					API.sendChat("This commands requires level 9001 bot access!");
+				}
+			break;
+			
+			case "toggle racism filter":
 			case "toggle rf":
 			case "trf":
 				if(authorized){
@@ -322,6 +342,10 @@ function recieveMessage(data){
 					}
 				}
 			break;
+			
+			case "version":
+				API.sendChat("mubBot version " + version);
+			break;
 		}
 	}else{
 		
@@ -338,6 +362,14 @@ function recieveMessage(data){
 		for(var a = 0; a < racism.length; a++){
 			if(data.message.toLowerCase().indexOf(racism[a]) > -1 && racismFilter){
 				API.moderateDeleteChat(data.chatID);
+			}
+		}
+		
+		// fan beggers
+		if(data.message.toLowerCase().indexOf("fan me") > -1 || data.message.toLowerCase().indexOf("fan 4 fan") > -1 || data.message.toLowerCase().indexOf("fan4fan") > -1){
+			if(beggerFilter)
+				API.moderateDeleteChat(data.chatID);
+				API.sendChat("@" + data.from + " Please don't ask for fans.");
 			}
 		}
 		
