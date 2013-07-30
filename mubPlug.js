@@ -1,4 +1,4 @@
-var version = "1.891";
+var version = "1.892";
 var customGreen = "#5bd708";
 function initialize(){
 
@@ -214,43 +214,44 @@ var fullAccess = false;
 var myID = "50aeaf683e083e18fa2d187e";
 var derpID = "50aeb07e96fba52c3ca04ca8";
 
-function saveStorage(){
+saveStorage = function(){
     localStorage.setItem("mubPlug", JSON.stringify(mubOptions));
-	sendChatUpdate("Saved settings.", "", "white");
+};
+loadStorage = function(){
+    mubOptions = JSON.parse(localStorage.getItem("mubPlug"));
 };
 
-function loadStorage(){
-    JSON.parse(localStorage.getItem("mubPlug"));
-};
+mubOptions                = {};
+mubOptions.autoWoot       = true;
+mubOptions.autoQueue      = false;
+mubOptions.historyAlerts  = true;
+mubOptions.speakingUp     = false;
+mubOptions.userListShown  = true;
+mubOptions.upcomingAlerts = true;
+mubOptions.curateAlerts   = false;
+mubOptions.videoShown     = true;
+mubOptions.load           = function(){mubOptions = JSON.parse(localStorage.getItem("mubPlug"))};
+mubOptions.save           = function(){localStorage.setItem("mubPlug", JSON.stringify(mubOptions))};
 
 if(localStorage.getItem("mubPlug") !== null){
-    loadStorage();
-	adaptToSettings();
+    mubOptions.save();
+    adaptToSettings();
 }else{
-	mubOptions                = {};
-	mubOptions.autoWoot       = true;
-	mubOptions.autoQueue      = false;
-	mubOptions.historyAlerts  = true;
-	mubOptions.speakingUp     = false;
-	mubOptions.userListShown  = true;
-	mubOptions.upcomingAlerts = true;
-	mubOptions.curateAlerts   = false;
-	mubOptions.videoShown     = true;
-	saveStorage();
-	adaptToSettings();
+    mubOptions.save();
+    adaptToSettings();
 }
 
 function adaptToSettings(){
-	mubOptions.autoWoot ? $("#autoWootButton").html(" + Auto woot") : $("#autoWootButton").html(" - Auto woot");
-	mubOptions.autoQueue ? $("#autoQueueButton").html(" + Auto queue") : $("#autoQueueButton").html(" - Auto queue");
-	mubOptions.historyAlerts ? $("#historyAlertButton").html(" + History alerts") : $("#historyAlertButton").html(" - History alerts");
-	mubOptions.speakingUp ? $("#speakUpButton").html(" + Tell chat history alerts") : $("#speakUpButton").html(" - Tell chat history alerts");
-	mubOptions.userListShown ? $("#userListButton").html(" + Show user list") : $("#userListButton").html(" - Show user list");
-	mubOptions.upcomingAlerts ? $("#upcomingAlertsButton").html(" + Upcoming alerts") : $("#upcomingAlertsButton").html(" - Upcoming alerts");
-	mubOptions.curateAlerts ? $("#curateAlertsButton").html(" + Curate messages") : $("#curateAlertsButton").html(" - Curate messages");
-	mubOptions.videoShown ? $("#hideVideoButton").html(" - Hidden video") : $("#hideVideoButton").html(" + Hidden video");
-	if(mubOptions.userListShown){
-		$("#mubPlug-userlist").css("display", "block");
+    mubOptions.autoWoot ? $("#autoWootButton").html(" + Auto woot") : $("#autoWootButton").html(" - Auto woot");
+    mubOptions.autoQueue ? $("#autoQueueButton").html(" + Auto queue") : $("#autoQueueButton").html(" - Auto queue");
+    mubOptions.historyAlerts ? $("#historyAlertButton").html(" + History alerts") : $("#historyAlertButton").html(" - History alerts");
+    mubOptions.speakingUp ? $("#speakUpButton").html(" + Tell chat history alerts") : $("#speakUpButton").html(" - Tell chat history alerts");
+    mubOptions.userListShown ? $("#userListButton").html(" + Show user list") : $("#userListButton").html(" - Show user list");
+    mubOptions.upcomingAlerts ? $("#upcomingAlertsButton").html(" + Upcoming alerts") : $("#upcomingAlertsButton").html(" - Upcoming alerts");
+    mubOptions.curateAlerts ? $("#curateAlertsButton").html(" + Curate messages") : $("#curateAlertsButton").html(" - Curate messages");
+    mubOptions.videoShown ? $("#hideVideoButton").html(" - Hidden video") : $("#hideVideoButton").html(" + Hidden video");
+    if(mubOptions.userListShown){
+        $("#mubPlug-userlist").css("display", "block");
         $("#mubPlug-userlist").animate({
             left: 0
         }, 800, function(){
@@ -262,7 +263,7 @@ function adaptToSettings(){
             $("#mubPlug-userlist").css("display", "none");
         });
     }
-	if(mubOptions.videoShown){
+    if(mubOptions.videoShown){
         $("#playback-container").fadeIn(600, function(){
             $("#playback-container").css("display", "block");
         });
@@ -275,20 +276,6 @@ function adaptToSettings(){
     }
 }
 
-function resetSettings(){
-	mubOptions                = {};
-	mubOptions.autoWoot       = true;
-	mubOptions.autoQueue      = false;
-	mubOptions.historyAlerts  = true;
-	mubOptions.speakingUp     = false;
-	mubOptions.userListShown  = true;
-	mubOptions.upcomingAlerts = true;
-	mubOptions.curateAlerts   = false;
-	mubOptions.videoShown     = true;
-	saveStorage();
-	adaptToSettings();
-}
-
 $("#autoWootButton").click(function(){
     if(mubOptions.autoWoot == true){
         mubOptions.autoWoot = false;
@@ -299,6 +286,7 @@ $("#autoWootButton").click(function(){
         $("#button-vote-positive").click();
     }
     return mubOptions.autoWoot;
+    mubOptions.save();
 });
 
 $("#autoQueueButton").click(function(){
@@ -313,6 +301,7 @@ $("#autoQueueButton").click(function(){
         }
     }
     return mubOptions.autoQueue;
+    mubOptions.save();
 });
 
 $("#speakUpButton").click(function(){
@@ -324,6 +313,7 @@ $("#speakUpButton").click(function(){
         $(this).html(" + Tell chat history alerts");
     }
     return mubOptions.speakingUp;
+    mubOptions.save();
 });
 
 $("#historyAlertButton").click(function(){
@@ -335,6 +325,7 @@ $("#historyAlertButton").click(function(){
         $(this).html(" + History alerts");
     }
     return mubOptions.historyAlerts;
+    mubOptions.save();
 });
 
 $("#settingsButton").click(function(){
@@ -353,7 +344,7 @@ $("#settingsWindowCloseButton").click(function(){
     $("#settingsWindow").fadeOut(600, function(){
         $("#settingsWindow").css("display", "none");
     });
-	saveStorage();
+    mubOptions.save();
 });
 
 $("#userListButton").click(function(){
@@ -374,22 +365,24 @@ $("#userListButton").click(function(){
         }, 800, function(){
         });
     }
+    mubOptions.save();
 });
 
 $("#hideVideoButton").click(function(){
     if(mubOptions.videoShown){
-		mubOptions.videoShown = false;
+        mubOptions.videoShown = false;
         $("#playback-container").fadeOut(600, function(){
             $("#playback-container").css("display", "none");
         });
         $(this).html(" + Hidden video");
     }else{
-		mubOptions.videoShown = true;
+        mubOptions.videoShown = true;
         $("#playback-container").fadeIn(600, function(){
             $("#playback-container").css("display", "block");
         });
         $(this).html(" - Hidden video");
     }
+    mubOptions.save();
 });
 
 $("#fixUserlistButton").click(function(){
@@ -404,6 +397,7 @@ $("#upcomingAlertsButton").click(function(){
         mubOptions.upcomingAlerts = true;
         $(this).html(" + Upcoming alerts");
     }
+    mubOptions.save();
 });
 
 $("#curateAlertsButton").click(function(){
@@ -414,6 +408,7 @@ $("#curateAlertsButton").click(function(){
         mubOptions.curateAlerts = true;
         $(this).html(" + Curate messages");
     }
+    mubOptions.save();
 });
 
 function sendChatUpdate(text, color, textcolor, id, link, cursor, clickToDelete, cross){
@@ -743,10 +738,6 @@ function chatCommand(value){
         case "/rsb":
             $("#settingsButton").remove();
             break;
-			
-		case "/ss":
-			saveStorage();
-			break;
 
         default:
             sendChatUpdate("This was not recognized as a command!", "", "red");
