@@ -113,7 +113,7 @@ function initialize(){
 	autoHideButton.attr("id", "autoHideButton").attr("class", "divButton").attr("title", "Toggles the user list auto hide feature");
 	
 	var recommendedButton    = $('<div>');
-	recommendedButton.html(" - Recommended settings").attr("id", "recommendedButton").attr("title", "Set's your settings to what the creators of mubPlug recommend").css("class", "divButton");
+	recommendedButton.html(" - Recommended settings").attr("id", "recommendedButton").attr("title", "Set's your settings to what the creators of mubPlug recommend").attr("class", "divButton");
 
     var halloButton          = $('<div>');
     halloButton.html('Set halloween avatar').attr("id", "setHalloAvatarButton").attr("class", "divButton").attr("title", "Sets your avatar to what you selected.");
