@@ -356,8 +356,8 @@ $("#recommendedButton").click(function(){
 	mubOptions.upcomingAlerts = true;
 	mubOptions.curateAlerts = false;
 	mubOptions.videoShown = true;
-	mubOptions.joinAlerts = false;
-	mubOptions.leaveAlerts = false;
+	mubOptions.joinAlerts = true;
+	mubOptions.leaveAlerts = true;
 	mubOptions.autoHide = false;
 	adaptToSettings();
 });
