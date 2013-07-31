@@ -146,13 +146,6 @@ function recieveMessage(data){
 	if(data.message.indexOf("!") === 0) command = true;
 	if(command){
 		chatCommand = data.message.substring(1);
-		if(chatCommand.indexOf("@") > -1){
-			//the command has a mention
-			/*mentionedPosition = chatCommand.indexOf("@") + 1;
-			mentionedName = chatCommand.substring(mentionedPosition);
-			mentioned = true;
-			chatCommand = chatCommand.substring(0, mentionedPosition - 2);*/
-		}
 		var commands = chatCommand.split(" ");
 		if(ready){
 		switch(commands[0].toLowerCase()){
@@ -305,24 +298,25 @@ function recieveMessage(data){
 			break;
 			
 			case "taco":
-				if(mentioned){
+				if(commands[1].indexOf("@") > -1){
+				var mentioned = commands[1].substring(1);
 					var randomNumber = Math.floor(Math.random() * (tacos.length - 1));
 					var randomNumber2 = Math.floor(Math.random() * 3);
 					switch(randomNumber2){
 						case 0:
-							API.sendChat("@" + mentionedName + " Quickly! Eat this " + tacos[randomNumber] + " before I do!");
+							API.sendChat("@" + mentioned + " Quickly! Eat this " + tacos[randomNumber] + " before I do!");
 						break;
 						case 1:
-							API.sendChat("Here you go, @" + mentionedName + " one free " + tacos[randomNumber] + " for you!");
+							API.sendChat("Here you go, @" + mentioned + " one free " + tacos[randomNumber] + " for you!");
 						break;
 						case 2:
-							API.sendChat("/me throws a " + tacos[randomNumber] + " @" + mentionedName + "!");
+							API.sendChat("/me throws a " + tacos[randomNumber] + " @" + mentioned + "!");
 						break;
 						case 3:
-							API.sendChat("I have come to you, " + mentionedName + " with this glorious " + tacos[randomNumber] + ".");
+							API.sendChat("I have come to you, " + mentioned + " with this glorious " + tacos[randomNumber] + ".");
 						break;
 						default:
-							API.sendChat("@" + mentionedName + ", you have somehow given me an error, so I will eat this " + tacos[randomNumber] + " myself!");
+							API.sendChat("@" + mentioned + ", you have somehow given me an error, so I will eat this " + tacos[randomNumber] + " myself!");
 							console.log(randomNumber + " - " + randomNumber2);
 						break;
 					}
