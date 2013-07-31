@@ -23,7 +23,7 @@ function initialize(){
     userListHeaderTitle.html('User List');
 	
 	var userlistHideButton = $('<div>');
-    userlistHideButton.attr("class", "overlay-close-button").attr("id", "userlistHideButton");
+    userlistHideButton.attr("class", "dialog-close-button").attr("id", "userlistHideButton");
 
     var usersPara                 = $('<p>');
     usersPara.html(" users in room").attr("id", "usersPara");
