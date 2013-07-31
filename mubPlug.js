@@ -3,8 +3,11 @@ var customGreen = "#5bd708";
 function initialize(){
 
     var css = $('<link>');
-    css.attr("href", "https://dl.dropboxusercontent.com/s/odraom8lt6dtzqu/mubPlug.css").attr("rel", "stylesheet").attr("type", "text/css");
+    css.attr("href", "https://dl.dropboxusercontent.com/s/u23ngkl352o2eki/mubPlug.css").attr("rel", "stylesheet").attr("type", "text/css");
     $("head").append(css);
+
+    $('body').prepend('<div id="firstRun">Since it is the first time you\'re running mubPlug, your settings have no been setup yet. Simply click on the settings button (located on the booth) and set your desired options. These will always be saved unless you clear your browser\'s storage and you can change them at any time.<p> If you experience any bugs or have a request you can submit an issue to <a href="http://goo.gl/BPs1Lz">http://goo.gl/BPs1Lz</a>.</p> This message will not be shown again unless you clear your browser\'s storage. <p>- DerpTheBass</p></div>');
+    $('body').prepend('<div id="firstRunExit">X</div>');
 
     var chatPosition = $("#chat").position();
     var chatPositionLeft = chatPosition.left;
@@ -153,8 +156,7 @@ function initialize(){
     settingsWindow.append(settingsWindowHeader).append(settingsWindowTable);
     $("#overlay-container").append(settingsWindow);
 
-
-}
+    }
 
 initialize();
 
@@ -215,14 +217,14 @@ var myID = "50aeaf683e083e18fa2d187e";
 var derpID = "50aeb07e96fba52c3ca04ca8";
 
 mubOptions                = {};
-mubOptions.autoWoot       = true;
+mubOptions.autoWoot       = false;
 mubOptions.autoQueue      = false;
-mubOptions.historyAlerts  = true;
+mubOptions.historyAlerts  = false;
 mubOptions.speakingUp     = false;
-mubOptions.userListShown  = true;
-mubOptions.upcomingAlerts = true;
+mubOptions.userListShown  = false;
+mubOptions.upcomingAlerts = false;
 mubOptions.curateAlerts   = false;
-mubOptions.videoShown     = false;
+mubOptions.videoShown     = true;
 
 mubMethods                = {};
 mubMethods.load           = function(){mubOptions = JSON.parse(localStorage.getItem("mubPlug"))};
@@ -234,6 +236,8 @@ if(localStorage.getItem("mubPlug") !== null){
 }else{
     mubMethods.save();
     adaptToSettings();
+    $("#firstRun") .css("display", "block");
+    $("#firstRunExit") .css("display", "block");
 }
 
 function adaptToSettings(){
@@ -270,6 +274,8 @@ function adaptToSettings(){
         $(this).html(" + Hidden video");
     }
 }
+
+$("#firstRunExit").click(function(){ $("#firstRun").fadeOut(200);$("#firstRunExit").fadeOut(200); });
 
 $("#autoWootButton").click(function(){
     if(mubOptions.autoWoot == true){
@@ -766,7 +772,7 @@ sendChatUpdate("Made exclusively by Emub and DerpTheBass", "", "#58FAF4");
 sendChatUpdate("Click to see available commands", "", "yellow", "commandsLink", "", "pointer", false, false);
 
 $("#commandsLink").click(function(){
-    window.open("http://dl.dropboxusercontent.com/s/py9l1k5zsjyjpe7/commands.txt", '_blank');
+    window.open("http://bit.ly/12DoBiv", '_blank');
     window.focus();
 });
 
