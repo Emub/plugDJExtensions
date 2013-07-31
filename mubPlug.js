@@ -1,4 +1,4 @@
-var version = "1.900";
+var version = "1.901";
 var customGreen = "#5bd708"; var bassPlugBlue = "#58FAF4";
 function initialize(){
 
@@ -328,10 +328,10 @@ $("#firstRunExit").click(function(){ $("#firstRun").fadeOut(200);$("#firstRunExi
 $("#leaveAlertsButton").click(function(){
 	if(mubOptions.leaveAlerts){
 		mubOptions.leaveAlerts = false;
-		(this).html(" - User leave alerts");
+		$(this).html(" - User leave alerts");
 	}else{
 		mubOptions.leaveAlerts = true;
-		(this).html(" + User leave alerts");
+		$(this).html(" + User leave alerts");
 	}
 	return mubOptions.leaveAlerts;
 	mubMethods.save();
@@ -341,10 +341,10 @@ $("#leaveAlertsButton").click(function(){
 $("#joinAlertsButton").click(function(){
 	if(mubOptions.joinAlerts){
 		mubOptions.joinAlerts = false;
-		(this).html(" - User join alerts");
+		$(this).html(" - User join alerts");
 	}else{
 		mubOptions.joinAlerts = true;
-		(this).html(" + User join alerts");
+		$(this).html(" + User join alerts");
 	}
 	return mubOptions.joinAlerts;
 	mubMethods.save();
