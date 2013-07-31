@@ -147,7 +147,9 @@ function recieveMessage(data){
 	if(command){
 		chatCommand = data.message.substring(1);
 		var commands = chatCommand.split(" ");
-		if(commands[1] === null) commands[1] = "";
+		if(commands[1] === null){
+		commands[1] = false;
+		}
 		if(ready){
 		switch(commands[0].toLowerCase()){
 			case "history":
@@ -299,7 +301,7 @@ function recieveMessage(data){
 			break;
 			
 			case "taco":
-				if(commands[1].indexOf("@") > -1){
+				if(commands[1].indexOf("@") > -1 && commands[1] !== false){
 				var mentioned = commands[1].substring(1);
 					var randomNumber = Math.floor(Math.random() * (tacos.length - 1));
 					var randomNumber2 = Math.floor(Math.random() * 3);
