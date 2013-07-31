@@ -1,4 +1,4 @@
-var version = "1.903";
+var version = "1.902";
 var customGreen = "#5bd708"; var bassPlugBlue = "#58FAF4";
 function initialize(){
 
@@ -71,6 +71,7 @@ function initialize(){
     var tableData15 = $('<td>');
 	
 	tableRow8.css("vertical-align", "bottom");
+	tableData15.attr("colspan", "2");
 
     var settingsButton       = $('<div>');
     settingsButton.html('Settings').attr("id", "settingsButton").attr("class", "divButton");
@@ -156,15 +157,15 @@ function initialize(){
     tableData12.append(joinAlertsButton);
     tableData13.append(leaveAlertsButton);
     tableData14.append(autoHideButton);
-    tableData15.append(recommendedButton);
+	tableData15.append(recommendedButton);
     tableRow1.append(tableData1).append(tableData2);
     tableRow2.append(tableData3).append(tableData4);
     tableRow3.append(tableData5).append(tableData6);
     tableRow4.append(tableData7).append(tableData8);
     tableRow5.append(tableData9).append(tableData10);
     tableRow6.append(tableData11).append(tableData14);
-    tableRow7.append(tableData12).append(tableData13);
-    tableRow8.append(tableData15);
+	tableRow7.append(tableData12).append(tableData13);
+	tabeRow8.append(tableData15);
 
 
     settingsWindowTable.append(tableRow1).append(tableRow2).append(tableRow3).append(tableRow4).append(tableRow5).append(tableRow6).append(tableRow7).append(tableRow8);
@@ -355,8 +356,8 @@ $("#recommendedButton").click(function(){
 	mubOptions.upcomingAlerts = true;
 	mubOptions.curateAlerts = false;
 	mubOptions.videoShown = true;
-	mubOptions.joinAlerts = true;
-	mubOptions.leaveAlerts = true;
+	mubOptions.joinAlerts = false;
+	mubOptions.leaveAlerts = false;
 	mubOptions.autoHide = false;
 	adaptToSettings();
 });
