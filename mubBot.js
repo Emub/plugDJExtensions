@@ -1,4 +1,4 @@
-var version = "0.004";
+var version = "0.005";
 var botName = API.getUser().username;
 var botNameMention = "@" + botName;
 var command = false;
@@ -48,6 +48,7 @@ function historyUpdate(){
   if(testHistory() > 1 && historySkip){
 		API.moderateForceSkip();
 		API.sendChat("This song was skipped because it was in the history.");
+		woot();
 	}
 }
 
@@ -347,6 +348,10 @@ function recieveMessage(data){
 						break;
 					}
 				}
+			break;
+			
+			case "skip":
+				if(authorized) API.moderateForceSkip();
 			break;
 			
 			case "version":
