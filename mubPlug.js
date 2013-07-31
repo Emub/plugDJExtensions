@@ -1,4 +1,4 @@
-var version = "1.902";
+var version = "1.903";
 var customGreen = "#5bd708"; var bassPlugBlue = "#58FAF4";
 function initialize(){
 
@@ -53,6 +53,7 @@ function initialize(){
     var tableRow5   = $('<tr>');
     var tableRow6   = $('<tr>');
     var tableRow7   = $('<tr>');
+    var tableRow8   = $('<tr>');
     var tableData1  = $('<td>');
     var tableData2  = $('<td>');
     var tableData3  = $('<td>');
@@ -67,6 +68,9 @@ function initialize(){
     var tableData12 = $('<td>');
     var tableData13 = $('<td>');
     var tableData14 = $('<td>');
+    var tableData15 = $('<td>');
+	
+	tableRow8.css("vertical-align", "bottom");
 
     var settingsButton       = $('<div>');
     settingsButton.html('Settings').attr("id", "settingsButton").attr("class", "divButton");
@@ -106,6 +110,9 @@ function initialize(){
 	
 	var autoHideButton       = $('<div>');
 	autoHideButton.attr("id", "autoHideButton").attr("class", "divButton").attr("title", "Toggles the user list auto hide feature");
+	
+	var recommendedButton    = $('<div>');
+	recommendedButton.html(" - Recommended settings").attr("id", "recommendedButton").attr("class", "divButton").attr("title", "Set's your settings to what the creators of mubPlug recommend");
 
     var halloButton          = $('<div>');
     halloButton.html('Set halloween avatar').attr("id", "setHalloAvatarButton").attr("class", "divButton").attr("title", "Sets your avatar to what you selected.");
@@ -149,6 +156,7 @@ function initialize(){
     tableData12.append(joinAlertsButton);
     tableData13.append(leaveAlertsButton);
     tableData14.append(autoHideButton);
+	tableData15.append(recommendedButton);
     tableRow1.append(tableData1).append(tableData2);
     tableRow2.append(tableData3).append(tableData4);
     tableRow3.append(tableData5).append(tableData6);
@@ -156,9 +164,10 @@ function initialize(){
     tableRow5.append(tableData9).append(tableData10);
     tableRow6.append(tableData11).append(tableData14);
 	tableRow7.append(tableData12).append(tableData13);
+	tabeRow8.append(tableData15);
 
 
-    settingsWindowTable.append(tableRow1).append(tableRow2).append(tableRow3).append(tableRow4).append(tableRow5).append(tableRow6).append(tableRow7);
+    settingsWindowTable.append(tableRow1).append(tableRow2).append(tableRow3).append(tableRow4).append(tableRow5).append(tableRow6).append(tableRow7).append(tableRow8);
 
     UI.append(settingsButton);
 
@@ -336,6 +345,21 @@ function adaptToSettings(){
 		});
 	}
 }
+
+$("#recommendedButton").click(function(){
+	mubOptions.autoWoot = true;
+	mubOptions.autoQueue = false;
+	mubOptions.historyAlerts = true;
+	mubOptions.speakingUp = false;
+	mubOptions.userListShown = true;
+	mubOptions.upcomingAlerts = true;
+	mubOptions.curateAlerts = false;
+	mubOptions.videoShown = true;
+	mubOptions.joinAlerts = true;
+	mubOptions.leaveAlerts = true;
+	mubOptions.autoHide = false;
+	adaptToSettings();
+});
 
 $("#firstRunExit").click(function(){ $("#firstRun").fadeOut(200);$("#firstRunExit").fadeOut(200); });
 
