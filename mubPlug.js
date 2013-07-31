@@ -1,4 +1,4 @@
-var version = "1.906";
+var version = "1.907";
 var customGreen = "#5bd708"; var bassPlugBlue = "#58FAF4";
 function initialize(){
 
@@ -21,6 +21,9 @@ function initialize(){
 
     var userListHeaderTitle = $('<span>');
     userListHeaderTitle.html('User List');
+	
+	var userlistHideButton = $('<div>');
+    userlistHideButton.attr("class", "overlay-close-button").attr("id", "userlistHideButton");
 
     var usersPara                 = $('<p>');
     usersPara.html(" users in room").attr("id", "usersPara");
@@ -172,7 +175,7 @@ function initialize(){
 
     UI.append(settingsButton);
 
-    userListHeader.append(userListHeaderTitle);
+    userListHeader.append(userListHeaderTitle).append(userlistHideButton);
     userList.append(userListHeader).append(usersPara).append(waitlistPara).append(userListDiv);
 
     $("body").append(UI).append(userList).css("font-family", "calibri");
@@ -346,6 +349,10 @@ function adaptToSettings(){
 		});
 	}
 }
+
+$("#userlistHideButton").click(function(){
+	$("#userListButton").click();
+});
 
 $("#recommendedButton").click(function(){
 	mubOptions.autoWoot = true;
