@@ -116,7 +116,6 @@ function woot(){
 API.on(API.CHAT, recieveMessage);
 function recieveMessage(data){
 	
-	if(ready){
 	command = false; authorized = false; HA = false; noAccess = false; mentioned = false;
 	$("#chat-messages").scrollTop(999999999);
 	
@@ -155,6 +154,7 @@ function recieveMessage(data){
 			chatCommand = chatCommand.substring(0, mentionedPosition - 2);*/
 		}
 		var commands = chatCommand.split(" ");
+		if(ready){
 		switch(commands[0].toLowerCase()){
 			case "history":
 				if(testHistory()>=2){
@@ -361,11 +361,18 @@ function recieveMessage(data){
 			break;
 			
 			case "cooldown":
-				cooldownPeriod = commands[1] * 1000;
-				API.sendChat("New cooldown period is now " + cooldownPeriod / 1000 + " seconds.");
-				return cooldownPeriod;
+				if(commands[1]==="disable"){
+					cooldownPeriod = 1;
+				}else{
+					cooldownPeriod = commands[1] * 1000;
+					API.sendChat("New cooldown period is now " + cooldownPeriod / 1000 + " seconds.");
+					return cooldownPeriod;
+				}
 			break;
 				
+		}
+		}else{
+			API.sendChat("You cannot use commands yet, the cooldown is still going!");
 		}
 	}else{
 		
@@ -393,9 +400,6 @@ function recieveMessage(data){
 			}
 		}
 		
-	}
-	ready = false;
-	setTimeout(function(){ ready = true; }, cooldownPeriod);
 	}
 }
 
