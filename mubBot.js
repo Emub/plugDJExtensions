@@ -359,6 +359,14 @@ function recieveMessage(data){
 				API.sendChat("mubBot version " + version);
 			break;
 			
+			case "status":
+				var response = "";
+				swearFilter ? response = response + "Swear filter is enabled. <br />" : response = response + "Swear filter is disabled. <br />";
+				racismFilter ? response = response + "Racism filter is enabled. <br />" : response = response + "Racism filter is disabled. <br />";
+				beggerFilter ? response = response + "Begger filter is enabled. <br />" : response = response + "Begger filter is disabled. <br />";
+				API.sendChat(response);
+			break;
+			
 			case "cooldown":
 			if(authorized){
 				if(commands[1]==="disable"){
