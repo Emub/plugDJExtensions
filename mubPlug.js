@@ -1,9 +1,9 @@
-var version = "1.905";
+var version = "1.906";
 var customGreen = "#5bd708"; var bassPlugBlue = "#58FAF4";
 function initialize(){
 
     var css = $('<link>');
-    css.attr("href", "https://dl.dropboxusercontent.com/s/u23ngkl352o2eki/mubPlug.css").attr("rel", "stylesheet").attr("type", "text/css");
+    css.attr("href", "https://dl.dropboxusercontent.com/s/f3b4hts408rdu2u/mubPlug.css").attr("rel", "stylesheet").attr("type", "text/css");
     $("head").append(css);
 
     $('body').prepend('<div id="firstRun">Since it is the first time you\'re running mubPlug, your settings have not been setup yet. Simply click on the settings button (located on the booth) and set your desired options. These will always be saved unless you clear your browser\'s storage and you can change them at any time.<p> If you experience any bugs or have a request you can submit an issue to <a style="color: #77E9FF" href="http://goo.gl/X0X6NN">http://goo.gl/X0X6NN</a>.</p> This message will not be shown again unless you clear your browser\'s storage. <p>- DerpTheBass</p></div>');
@@ -113,7 +113,7 @@ function initialize(){
 	autoHideButton.attr("id", "autoHideButton").attr("class", "divButton").attr("title", "Toggles the user list auto hide feature");
 	
 	var recommendedButton    = $('<div>');
-	recommendedButton.html(" - Recommended settings").attr("id", "recommendedButton").attr("title", "Set's your settings to what the creators of mubPlug recommend").attr("class", "divButton");
+	recommendedButton.html(" - Recommended settings").attr("class", "divButton").attr("id", "recommendedButton").attr("title", "Set's your settings to what the creators of mubPlug recommend");
 
     var halloButton          = $('<div>');
     halloButton.html('Set halloween avatar').attr("id", "setHalloAvatarButton").attr("class", "divButton").attr("title", "Sets your avatar to what you selected.");
