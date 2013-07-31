@@ -1,4 +1,4 @@
-var version = "0.006";
+var version = "0.005";
 var botName = API.getUser().username;
 var botNameMention = "@" + botName;
 var command = false;
@@ -8,7 +8,7 @@ var chatCommand, authorized, HA, noAccess;
 var AP = new Array(); // short for authorized people.
 var HAP = new Array(); // short for half authorized people array.
 var swears = new Array(); var tacos = new Array(); var racism = new Array();
-var mentionedPosition; var mentionedName; var mentioned;
+var mentionedPosition; var mentionedName; var mentioned; var cooldownPeriod = 5000;
 
 tacos[0] = "crispy taco";
 tacos[1] = "mexican taco";
@@ -39,6 +39,7 @@ racism[1] = "nigguh";
 racism[2] = "nigga";
 racism[3] = "niggs";
 racism[4] = "niggz";
+racism[5] = "nizzle";
 
 
 // ---------------- Bot functionalities ----------------
@@ -148,12 +149,13 @@ function recieveMessage(data){
 		chatCommand = data.message.substring(1);
 		if(chatCommand.indexOf("@") > -1){
 			//the command has a mention
-			mentionedPosition = chatCommand.indexOf("@") + 1;
+			/*mentionedPosition = chatCommand.indexOf("@") + 1;
 			mentionedName = chatCommand.substring(mentionedPosition);
 			mentioned = true;
-			chatCommand = chatCommand.substring(0, mentionedPosition - 2);
+			chatCommand = chatCommand.substring(0, mentionedPosition - 2);*/
 		}
-		switch(chatCommand.toLowerCase()){
+		var commands = chatCommand.split(" ");
+		switch(commands[0].toLowerCase()){
 			case "history":
 				if(testHistory()>=2){
 					if(API.getUser().permission < 2){
@@ -357,6 +359,13 @@ function recieveMessage(data){
 			case "version":
 				API.sendChat("mubBot version " + version);
 			break;
+			
+			case "cooldown":
+				cooldownPeriod = commands[1] * 1000;
+				API.sendChat("New cooldown period is now " + cooldownPeriod);
+				return cooldownPeriod;
+			break;
+				
 		}
 	}else{
 		
@@ -386,7 +395,7 @@ function recieveMessage(data){
 		
 	}
 	ready = false;
-	setTimeout(function(){ ready = true; }, 5000);
+	setTimeout(function(){ ready = true; }, cooldownPeriod);
 	}
 }
 
