@@ -1,4 +1,4 @@
-var version = "1.893";
+var version = "1.894";
 var customGreen = "#5bd708";
 function initialize(){
 
@@ -783,6 +783,6 @@ switch(user.id){
         break;
 
     case "50aeaf683e083e18fa2d187e":
-        sendChatUpdate("Hallo mastar!!", "", "pink", "", "", "pointer", true, false);
+        sendChatUpdate("Hallo mastar!! .. clear your localstorage and rerun mubPlug", "", "pink", "", "", "pointer", true, false);
         break;
 }
