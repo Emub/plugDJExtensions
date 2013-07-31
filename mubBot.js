@@ -373,7 +373,7 @@ function recieveMessage(data){
 		
 		// fan beggers
 		if(data.message.toLowerCase().indexOf("fan me") > -1 || data.message.toLowerCase().indexOf("fan 4 fan") > -1 || data.message.toLowerCase().indexOf("fan4fan") > -1){
-			if(beggerFilter)
+			if(beggerFilter){
 				API.moderateDeleteChat(data.chatID);
 				API.sendChat("@" + data.from + " Please don't ask for fans.");
 			}
