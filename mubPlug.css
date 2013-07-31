@@ -1,136 +1,142 @@
 #mubPlug-userlist {
-	width: 200px;
-	height: 99%;
-	background-color: #191919;
-	border-style: solid;
-	border-color: #2c2c2c;
-	border-width: 2px;
-	position: absolute;
+    width: 200px;
+    height: 99%;
+    background-color: #191919;
+    border-style: solid;
+    border-color: #2c2c2c;
+    border-width: 2px;
+    position: absolute;
 }
 
 #usersPara {
-	font-size: 24px;
-	color: #42a5dc;
-	text-align: center;
-	margin-top: 5px;
-	margin: 0px;
-	padding: 0px;
+    font-size: 24px;
+    color: #42a5dc;
+    text-align: center;
+    margin-top: 5px;
+    margin: 0px;
+    padding: 0px;
 }
 
 #waitlistPara {
-	font-size: 24px;
-	color: #42a5dc;
-	text-align: center;
-	border-bottom-style: solid;
-	border-color: #2c2c2c;
-	border-width: 2px;
-	margin: 0px;
-	padding: 0px;
+    font-size: 24px;
+    color: #42a5dc;
+    text-align: center;
+    border-bottom-style: solid;
+    border-color: #2c2c2c;
+    border-width: 2px;
+    margin: 0px;
+    padding: 0px;
 }
 
 #userListHeader {
-	width: 200px;
+    width: 200px;
 }
 
 #settingsWindow {
-	width: 800px;
-	height: 600px;
-	position: absolute;
-	top: 50px;
-	background-color: #191919;
-	border-style: solid;
-	border-color: #2c2c2c;
-	border-width: 2px;
+    width: 800px;
+    height: 600px;
+    position: absolute;
+    top: 50px;
+    background-color: #191919;
+    border-style: solid;
+    border-color: #2c2c2c;
+    border-width: 2px;
 }
 
 #settingsWindowTable {
-	margin-right: auto;
-	margin-left: auto;
-	position: relative;
-	top: 75px;
+    margin-right: auto;
+    margin-left: auto;
+    position: relative;
+    top: 75px;
 }
 
 .divButton {
-	width: 260px;
-	font-size: 18px;
-	text-align: center;
-	cursor: pointer;
-	background-color: #42a5dc;
-	border-width: 1px;
-	border-color: black;
-	border-style: solid;
-	border-radius: 5px;
-	height: 24px;
-	line-height: 24px;
-	margin: 2px;
-	background-color: #42a5dc;
+    width: 260px;
+    font-size: 18px;
+    text-align: center;
+    cursor: pointer;
+    background-color: #42a5dc;
+    border-width: 1px;
+    border-color: black;
+    border-style: solid;
+    border-radius: 5px;
+    height: 24px;
+    line-height: 24px;
+    margin: 2px;
+    background-color: #42a5dc;
 }
 
 #settingsButton {
-	width: 80px;
+    width: 80px;
 }
 
 .userListParagraph {
-	color: #FFFFFF;
-	margin: 1px;
-	margin-top: 2px;
-	margin-left: 4px;
+    color: #FFFFFF;
+    margin: 1px;
+    margin-top: 2px;
+    margin-left: 4px;
 }
 
 .imageSpan {
-	width: 15px;
-	height: 15px;
-	margin-top: 1px;
-	margin-bottom: 0px;
-	margin-right: 4px;
+    width: 15px;
+    height: 15px;
+    margin-top: 1px;
+    margin-bottom: 0px;
+    margin-right: 4px;
 }
 
 #userListDiv {
-	overflow-y: scroll;
+    overflow-y: scroll;
 }
 
 .userParaName {
-	cursor: pointer;
+    cursor: pointer;
 }
 
 #halloSelect {
-	width: 260px;
-	height: 24px;
-	margin: 2px;
-	text-align: center;
+    width: 260px;
+    height: 24px;
+    margin: 2px;
+    text-align: center;
 }
 
 .chatUpdateCross {
-	cursor: pointer;
-	width: 10px;
-	height: 10px;
-	margin: 4px;
-	margin-top: 3px;
+    cursor: pointer;
+    width: 10px;
+    height: 10px;
+    margin: 4px;
+    margin-top: 3px;
 }
 #firstRun
 {
-	width: 500px;
-	height: 400px;
-	background-color: rgba(10,10,10,0.85);
-  color: #fff;
-  font-size: 22px;
-  font-family: Calibri;
-  line-height: 130%;
-  padding: 10px;
-	border-style: solid;
-	border-color: #2c2c2c;
-	border-width: 3px;
-  margin: 25% auto;
+    z-index: 9999999 !important;
+    position: absolute;
+    width: 500px;
+    height: 400px;
+    background-color: rgba(10,10,10,0.95);
+    color: #fff;
+    font-size: 22px;
+    font-family: Calibri;
+    line-height: 130%;
+    padding: 10px;
+    border-style: solid;
+    border-color: #2c2c2c;
+    border-width: 3px;
+    border-radius: 5%;
+    margin: 10% 34.5%;
+    display: none;
 }
 #firstRunExit
 {
-  position: relative;
-  top: -712px;
-  width: 15px;
-  height: 15px;
-  left: 804px;
-  cursor: pointer;
-  font-size: 25px;
-  font-family: Lucida Console;
-  color: RED;
+    z-index: 99999999 !important;
+    position: relative;
+    top: 185px;
+    width: 15px;
+    height: 15px;
+    left: 1114px;
+    cursor: pointer;
+    font-size: 25px;
+    font-family: Lucida Console;
+    color: RED;
+    display: none;
 }
