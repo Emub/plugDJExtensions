@@ -361,9 +361,9 @@ function recieveMessage(data){
 			
 			case "status":
 				var response = "";
-				swearFilter ? response = response + "Swear filter is enabled. <br />" : response = response + "Swear filter is disabled. <br />";
-				racismFilter ? response = response + "Racism filter is enabled. <br />" : response = response + "Racism filter is disabled. <br />";
-				beggerFilter ? response = response + "Begger filter is enabled. <br />" : response = response + "Begger filter is disabled. <br />";
+				swearFilter ? response = "Swear filter is enabled. - " : response = "Swear filter is disabled. - ";
+				racismFilter ? response = response + "Racism filter is enabled. - " : response = response + "Racism filter is disabled. - ";
+				beggerFilter ? response = response + "Begger filter is enabled." : response = response + "Begger filter is disabled.";
 				API.sendChat(response);
 			break;
 			
@@ -426,4 +426,7 @@ function recieveMessage(data){
 	setTimeout(function(){ ready = true; }, cooldownPeriod);
 }
 
+$("#playback").remove();
+$("#meta-frame").remove();
+$("#room-wheel").remove();
 API.sendChat("Running mubBot version "+version);
