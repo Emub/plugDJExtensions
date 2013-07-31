@@ -742,6 +742,7 @@ function chatCommand(value){
 		case "/ss":
 			mubMethods.save();
 			sendChatUpdate("Settings saved", "", "white");
+		break;
 
         default:
             sendChatUpdate("This was not recognized as a command!", "", "red");
