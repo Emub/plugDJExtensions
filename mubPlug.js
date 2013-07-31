@@ -363,7 +363,7 @@ $("#mubPlug-userlist").mouseover(function(){
 $("#mubPlug-userlist").mouseout(function(){
 	if(mubOptions.autoHide){
 		setTimeout(function(){
-			$(this).animate({
+			$("#mubPlug-userlist").animate({
 				left: -180
 			}, 100, function(){
 				//Animated and is now almost hidden
