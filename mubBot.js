@@ -1,4 +1,4 @@
-var version = "0.010";
+var version = "0.011";
 var botName = API.getUser().username;
 var botNameMention = "@" + botName;
 var command = false;
@@ -360,6 +360,10 @@ function recieveMessage(data){
 				API.sendChat("mubBot version " + version);
 			break;
 			
+			case "marco":
+				API.sendChat("Polo");
+			break;
+			
 			case "status":
 				var response = "";
 				var elapsed = new Date().getTime() - joined;
@@ -431,4 +435,7 @@ function recieveMessage(data){
 $("#playback").remove();
 $("#meta-frame").remove();
 $("#room-wheel").remove();
+$("#user-container").remove();
+$("#audience").remove();
+$("#booth-canvas").remove();
 API.sendChat("Running mubBot version "+version);
