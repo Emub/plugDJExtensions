@@ -1,4 +1,4 @@
-var version = "0.005";
+var version = "0.006";
 var botName = API.getUser().username;
 var botNameMention = "@" + botName;
 var command = false;
@@ -362,7 +362,7 @@ function recieveMessage(data){
 			
 			case "cooldown":
 				cooldownPeriod = commands[1] * 1000;
-				API.sendChat("New cooldown period is now " + cooldownPeriod);
+				API.sendChat("New cooldown period is now " + cooldownPeriod / 1000 + " seconds.");
 				return cooldownPeriod;
 			break;
 				
