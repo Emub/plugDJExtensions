@@ -1,4 +1,4 @@
-var version = "1.895";
+var version = "1.896";
 var customGreen = "#5bd708";
 function initialize(){
 
@@ -6,7 +6,7 @@ function initialize(){
     css.attr("href", "https://dl.dropboxusercontent.com/s/u23ngkl352o2eki/mubPlug.css").attr("rel", "stylesheet").attr("type", "text/css");
     $("head").append(css);
 
-    $('body').prepend('<div id="firstRun">Since it is the first time you\'re running mubPlug, your settings have no been setup yet. Simply click on the settings button (located on the booth) and set your desired options. These will always be saved unless you clear your browser\'s storage and you can change them at any time.<p> If you experience any bugs or have a request you can submit an issue to <a href="http://goo.gl/BPs1Lz">http://goo.gl/BPs1Lz</a>.</p> This message will not be shown again unless you clear your browser\'s storage. <p>- DerpTheBass</p></div>');
+    $('body').prepend('<div id="firstRun">Since it is the first time you\'re running mubPlug, your settings have not been setup yet. Simply click on the settings button (located on the booth) and set your desired options. These will always be saved unless you clear your browser\'s storage and you can change them at any time.<p> If you experience any bugs or have a request you can submit an issue to <a target="_blank" href="http://goo.gl/BPs1Lz">http://goo.gl/BPs1Lz</a>.</p> This message will not be shown again unless you clear your browser\'s storage. <p>- DerpTheBass</p></div>');
     $('body').prepend('<div id="firstRunExit">X</div>');
 
     var chatPosition     = $("#chat").position();
@@ -441,7 +441,7 @@ function sendChatUpdate(text, color, textcolor, id, link, cursor, clickToDelete,
         chatUpdate.append(crossImage);
     }
     $("#chat-messages").append(chatUpdate);
-    $("#chat-message").scrollTop(99999999);
+    document.getElementById("chat-messages").scrollTop = 999999999;
 }
 
 API.on(API.HISTORY_UPDATE, checkStuff);
@@ -738,6 +738,10 @@ function chatCommand(value){
         case "/rsb":
             $("#settingsButton").remove();
             break;
+    		
+		case "/ss":
+			mubMethods.save();
+			sendChatUpdate("Settings saved", "", "white");
 
         default:
             sendChatUpdate("This was not recognized as a command!", "", "red");
@@ -748,7 +752,7 @@ function chatCommand(value){
 
 API.on(API.CHAT, recieveMessage);
 function recieveMessage(data){
-    $("#chat-messages").scrollTop(99999999);
+    document.getElementById("chat-messages").scrollTop = 999999999;
     if(data.fromID === myID || data.fromID === derpID){
         switch(data.message){
             case "!mubPlugPeepz":
@@ -786,13 +790,14 @@ $("#commandsLink").click(function(){
     window.focus();
 });
 
+setTimeout(function(){
 var user = API.getUser();
 switch(user.id){
     case "50aeb07e96fba52c3ca04ca8":
-        sendChatUpdate("SUP DERP!?!", "", "pink", "", "", "pointer", true, false);
+        sendChatUpdate("SUP DERP!?! (Nice update you made there! :D)", "", "pink", "", "", "pointer", true, false);
         break;
 
     case "50aeaf683e083e18fa2d187e":
-        sendChatUpdate("Hallo mastar!! .. clear your localstorage, rerun mubPlug and check it out", "", "pink", "", "", "pointer", true, false);
+        sendChatUpdate("Hallo mastar!!", "", "pink", "", "", "pointer", true, false);
         break;
-}
+}}, 10000);
