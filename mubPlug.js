@@ -1,4 +1,4 @@
-var version = "1.897";
+var version = "1.898";
 var customGreen = "#5bd708";
 function initialize(){
 
@@ -497,11 +497,11 @@ function updateUserlist(){
             userParaSpan.append(userParaImage);
         }
         if(users[usersWritten].permission >= 2 && users[usersWritten].permission < 4){
-            userParaImage.attr("src", "http://i.imgur.com/bW75HNL.png").attr("class", "imageSpan");
+            userParaImage.attr("src", "http://i.imgur.com/aeEE6jF.png").attr("class", "imageSpan");
             userParaSpan.append(userParaImage);
         }
         if(users[usersWritten].permission >= 4 && users[usersWritten].permission < 9){
-            userParaImage.attr("src", "http://i.imgur.com/7pydYt5.png").attr("class", "imageSpan");
+            userParaImage.attr("src", "http://i.imgur.com/p2FzDNP.png").attr("class", "imageSpan");
             userParaSpan.append(userParaImage);
         }
         if(users[usersWritten].permission == 9){
