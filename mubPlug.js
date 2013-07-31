@@ -1,4 +1,4 @@
-var version = "1.894";
+var version = "1.895";
 var customGreen = "#5bd708";
 function initialize(){
 
@@ -9,34 +9,32 @@ function initialize(){
     $('body').prepend('<div id="firstRun">Since it is the first time you\'re running mubPlug, your settings have no been setup yet. Simply click on the settings button (located on the booth) and set your desired options. These will always be saved unless you clear your browser\'s storage and you can change them at any time.<p> If you experience any bugs or have a request you can submit an issue to <a href="http://goo.gl/BPs1Lz">http://goo.gl/BPs1Lz</a>.</p> This message will not be shown again unless you clear your browser\'s storage. <p>- DerpTheBass</p></div>');
     $('body').prepend('<div id="firstRunExit">X</div>');
 
-    var chatPosition = $("#chat").position();
+    var chatPosition     = $("#chat").position();
     var chatPositionLeft = chatPosition.left;
-    var chatWidth = $("#chat").width();
-    var UIPosition = chatPositionLeft + 170 + "px";
-    var UI = $('<div>');
-
-    var userList = $('<div>');
+    var chatWidth        = $("#chat").width();
+    var UIPosition       = chatPositionLeft + 170 + "px";
+    var UI               = $('<div>');
+    var userList         = $('<div>');
     userList.attr("id", "mubPlug-userlist").attr("class", "sidebar");
-
-    var userListHeader = $('<div>');
+    var userListHeader   = $('<div>');
     userListHeader.attr("class", "dialog-header");
 
     var userListHeaderTitle = $('<span>');
     userListHeaderTitle.html('User List');
 
-    var usersPara = $('<p>');
+    var usersPara                 = $('<p>');
     usersPara.html(" users in room").attr("id", "usersPara");
 
-    var waitlistPara = $('<p>');
+    var waitlistPara              = $('<p>');
     waitlistPara.html("Waitlist: ").attr("id", "waitlistPara");
 
-    var userListDiv = $('<div>');
+    var userListDiv               = $('<div>');
     userListDiv.attr("id", "userListDiv");
 
-    var settingsWindow = $('<div>');
+    var settingsWindow            = $('<div>');
     settingsWindow.attr("id", "settingsWindow").css("display", "none");
 
-    var settingsWindowHeader = $('<div>');
+    var settingsWindowHeader      = $('<div>');
     settingsWindowHeader.attr("class", "overlay-header");
 
     var settingsWindowHeaderTitle = $('<div>');
@@ -45,61 +43,61 @@ function initialize(){
     var settingsWindowCloseButton = $('<div>');
     settingsWindowCloseButton.attr("class", "overlay-close-button").attr("id", "settingsWindowCloseButton");
 
-    var settingsWindowTable = $('<table>');
+    var settingsWindowTable       = $('<table>');
     settingsWindowTable.attr("cellspacing", "5").attr("cellspacing", "5").attr("id", "settingsWindowTable");
 
-    var tableRow1 = $('<tr>');
-    var tableRow2 = $('<tr>');
-    var tableRow3 = $('<tr>');
-    var tableRow4 = $('<tr>');
-    var tableRow5 = $('<tr>');
-    var tableRow6 = $('<tr>');
-    var tableData1 = $('<td>');
-    var tableData2 = $('<td>');
-    var tableData3 = $('<td>');
-    var tableData4 = $('<td>');
-    var tableData5 = $('<td>');
-    var tableData6 = $('<td>');
-    var tableData7 = $('<td>');
-    var tableData8 = $('<td>');
-    var tableData9 = $('<td>');
+    var tableRow1   = $('<tr>');
+    var tableRow2   = $('<tr>');
+    var tableRow3   = $('<tr>');
+    var tableRow4   = $('<tr>');
+    var tableRow5   = $('<tr>');
+    var tableRow6   = $('<tr>');
+    var tableData1  = $('<td>');
+    var tableData2  = $('<td>');
+    var tableData3  = $('<td>');
+    var tableData4  = $('<td>');
+    var tableData5  = $('<td>');
+    var tableData6  = $('<td>');
+    var tableData7  = $('<td>');
+    var tableData8  = $('<td>');
+    var tableData9  = $('<td>');
     var tableData10 = $('<td>');
     var tableData11 = $('<td>');
 
-    var settingsButton = $('<div>');
+    var settingsButton       = $('<div>');
     settingsButton.html('Settings').attr("id", "settingsButton").attr("class", "divButton");
 
-    var autoQueueButton = $('<div>');
+    var autoQueueButton      = $('<div>');
     autoQueueButton.attr("id", "autoQueueButton").attr("class", "divButton").attr("title", "Toggles the auto waitlist join feature.");
 
-    var autoWootButton = $('<div>');
+    var autoWootButton       = $('<div>');
     autoWootButton.attr("id", "autoWootButton").attr("class", "divButton").attr("title", "Toggles the auto woot feature.");
 
-    var historyAlertButton = $('<div>');
+    var historyAlertButton   = $('<div>');
     historyAlertButton.attr("id", "historyAlertButton").attr("class", "divButton").attr("title", "Displays a warning in the chat if the song currently playing is in the room history.");
 
     var upcomingAlertsButton = $('<div>');
     upcomingAlertsButton.attr("id", "upcomingAlertsButton").attr("class", "divButton").attr("title", "Displays a warning in the chat if the song you are going to play is in the room history.");
 
-    var curateAlertsButton = $('<div>');
+    var curateAlertsButton   = $('<div>');
     curateAlertsButton.attr("id", "curateAlertsButton").attr("class", "divButton").attr("title", "Shows a message in the chat when someone curates a song.");
 
-    var speakUpButton = $('<div>');
+    var speakUpButton        = $('<div>');
     speakUpButton.attr("id", "speakUpButton").attr("class", "divButton").attr("title", "Sends a message in the chat if the song playing is in the room history.");
 
-    var hideVideoButton = $('<div>');
+    var hideVideoButton      = $('<div>');
     hideVideoButton.attr("id", "hideVideoButton").attr("class", "divButton").attr("title", "Hides or shows the video.");
 
-    var userListButton = $('<div>');
+    var userListButton       = $('<div>');
     userListButton.attr("id", "userListButton").attr("class", "divButton").attr("title", "Hides or shows the userlist.");
 
-    var fixUserListButton = $('<div>');
+    var fixUserListButton    = $('<div>');
     fixUserListButton.html(' - Refresh userlist').attr("id", "fixUserlistButton").attr("class", "divButton").attr("title", "Refreshes the userlist.");
 
-    var halloButton = $('<div>');
+    var halloButton          = $('<div>');
     halloButton.html('Set halloween avatar').attr("id", "setHalloAvatarButton").attr("class", "divButton").attr("title", "Sets your avatar to what you selected.");
 
-    var halloSelect = $('<select>');
+    var halloSelect          = $('<select>');
     halloSelect.attr("id", "halloSelect");
 
     var halloOption1  = $('<option>'); halloOption1.html("Male vampire").attr("value", "1");
@@ -241,14 +239,14 @@ if(localStorage.getItem("mubPlug") !== null){
 }
 
 function adaptToSettings(){
-    mubOptions.autoWoot ? $("#autoWootButton").html(" + Auto woot") : $("#autoWootButton").html(" - Auto woot");
-    mubOptions.autoQueue ? $("#autoQueueButton").html(" + Auto queue") : $("#autoQueueButton").html(" - Auto queue");
-    mubOptions.historyAlerts ? $("#historyAlertButton").html(" + History alerts") : $("#historyAlertButton").html(" - History alerts");
-    mubOptions.speakingUp ? $("#speakUpButton").html(" + Tell chat history alerts") : $("#speakUpButton").html(" - Tell chat history alerts");
-    mubOptions.userListShown ? $("#userListButton").html(" + Show user list") : $("#userListButton").html(" - Show user list");
+    mubOptions.autoWoot       ? $("#autoWootButton").html(" + Auto woot") : $("#autoWootButton").html(" - Auto woot");
+    mubOptions.autoQueue      ? $("#autoQueueButton").html(" + Auto queue") : $("#autoQueueButton").html(" - Auto queue");
+    mubOptions.historyAlerts  ? $("#historyAlertButton").html(" + History alerts") : $("#historyAlertButton").html(" - History alerts");
+    mubOptions.speakingUp     ? $("#speakUpButton").html(" + Tell chat history alerts") : $("#speakUpButton").html(" - Tell chat history alerts");
+    mubOptions.userListShown  ? $("#userListButton").html(" + Show user list") : $("#userListButton").html(" - Show user list");
     mubOptions.upcomingAlerts ? $("#upcomingAlertsButton").html(" + Upcoming alerts") : $("#upcomingAlertsButton").html(" - Upcoming alerts");
-    mubOptions.curateAlerts ? $("#curateAlertsButton").html(" + Curate messages") : $("#curateAlertsButton").html(" - Curate messages");
-    mubOptions.videoShown ? $("#hideVideoButton").html(" - Hidden video") : $("#hideVideoButton").html(" + Hidden video");
+    mubOptions.curateAlerts   ? $("#curateAlertsButton").html(" + Curate messages") : $("#curateAlertsButton").html(" - Curate messages");
+    mubOptions.videoShown     ? $("#hideVideoButton").html(" - Hidden video") : $("#hideVideoButton").html(" + Hidden video");
     if(mubOptions.userListShown){
         $("#mubPlug-userlist").css("display", "block");
         $("#mubPlug-userlist").animate({
@@ -294,6 +292,7 @@ $("#autoQueueButton").click(function(){
     if(mubOptions.autoQueue == true){
         mubOptions.autoQueue = false;
         $(this).html(' - Auto queue');
+        API.djLeave();
     }else{
         mubOptions.autoQueue = true;
         $(this).html(' + Auto queue');
@@ -744,6 +743,7 @@ function chatCommand(value){
             sendChatUpdate("This was not recognized as a command!", "", "red");
             break;
     }
+
 }
 
 API.on(API.CHAT, recieveMessage);
@@ -754,6 +754,16 @@ function recieveMessage(data){
             case "!mubPlugPeepz":
                 API.sendChat("I'm running mubPlug version "+version);
                 break;
+        }
+    }
+    if(data.message.indexOf("!disable") > -1 && API.getUser(data.fromID).permission > 1 && data.type === "mention") {
+        if(mubOptions.autoQueue){
+            $("#autoQueueButton").click();
+            API.sendChat("@"+data.from+" - Autojoin disabled!");
+            API.chatLog("Woops!, looks like autojoining may not be allowed in this room!", true);
+            API.djLeave()
+        }else{
+            API.sendChat("@"+data.from+" - Autojoin was not enabled!")
         }
     }
 }
@@ -783,6 +793,6 @@ switch(user.id){
         break;
 
     case "50aeaf683e083e18fa2d187e":
-        sendChatUpdate("Hallo mastar!! .. clear your localstorage and rerun mubPlug", "", "pink", "", "", "pointer", true, false);
+        sendChatUpdate("Hallo mastar!! .. clear your localstorage, rerun mubPlug and check it out", "", "pink", "", "", "pointer", true, false);
         break;
 }
