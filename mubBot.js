@@ -348,7 +348,11 @@ function recieveMessage(data){
 			break;
 			
 			case "skip":
-				if(authorized) API.moderateForceSkip();
+				if(authorized){
+					API.moderateForceSkip();
+				}else{
+					API.sendChat("You need level 9001 bot control to use this command!");
+				}
 			break;
 			
 			case "version":
@@ -356,6 +360,7 @@ function recieveMessage(data){
 			break;
 			
 			case "cooldown":
+			if(authorized){
 				if(commands[1]==="disable"){
 					cooldownPeriod = 1;
 					API.sendChat("Cooldown disabled");
@@ -364,11 +369,23 @@ function recieveMessage(data){
 					API.sendChat("New cooldown period is now " + cooldownPeriod / 1000 + " seconds.");
 					return cooldownPeriod;
 				}
+			}else{
+				API.sendChat("You need level 9001 bot control to use this command!");
+			}
 			break;
 				
 		}
 		}else{
-			API.sendChat("You cannot use commands yet, the cooldown is still going!");
+			if(commands[0] === "cooldown" && authorized){
+				if(commands[1]==="disable"){
+					cooldownPeriod = 1;
+					API.sendChat("Cooldown disabled");
+				}else{
+					cooldownPeriod = commands[1] * 1000;
+					API.sendChat("New cooldown period is now " + cooldownPeriod / 1000 + " seconds.");
+					return cooldownPeriod;
+				}
+			}
 		}
 	}else{
 		
