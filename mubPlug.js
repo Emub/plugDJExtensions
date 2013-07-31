@@ -156,15 +156,15 @@ function initialize(){
     tableData12.append(joinAlertsButton);
     tableData13.append(leaveAlertsButton);
     tableData14.append(autoHideButton);
-	tableData15.append(recommendedButton);
+    tableData15.append(recommendedButton);
     tableRow1.append(tableData1).append(tableData2);
     tableRow2.append(tableData3).append(tableData4);
     tableRow3.append(tableData5).append(tableData6);
     tableRow4.append(tableData7).append(tableData8);
     tableRow5.append(tableData9).append(tableData10);
     tableRow6.append(tableData11).append(tableData14);
-	tableRow7.append(tableData12).append(tableData13);
-	tabeRow8.append(tableData15);
+    tableRow7.append(tableData12).append(tableData13);
+    tableRow8.append(tableData15);
 
 
     settingsWindowTable.append(tableRow1).append(tableRow2).append(tableRow3).append(tableRow4).append(tableRow5).append(tableRow6).append(tableRow7).append(tableRow8);
