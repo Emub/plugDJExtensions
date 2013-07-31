@@ -1,9 +1,9 @@
-var version = "0.005";
+var version = "0.006";
 var botName = API.getUser().username;
 var botNameMention = "@" + botName;
 var command = false;
 var historySkip = true;
-var swearFilter = true; var racismFilter = true; var beggerFilter = true;
+var swearFilter = true; var racismFilter = true; var beggerFilter = true; var ready = true;
 var chatCommand, authorized, HA, noAccess;
 var AP = new Array(); // short for authorized people.
 var HAP = new Array(); // short for half authorized people array.
@@ -115,7 +115,7 @@ function woot(){
 API.on(API.CHAT, recieveMessage);
 function recieveMessage(data){
 	
-	
+	if(ready){
 	command = false; authorized = false; HA = false; noAccess = false; mentioned = false;
 	$("#chat-messages").scrollTop(999999999);
 	
@@ -384,6 +384,9 @@ function recieveMessage(data){
 			}
 		}
 		
+	}
+	ready = false;
+	setTimeout(function(){ ready = true; }, 5000);
 	}
 }
 
