@@ -1,4 +1,4 @@
-var version = "0.003";
+var version = "0.004";
 var botName = API.getUser().username;
 var botNameMention = "@" + botName;
 var command = false;
@@ -130,10 +130,16 @@ function recieveMessage(data){
 		}
 	}
 	
+	if(API.getUser(data.fromID).permission > 0){
+		HA = true;
+	}
+	
+	if(API.getUser(data.fromID).permission > 3){
+		authorized = true;
+	}
+	
 	if(HA === false && authorized === false){
 		noAccess = true;
-	}else{
-		noAccess = false;
 	}
 	
 	if(data.message.indexOf("!") === 0) command = true;
