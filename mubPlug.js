@@ -1,4 +1,4 @@
-var version = "1.896";
+var version = "1.897";
 var customGreen = "#5bd708";
 function initialize(){
 
@@ -6,7 +6,7 @@ function initialize(){
     css.attr("href", "https://dl.dropboxusercontent.com/s/u23ngkl352o2eki/mubPlug.css").attr("rel", "stylesheet").attr("type", "text/css");
     $("head").append(css);
 
-    $('body').prepend('<div id="firstRun">Since it is the first time you\'re running mubPlug, your settings have not been setup yet. Simply click on the settings button (located on the booth) and set your desired options. These will always be saved unless you clear your browser\'s storage and you can change them at any time.<p> If you experience any bugs or have a request you can submit an issue to <a target="_blank" href="http://goo.gl/X0X6NN">http://goo.gl/X0X6NN</a>.</p> This message will not be shown again unless you clear your browser\'s storage. <p>- DerpTheBass</p></div>');
+    $('body').prepend('<div id="firstRun">Since it is the first time you\'re running mubPlug, your settings have not been setup yet. Simply click on the settings button (located on the booth) and set your desired options. These will always be saved unless you clear your browser\'s storage and you can change them at any time.<p> If you experience any bugs or have a request you can submit an issue to <a style="color: #77E9FF" href="http://goo.gl/X0X6NN">http://goo.gl/X0X6NN</a>.</p> This message will not be shown again unless you clear your browser\'s storage. <p>- DerpTheBass</p></div>');
     $('body').prepend('<div id="firstRunExit">X</div>');
 
     var chatPosition     = $("#chat").position();
@@ -153,6 +153,40 @@ function initialize(){
     settingsWindowHeader.append(settingsWindowHeaderTitle).append(settingsWindowCloseButton);
     settingsWindow.append(settingsWindowHeader).append(settingsWindowTable);
     $("#overlay-container").append(settingsWindow);
+
+    function addGlobalStyle(css){
+        var head, style;
+        head = document.getElementsByTagName('head')[0];
+        if(!head){
+            return;
+        }
+        style = document.createElement('style');
+        style.type = 'text/css';
+        style.innerHTML = css;
+        head.appendChild(style);
+    }
+    {
+        addGlobalStyle('#button-chat-collapse, #button-chat-collapse {background: url(http://i.imgur.com/jqbkAOH.png);');
+        addGlobalStyle('#button-chat-expand, #button-chat-expand {background: url(http://i.imgur.com/6dFswPF.png);');
+        //addGlobalStyle('#chat, #chat {border-style: solid; border-width: 1px; border-color: #000; ');
+        //addGlobalStyle('#playback, #playback {border-style: solid; border-width: 1px; border-color: #000; ');
+        //addGlobalStyle('#meta-frame, #meta-frame {border-style: solid; border-width: 1px; border-color: #000; ');
+        //addGlobalStyle('#user-container, #user-container {border-style: solid; border-width: 1px; border-color: #000; ');
+        addGlobalStyle('.frame-background, .frame-background {opacity: 0.83;}');
+        addGlobalStyle('.chat-from-featureddj, .chat-from-featureddj {color: #00C4FF !important;}');
+        addGlobalStyle('.chat-from-manager, .chat-from-manager {color: #16BF00 !important;}');
+        addGlobalStyle('.chat-from-cohost, .chat-from-cohost {color: #FF4000 !important;}');
+        addGlobalStyle('.chat-from-host, .chat-from-host {color: #FF0004 !important;}');
+        addGlobalStyle('.chat-host, .chat-host {background-image: url(http://i.imgur.com/p2FzDNP.png); no repeat 0 5px);}');
+        addGlobalStyle('.chat-cohost, .chat-cohost {background-image: url(http://i.imgur.com/Vf1KvPO.png); no repeat 0 5px;}');
+        addGlobalStyle('.chat-manager, .chat-manager {background-image: url(http://i.imgur.com/aeEE6jF.png); no repeat 0 5px;}');
+        addGlobalStyle('.chat-message:nth-child(2n), .chat-message:nth-child(2n) {background-color: rgba(0, 0, 0, 0.45);}');
+        addGlobalStyle('.chat-update:nth-child(2n), .chat-update:nth-child(2n) {background-color: rgba(0, 0, 0, 0.45);}');
+        addGlobalStyle('.chat-mention:nth-child(1n), .chat-mention:nth-child(1n) {background-color: rgba(82, 0, 255, 0.12);}');
+        addGlobalStyle('.chat-moderation:nth-child(1n), .chat-moderation:nth-child(1n) {background-color: rgba(255, 0, 0, 0.09);}');
+        addGlobalStyle('.chat-skip:nth-child(1n), .chat-skip:nth-child(1n) {background-color: rgba(255, 0, 0, 0.09);}');
+        addGlobalStyle('.chat-emote:nth-child(2n), .chat-emote:nth-child(2n) {background-color: rgba(0, 0, 0, 0.45);}');
+    }
 
 }
 
