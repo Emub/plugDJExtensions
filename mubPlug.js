@@ -1,4 +1,4 @@
-var version = "1.898";
+var version = "1.899";
 var customGreen = "#5bd708";
 function initialize(){
 
@@ -492,26 +492,36 @@ function updateUserlist(){
         var userPara = $('<p>'); var userParaSpan = $('<span>'); var userParaImage = $('<img>'); var userParaName = $('<span>'); var userCurateImage = $('<img>');
         userParaName.html(users[usersWritten].username).attr("id", users[usersWritten].username + "Entry").attr("class", "userParaName").attr("onClick", "mentionName(this)");
         userPara.attr("class", "userListParagraph");
-        if(users[usersWritten].permission == 1){
-            userParaImage.attr("src", "http://i.imgur.com/g0KaaZK.png").attr("class", "imageSpan");
+        switch(users[usersWritten].permission){
+    	case 1:
+			userParaImage.attr("src", "http://i.imgur.com/nohDf9l.png").attr("class", "imageSpan");
             userParaSpan.append(userParaImage);
-        }
-        if(users[usersWritten].permission >= 2 && users[usersWritten].permission < 4){
-            userParaImage.attr("src", "http://i.imgur.com/aeEE6jF.png").attr("class", "imageSpan");
+		break;
+		case 2:
+			userParaImage.attr("src", "http://i.imgur.com/bW75HNL.png").attr("class", "imageSpan");
             userParaSpan.append(userParaImage);
-        }
-        if(users[usersWritten].permission >= 4 && users[usersWritten].permission < 9){
-            userParaImage.attr("src", "http://i.imgur.com/p2FzDNP.png").attr("class", "imageSpan");
+		break;
+		case 3:
+			userParaImage.attr("src", "http://i.imgur.com/v1cDyJV.png").attr("class", "imageSpan");
             userParaSpan.append(userParaImage);
-        }
-        if(users[usersWritten].permission == 9){
-            userParaImage.attr("src", "http://i.imgur.com/gEMSNwG.png").attr("class", "imageSpan");
+		break;
+		case 4:
+			userParaImage.attr("src", "http://i.imgur.com/mTLOMEi.png").attr("class", "imageSpan");
             userParaSpan.append(userParaImage);
-        }
-        if(users[usersWritten].permission > 9){
-            userParaImage.attr("src", "http://i.imgur.com/KkElZ14.png").attr("class", "imageSpan");
+		break;
+		case 5:
+			userParaImage.attr("src", "http://i.imgur.com/1gS3StB.png").attr("class", "imageSpan");
             userParaSpan.append(userParaImage);
-        }
+		break;
+		case 9:
+			userParaImage.attr("src", "http://i.imgur.com/gEMSNwG.png").attr("class", "imageSpan");
+            userParaSpan.append(userParaImage);
+		break;
+		case 10:
+			userParaImage.attr("src", "http://i.imgur.com/KkElZ14.png").attr("class", "imageSpan");
+            userParaSpan.append(userParaImage);
+		break;
+		}
         if(users[usersWritten].curated != false){
             userCurateImage.attr("src", "http://i.imgur.com/mYOM9qa.png").attr("class", "imageSpan").attr("id", "curateImage");
             userParaSpan.append(userCurateImage);
