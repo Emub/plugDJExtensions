@@ -1,5 +1,5 @@
-var version = "1.899";
-var customGreen = "#5bd708";
+var version = "1.900";
+var customGreen = "#5bd708"; var bassPlugBlue = "#58FAF4";
 function initialize(){
 
     var css = $('<link>');
@@ -52,6 +52,7 @@ function initialize(){
     var tableRow4   = $('<tr>');
     var tableRow5   = $('<tr>');
     var tableRow6   = $('<tr>');
+    var tableRow7   = $('<tr>');
     var tableData1  = $('<td>');
     var tableData2  = $('<td>');
     var tableData3  = $('<td>');
@@ -63,6 +64,8 @@ function initialize(){
     var tableData9  = $('<td>');
     var tableData10 = $('<td>');
     var tableData11 = $('<td>');
+    var tableData12 = $('<td>');
+    var tableData13 = $('<td>');
 
     var settingsButton       = $('<div>');
     settingsButton.html('Settings').attr("id", "settingsButton").attr("class", "divButton");
@@ -93,6 +96,12 @@ function initialize(){
 
     var fixUserListButton    = $('<div>');
     fixUserListButton.html(' - Refresh userlist').attr("id", "fixUserlistButton").attr("class", "divButton").attr("title", "Refreshes the userlist.");
+	
+	var joinAlertsButton     = $('<div>');
+	joinAlertsButton.attr("id", "joinAlertsButton").attr("class", "divButton").attr("title", "Toggles the user join alert feature");
+	
+	var leaveAlertsButton    = $('<div>');
+	leaveAlertsButton.attr("id", "leaveAlertsButton").attr("class", "divButton").attr("title", "Toggles the user leave alert feature");
 
     var halloButton          = $('<div>');
     halloButton.html('Set halloween avatar').attr("id", "setHalloAvatarButton").attr("class", "divButton").attr("title", "Sets your avatar to what you selected.");
@@ -133,15 +142,18 @@ function initialize(){
     tableData9.append(hideVideoButton);
     tableData10.append(upcomingAlertsButton);
     tableData11.append(curateAlertsButton);
+    tableData12.append(joinAlertsButton);
+    tableData13.append(leaveAlertsButton);
     tableRow1.append(tableData1).append(tableData2);
     tableRow2.append(tableData3).append(tableData4);
     tableRow3.append(tableData5).append(tableData6);
     tableRow4.append(tableData7).append(tableData8);
     tableRow5.append(tableData9).append(tableData10);
     tableRow6.append(tableData11);
+	tableRow7.append(tableData12).append(tableData13);
 
 
-    settingsWindowTable.append(tableRow1).append(tableRow2).append(tableRow3).append(tableRow4).append(tableRow5).append(tableRow6);
+    settingsWindowTable.append(tableRow1).append(tableRow2).append(tableRow3).append(tableRow4).append(tableRow5).append(tableRow6).append(tableRow7);
 
     UI.append(settingsButton);
 
@@ -257,6 +269,8 @@ mubOptions.userListShown  = false;
 mubOptions.upcomingAlerts = false;
 mubOptions.curateAlerts   = false;
 mubOptions.videoShown     = true;
+mubOptions.joinAlerts     = false;
+mubOptions.leaveAlerts    = true;
 
 mubMethods                = {};
 mubMethods.load           = function(){mubOptions = JSON.parse(localStorage.getItem("mubPlug"))};
@@ -281,6 +295,8 @@ function adaptToSettings(){
     mubOptions.upcomingAlerts ? $("#upcomingAlertsButton").html(" + Upcoming alerts") : $("#upcomingAlertsButton").html(" - Upcoming alerts");
     mubOptions.curateAlerts   ? $("#curateAlertsButton").html(" + Curate messages") : $("#curateAlertsButton").html(" - Curate messages");
     mubOptions.videoShown     ? $("#hideVideoButton").html(" - Hidden video") : $("#hideVideoButton").html(" + Hidden video");
+	mubOptions.joinAlerts     ? $("#joinAlertsButton").html(" + User join alerts") : $("#joinAlertsButton").html(" - User join alerts");
+	mubOptions.leaveAlerts    ? $("#leaveAlertsButton").html(" + User leave alerts") : $("#leaveAlertsButton").html(" - User leave alerts");
     if(mubOptions.userListShown){
         $("#mubPlug-userlist").css("display", "block");
         $("#mubPlug-userlist").animate({
@@ -308,6 +324,31 @@ function adaptToSettings(){
 }
 
 $("#firstRunExit").click(function(){ $("#firstRun").fadeOut(200);$("#firstRunExit").fadeOut(200); });
+
+$("#leaveAlertsButton").click(function(){
+	if(mubOptions.leaveAlerts){
+		mubOptions.leaveAlerts = false;
+		(this).html(" - User leave alerts");
+	}else{
+		mubOptions.leaveAlerts = true;
+		(this).html(" + User leave alerts");
+	}
+	return mubOptions.leaveAlerts;
+	mubMethods.save();
+});
+
+
+$("#joinAlertsButton").click(function(){
+	if(mubOptions.joinAlerts){
+		mubOptions.joinAlerts = false;
+		(this).html(" - User join alerts");
+	}else{
+		mubOptions.joinAlerts = true;
+		(this).html(" + User join alerts");
+	}
+	return mubOptions.joinAlerts;
+	mubMethods.save();
+});
 
 $("#autoWootButton").click(function(){
     if(mubOptions.autoWoot == true){
@@ -479,10 +520,24 @@ function sendChatUpdate(text, color, textcolor, id, link, cursor, clickToDelete,
 }
 
 API.on(API.HISTORY_UPDATE, checkStuff);
-API.on(API.USER_JOIN, updateUserlist);
+API.on(API.USER_JOIN, userJoin);
 API.on(API.USER_LEAVE, updateUserlist);
 API.on(API.VOTE_UPDATE, colorUserlist);
 API.on(API.CURATE_UPDATE, assignCurateIcon);
+
+function userJoin(user){
+	if(mubOptions.joinAlerts){
+		sendChatUpdate(user.username+" just joined the room!", "", bassPlugBlue);
+	}
+	updateUserlist();
+}
+
+function userLeave(user){
+	if(mubOptions.leaveAlerts){
+		sendChatUpdate(user.username+" just left the room!", "", bassPlugBlue);
+	}
+	updateUserlist();
+}
 
 function updateUserlist(){
     var users = API.getUsers();
