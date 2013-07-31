@@ -6,7 +6,7 @@ function initialize(){
     css.attr("href", "https://dl.dropboxusercontent.com/s/u23ngkl352o2eki/mubPlug.css").attr("rel", "stylesheet").attr("type", "text/css");
     $("head").append(css);
 
-    $('body').prepend('<div id="firstRun">Since it is the first time you\'re running mubPlug, your settings have not been setup yet. Simply click on the settings button (located on the booth) and set your desired options. These will always be saved unless you clear your browser\'s storage and you can change them at any time.<p> If you experience any bugs or have a request you can submit an issue to <a target="_blank" href="http://goo.gl/BPs1Lz">http://goo.gl/BPs1Lz</a>.</p> This message will not be shown again unless you clear your browser\'s storage. <p>- DerpTheBass</p></div>');
+    $('body').prepend('<div id="firstRun">Since it is the first time you\'re running mubPlug, your settings have not been setup yet. Simply click on the settings button (located on the booth) and set your desired options. These will always be saved unless you clear your browser\'s storage and you can change them at any time.<p> If you experience any bugs or have a request you can submit an issue to <a target="_blank" href="http://goo.gl/X0X6NN">http://goo.gl/X0X6NN</a>.</p> This message will not be shown again unless you clear your browser\'s storage. <p>- DerpTheBass</p></div>');
     $('body').prepend('<div id="firstRunExit">X</div>');
 
     var chatPosition     = $("#chat").position();
@@ -154,7 +154,7 @@ function initialize(){
     settingsWindow.append(settingsWindowHeader).append(settingsWindowTable);
     $("#overlay-container").append(settingsWindow);
 
-    }
+}
 
 initialize();
 
@@ -738,11 +738,11 @@ function chatCommand(value){
         case "/rsb":
             $("#settingsButton").remove();
             break;
-    		
-		case "/ss":
-			mubMethods.save();
-			sendChatUpdate("Settings saved", "", "white");
-		break;
+
+        case "/ss":
+            mubMethods.save();
+            sendChatUpdate("Settings saved", "", "white");
+            break;
 
         default:
             sendChatUpdate("This was not recognized as a command!", "", "red");
@@ -792,13 +792,13 @@ $("#commandsLink").click(function(){
 });
 
 setTimeout(function(){
-var user = API.getUser();
-switch(user.id){
-    case "50aeb07e96fba52c3ca04ca8":
-        sendChatUpdate("SUP DERP!?! (Nice update you made there! :D)", "", "pink", "", "", "pointer", true, false);
-        break;
+    var user = API.getUser();
+    switch(user.id){
+        case "50aeb07e96fba52c3ca04ca8":
+            sendChatUpdate("SUP DERP!?!", "", "pink", "", "", "pointer", true, false);
+            break;
 
-    case "50aeaf683e083e18fa2d187e":
-        sendChatUpdate("Hallo mastar!!", "", "pink", "", "", "pointer", true, false);
-        break;
-}}, 10000);
+        case "50aeaf683e083e18fa2d187e":
+            sendChatUpdate("Hallo mastar!!", "", "pink", "", "", "pointer", true, false);
+            break;
+    }}, 10000);
