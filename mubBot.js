@@ -9,6 +9,7 @@ var AP = new Array(); // short for authorized people.
 var HAP = new Array(); // short for half authorized people array.
 var swears = new Array(); var tacos = new Array(); var racism = new Array();
 var mentionedPosition; var mentionedName; var mentioned; var cooldownPeriod = 5000;
+var joined = new Date().getTime();
 
 tacos[0] = "crispy taco";
 tacos[1] = "mexican taco";
@@ -361,10 +362,11 @@ function recieveMessage(data){
 			
 			case "status":
 				var response = "";
+				var elapsed = new Date().getTime() - joined;
 				swearFilter ? response = "Swear filter is enabled. - " : response = "Swear filter is disabled. - ";
 				racismFilter ? response = response + "Racism filter is enabled. - " : response = response + "Racism filter is disabled. - ";
 				beggerFilter ? response = response + "Begger filter is enabled." : response = response + "Begger filter is disabled.";
-				API.sendChat(response);
+				API.sendChat("Running for "+Math.round(elapsed/100000)+" minutes. - "+response);
 			break;
 			
 			case "cooldown":
