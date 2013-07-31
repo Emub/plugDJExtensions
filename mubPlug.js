@@ -138,7 +138,7 @@ function initialize(){
     var halloOption12 = $('<option>'); halloOption12.html("Female wolf").attr("value", "12");
     var halloOption13 = $('<option>'); halloOption13.html("Disco zombie").attr("value", "13");
 
-    UI.html('').attr("id", "mubPlugUI").css("position", "absolute").css("left", UIPosition).css("font-family", "Calibri").css("top", 647).css("z-index", "8");
+    UI.attr("id", "mubPlugUI").css("left", UIPosition);
 
     var windowWidth = $(window).width();
     var settingsPositionLeft = windowWidth - 800;
@@ -178,7 +178,7 @@ function initialize(){
     userListHeader.append(userListHeaderTitle).append(userlistHideButton);
     userList.append(userListHeader).append(usersPara).append(waitlistPara).append(userListDiv);
 
-    $("body").append(UI).append(userList).css("font-family", "calibri");
+    $("body").append(UI).append(userList);
 
     settingsWindowHeader.append(settingsWindowHeaderTitle).append(settingsWindowCloseButton);
     settingsWindow.append(settingsWindowHeader).append(settingsWindowTable);
