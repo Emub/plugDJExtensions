@@ -1,4 +1,4 @@
-var version = "1.901";
+var version = "1.902";
 var customGreen = "#5bd708"; var bassPlugBlue = "#58FAF4";
 function initialize(){
 
@@ -66,6 +66,7 @@ function initialize(){
     var tableData11 = $('<td>');
     var tableData12 = $('<td>');
     var tableData13 = $('<td>');
+    var tableData14 = $('<td>');
 
     var settingsButton       = $('<div>');
     settingsButton.html('Settings').attr("id", "settingsButton").attr("class", "divButton");
@@ -102,6 +103,9 @@ function initialize(){
 	
 	var leaveAlertsButton    = $('<div>');
 	leaveAlertsButton.attr("id", "leaveAlertsButton").attr("class", "divButton").attr("title", "Toggles the user leave alert feature");
+	
+	var autoHideButton       = $('<div>');
+	autoHideButton.attr("id", "autoHideButton").attr("class", "divButton").attr("title", "Toggles the user list auto hide feature");
 
     var halloButton          = $('<div>');
     halloButton.html('Set halloween avatar').attr("id", "setHalloAvatarButton").attr("class", "divButton").attr("title", "Sets your avatar to what you selected.");
@@ -144,12 +148,13 @@ function initialize(){
     tableData11.append(curateAlertsButton);
     tableData12.append(joinAlertsButton);
     tableData13.append(leaveAlertsButton);
+    tableData14.append(autoHideButton);
     tableRow1.append(tableData1).append(tableData2);
     tableRow2.append(tableData3).append(tableData4);
     tableRow3.append(tableData5).append(tableData6);
     tableRow4.append(tableData7).append(tableData8);
     tableRow5.append(tableData9).append(tableData10);
-    tableRow6.append(tableData11);
+    tableRow6.append(tableData11).append(tableData14);
 	tableRow7.append(tableData12).append(tableData13);
 
 
@@ -270,7 +275,8 @@ mubOptions.upcomingAlerts = false;
 mubOptions.curateAlerts   = false;
 mubOptions.videoShown     = true;
 mubOptions.joinAlerts     = false;
-mubOptions.leaveAlerts    = true;
+mubOptions.leaveAlerts    = false;
+mubOptions.autoHide       = false;
 
 mubMethods                = {};
 mubMethods.load           = function(){mubOptions = JSON.parse(localStorage.getItem("mubPlug"))};
@@ -297,6 +303,7 @@ function adaptToSettings(){
     mubOptions.videoShown     ? $("#hideVideoButton").html(" - Hidden video") : $("#hideVideoButton").html(" + Hidden video");
 	mubOptions.joinAlerts     ? $("#joinAlertsButton").html(" + User join alerts") : $("#joinAlertsButton").html(" - User join alerts");
 	mubOptions.leaveAlerts    ? $("#leaveAlertsButton").html(" + User leave alerts") : $("#leaveAlertsButton").html(" - User leave alerts");
+	mubOptions.autoHide       ? $("#autoHideButton").html(" + Auto hide user list") : $("#autoHideButton").html(" - Auto hide user list");
     if(mubOptions.userListShown){
         $("#mubPlug-userlist").css("display", "block");
         $("#mubPlug-userlist").animate({
@@ -324,6 +331,46 @@ function adaptToSettings(){
 }
 
 $("#firstRunExit").click(function(){ $("#firstRun").fadeOut(200);$("#firstRunExit").fadeOut(200); });
+
+$("#autoHideButton").click(function(){
+	if(mubOptions.autoHide){
+		mubOptions.autoHide = false;
+		$(this).html(" - Auto hide user list");
+		$("#mubPlug-userlist").animate({
+            left: 0
+        }, 100, function(){
+        });
+	}else{
+		mubOptions.autoHide = true;
+		$(this).html(" + Auto hide user list");
+		$("#mubPlug-userlist").animate({
+            left: -180
+        }, 100, function(){
+        });
+	}
+});
+
+$("#mubPlug-userlist").mouseover(function(){
+	if(mubOptions.autoHide){
+		$(this).animate({
+			left: 0
+		}, 100, function(){
+			//Animated and is now almost hidden
+		});
+	}
+});
+
+$("#mubPlug-userlist").mouseout(function(){
+	if(mubOptions.autoHide){
+		setTimeout(function(){
+			$(this).animate({
+				left: -180
+			}, 100, function(){
+				//Animated and is now almost hidden
+			});
+		}, 4000);
+	}
+});
 
 $("#leaveAlertsButton").click(function(){
 	if(mubOptions.leaveAlerts){
@@ -557,7 +604,7 @@ function updateUserlist(){
             userParaSpan.append(userParaImage);
 		break;
 		case 3:
-			userParaImage.attr("src", "http://i.imgur.com/v1cDyJV.png").attr("class", "imageSpan");
+			userParaImage.attr("src", "http://i.imgur.com/PpHziJF.png").attr("class", "imageSpan");
             userParaSpan.append(userParaImage);
 		break;
 		case 4:
