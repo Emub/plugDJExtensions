@@ -1,4 +1,4 @@
-var version = "0.009";
+var version = "0.010";
 var botName = API.getUser().username;
 var botNameMention = "@" + botName;
 var command = false;
@@ -147,9 +147,7 @@ function recieveMessage(data){
 	if(command){
 		chatCommand = data.message.substring(1);
 		var commands = chatCommand.split(" ");
-		if(commands[1] === null){
-		commands[1] = false;
-		}
+		commands.push("undefined");
 		if(ready){
 		switch(commands[0].toLowerCase()){
 			case "history":
@@ -301,7 +299,7 @@ function recieveMessage(data){
 			break;
 			
 			case "taco":
-				if(commands[1].indexOf("@") > -1 && commands[1] !== false){
+				if(commands[1].indexOf("@") > -1 && commands[1] !== "undefined"){
 				var mentioned = commands[1].substring(1);
 					var randomNumber = Math.floor(Math.random() * (tacos.length - 1));
 					var randomNumber2 = Math.floor(Math.random() * 3);
