@@ -1,4 +1,4 @@
-var version = "1.902";
+var version = "1.904";
 var customGreen = "#5bd708"; var bassPlugBlue = "#58FAF4";
 function initialize(){
 
