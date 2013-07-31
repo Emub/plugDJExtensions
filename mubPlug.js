@@ -328,6 +328,13 @@ function adaptToSettings(){
         });
         $(this).html(" + Hidden video");
     }
+	if(mubOptions.autoHide){
+		$("#mubPlug-userlist").animate({
+			left: -180
+		}, 100, function(){
+			//Animated and is now almost hidden
+		});
+	}
 }
 
 $("#firstRunExit").click(function(){ $("#firstRun").fadeOut(200);$("#firstRunExit").fadeOut(200); });
@@ -368,7 +375,7 @@ $("#mubPlug-userlist").mouseout(function(){
 			}, 100, function(){
 				//Animated and is now almost hidden
 			});
-		}, 4000);
+		}, 800);
 	}
 });
 
