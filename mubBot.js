@@ -1,4 +1,4 @@
-var version = "0.007";
+var version = "0.008";
 var botName = API.getUser().username;
 var botNameMention = "@" + botName;
 var command = false;
@@ -298,7 +298,7 @@ function recieveMessage(data){
 			break;
 			
 			case "taco":
-				if(commands[1].indexOf("@") > -1){
+				if(commands[1] !== null && commands[1].indexOf("@") > -1){
 				var mentioned = commands[1].substring(1);
 					var randomNumber = Math.floor(Math.random() * (tacos.length - 1));
 					var randomNumber2 = Math.floor(Math.random() * 3);
@@ -396,6 +396,8 @@ function recieveMessage(data){
 		}
 		
 	}
+	ready = false;
+	setTimeout(function(){ ready = true; }, cooldownPeriod);
 }
 
 API.sendChat("Running mubBot version "+version);
