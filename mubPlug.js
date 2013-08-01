@@ -1,4 +1,4 @@
-var version = "1.907";
+var version = "1.908";
 var customGreen = "#5bd708"; var bassPlugBlue = "#58FAF4";
 function initialize(){
 
@@ -524,6 +524,7 @@ $("#userListButton").click(function(){
         $("#mubPlug-userlist").animate({
             left: 0
         }, 800, function(){
+			updateUserlist();
         });
     }
     mubMethods.save();
@@ -626,6 +627,7 @@ function userLeave(user){
 }
 
 function updateUserlist(){
+	if(mubOptions.userListShown){
     var users = API.getUsers();
     $("#userListDiv").html("");
     $("#usersPara").html( users.length + " users in room");
@@ -675,6 +677,7 @@ function updateUserlist(){
     }
     colorUserlist();
     updateWaitlistPara();
+}
 }
 
 function colorUserlist(obj){
