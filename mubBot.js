@@ -1,4 +1,4 @@
-var version = "0.011";
+var version = "0.012";
 var botName = API.getUser().username;
 var botNameMention = "@" + botName;
 var command = false;
@@ -8,7 +8,7 @@ var chatCommand, authorized, HA, noAccess;
 var AP = new Array(); // short for authorized people.
 var HAP = new Array(); // short for half authorized people array.
 var swears = new Array(); var tacos = new Array(); var racism = new Array();
-var mentionedPosition; var mentionedName; var mentioned; var cooldownPeriod = 5000;
+var mentionedPosition; var mentionedName; var mentioned; var cooldownPeriod = 5000; var maxLength = 12; //measured in minutes
 var joined = new Date().getTime();
 
 tacos[0] = "crispy taco";
@@ -47,10 +47,15 @@ racism[5] = "nizzle";
 
 API.on(API.HISTORY_UPDATE, historyUpdate);
 function historyUpdate(){
-  if(testHistory() > 1 && historySkip){
+	var song = API.getMedia();
+	if(testHistory() > 1 && historySkip){
 		API.moderateForceSkip();
 		API.sendChat("This song was skipped because it was in the history.");
 		woot();
+	}
+	if(song.duration > maxLength * 60){
+		API.moderateForceSkip();
+		API.sendChat("Max playtime is " + maxLength + " minutes, sorry.");
 	}
 }
 
@@ -110,6 +115,7 @@ function woot(){
 	setTimeout(function(){
 		$("#button-vote-positive").click();
 	}, 10000);
+	historyUpdate();
 }
 
 // ---------------- Chat commands ----------------
@@ -378,6 +384,9 @@ function recieveMessage(data){
 				if(commands[1]==="disable"){
 					cooldownPeriod = 1;
 					API.sendChat("Cooldown disabled");
+				}
+				if(commands[1] === "undefined"){
+					API.sendChat("The cooldown period is " + cooldownPeriod / 1000 + " seconds.");
 				}else{
 					cooldownPeriod = commands[1] * 1000;
 					API.sendChat("New cooldown period is now " + cooldownPeriod / 1000 + " seconds.");
@@ -387,9 +396,25 @@ function recieveMessage(data){
 				API.sendChat("You need level 9001 bot control to use this command!");
 			}
 			break;
-				
+			
+			case "maxlength":
+			if(authorized){
+				if(commands[1]==="disable"){
+					maxLength = 9999999;
+					API.sendChat("Max song length is now disabled");
+				}
+				if(commands[1] === "undefined"){
+					API.sendChat("The current max song length is " + maxLength + " minutes.");
+				}else{
+					maxLength = commands[1];
+					API.sendChat("Max song length set to " + maxLength + " minutes.");
+					return maxLength;
+				}
+			}
+			break;
 		}
 		}else{
+			console.log("Cooldown not ready.");
 			if(commands[0] === "cooldown" && authorized){
 				if(commands[1]==="disable"){
 					cooldownPeriod = 1;
