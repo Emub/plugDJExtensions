@@ -1,4 +1,4 @@
-var version = "1.908";
+var version = "1.909";
 var customGreen = "#5bd708"; var bassPlugBlue = "#58FAF4";
 function initialize(){
 
@@ -21,8 +21,8 @@ function initialize(){
 
     var userListHeaderTitle = $('<span>');
     userListHeaderTitle.html('User List');
-	
-	var userlistHideButton = $('<div>');
+
+    var userlistHideButton = $('<div>');
     userlistHideButton.attr("class", "dialog-close-button").attr("id", "userlistHideButton");
 
     var usersPara                 = $('<p>');
@@ -72,9 +72,9 @@ function initialize(){
     var tableData13 = $('<td>');
     var tableData14 = $('<td>');
     var tableData15 = $('<td>');
-	
-	tableRow8.css("vertical-align", "bottom");
-	tableData15.attr("colspan", "2");
+
+    tableRow8.css("vertical-align", "bottom");
+    tableData15.attr("colspan", "2");
 
     var settingsButton       = $('<div>');
     settingsButton.html('Settings').attr("id", "settingsButton").attr("class", "divButton");
@@ -105,18 +105,18 @@ function initialize(){
 
     var fixUserListButton    = $('<div>');
     fixUserListButton.html(' - Refresh userlist').attr("id", "fixUserlistButton").attr("class", "divButton").attr("title", "Refreshes the userlist.");
-	
-	var joinAlertsButton     = $('<div>');
-	joinAlertsButton.attr("id", "joinAlertsButton").attr("class", "divButton").attr("title", "Toggles the user join alert feature");
-	
-	var leaveAlertsButton    = $('<div>');
-	leaveAlertsButton.attr("id", "leaveAlertsButton").attr("class", "divButton").attr("title", "Toggles the user leave alert feature");
-	
-	var autoHideButton       = $('<div>');
-	autoHideButton.attr("id", "autoHideButton").attr("class", "divButton").attr("title", "Toggles the user list auto hide feature");
-	
-	var recommendedButton    = $('<div>');
-	recommendedButton.html(" - Recommended settings").attr("class", "divButton").attr("id", "recommendedButton").attr("title", "Set's your settings to what the creators of mubPlug recommend");
+
+    var joinAlertsButton     = $('<div>');
+    joinAlertsButton.attr("id", "joinAlertsButton").attr("class", "divButton").attr("title", "Toggles the user join alert feature");
+
+    var leaveAlertsButton    = $('<div>');
+    leaveAlertsButton.attr("id", "leaveAlertsButton").attr("class", "divButton").attr("title", "Toggles the user leave alert feature");
+
+    var autoHideButton       = $('<div>');
+    autoHideButton.attr("id", "autoHideButton").attr("class", "divButton").attr("title", "Toggles the user list auto hide feature");
+
+    var recommendedButton    = $('<div>');
+    recommendedButton.html(" - Recommended settings").attr("class", "divButton").attr("id", "recommendedButton").attr("title", "Set's your settings to what the creators of mubPlug recommend");
 
     var halloButton          = $('<div>');
     halloButton.html('Set halloween avatar').attr("id", "setHalloAvatarButton").attr("class", "divButton").attr("title", "Sets your avatar to what you selected.");
@@ -290,10 +290,12 @@ mubOptions.videoShown     = true;
 mubOptions.joinAlerts     = false;
 mubOptions.leaveAlerts    = false;
 mubOptions.autoHide       = false;
+mubOptions.debug          = false;
 
 mubMethods                = {};
 mubMethods.load           = function(){mubOptions = JSON.parse(localStorage.getItem("mubPlug"))};
 mubMethods.save           = function(){localStorage.setItem("mubPlug", JSON.stringify(mubOptions))};
+mubMethods.Debug          = function(a){console.log("[mubPlug "+version+"]"+" "+a);};
 
 if(localStorage.getItem("mubPlug") !== null){
     mubMethods.load();
@@ -314,9 +316,9 @@ function adaptToSettings(){
     mubOptions.upcomingAlerts ? $("#upcomingAlertsButton").html(" + Upcoming alerts") : $("#upcomingAlertsButton").html(" - Upcoming alerts");
     mubOptions.curateAlerts   ? $("#curateAlertsButton").html(" + Curate messages") : $("#curateAlertsButton").html(" - Curate messages");
     mubOptions.videoShown     ? $("#hideVideoButton").html(" - Hidden video") : $("#hideVideoButton").html(" + Hidden video");
-	mubOptions.joinAlerts     ? $("#joinAlertsButton").html(" + User join alerts") : $("#joinAlertsButton").html(" - User join alerts");
-	mubOptions.leaveAlerts    ? $("#leaveAlertsButton").html(" + User leave alerts") : $("#leaveAlertsButton").html(" - User leave alerts");
-	mubOptions.autoHide       ? $("#autoHideButton").html(" + Auto hide user list") : $("#autoHideButton").html(" - Auto hide user list");
+    mubOptions.joinAlerts     ? $("#joinAlertsButton").html(" + User join alerts") : $("#joinAlertsButton").html(" - User join alerts");
+    mubOptions.leaveAlerts    ? $("#leaveAlertsButton").html(" + User leave alerts") : $("#leaveAlertsButton").html(" - User leave alerts");
+    mubOptions.autoHide       ? $("#autoHideButton").html(" + Auto hide user list") : $("#autoHideButton").html(" - Auto hide user list");
     if(mubOptions.userListShown){
         $("#mubPlug-userlist").css("display", "block");
         $("#mubPlug-userlist").animate({
@@ -341,99 +343,99 @@ function adaptToSettings(){
         });
         $(this).html(" + Hidden video");
     }
-	if(mubOptions.autoHide){
-		$("#mubPlug-userlist").animate({
-			left: -180
-		}, 100, function(){
-			//Animated and is now almost hidden
-		});
-	}
+    if(mubOptions.autoHide){
+        $("#mubPlug-userlist").animate({
+            left: -180
+        }, 100, function(){
+            //Animated and is now almost hidden
+        });
+    }
 }
 
 $("#userlistHideButton").click(function(){
-	$("#userListButton").click();
+    $("#userListButton").click();
 });
 
 $("#recommendedButton").click(function(){
-	mubOptions.autoWoot = true;
-	mubOptions.autoQueue = false;
-	mubOptions.historyAlerts = true;
-	mubOptions.speakingUp = false;
-	mubOptions.userListShown = true;
-	mubOptions.upcomingAlerts = true;
-	mubOptions.curateAlerts = false;
-	mubOptions.videoShown = true;
-	mubOptions.joinAlerts = true;
-	mubOptions.leaveAlerts = true;
-	mubOptions.autoHide = false;
-	adaptToSettings();
+    mubOptions.autoWoot = true;
+    mubOptions.autoQueue = false;
+    mubOptions.historyAlerts = true;
+    mubOptions.speakingUp = false;
+    mubOptions.userListShown = true;
+    mubOptions.upcomingAlerts = true;
+    mubOptions.curateAlerts = false;
+    mubOptions.videoShown = true;
+    mubOptions.joinAlerts = true;
+    mubOptions.leaveAlerts = true;
+    mubOptions.autoHide = false;
+    adaptToSettings();
 });
 
 $("#firstRunExit").click(function(){ $("#firstRun").fadeOut(200);$("#firstRunExit").fadeOut(200); });
 
 $("#autoHideButton").click(function(){
-	if(mubOptions.autoHide){
-		mubOptions.autoHide = false;
-		$(this).html(" - Auto hide user list");
-		$("#mubPlug-userlist").animate({
+    if(mubOptions.autoHide){
+        mubOptions.autoHide = false;
+        $(this).html(" - Auto hide user list");
+        $("#mubPlug-userlist").animate({
             left: 0
         }, 100, function(){
         });
-	}else{
-		mubOptions.autoHide = true;
-		$(this).html(" + Auto hide user list");
-		$("#mubPlug-userlist").animate({
+    }else{
+        mubOptions.autoHide = true;
+        $(this).html(" + Auto hide user list");
+        $("#mubPlug-userlist").animate({
             left: -180
         }, 100, function(){
         });
-	}
+    }
 });
 
 $("#mubPlug-userlist").mouseover(function(){
-	if(mubOptions.autoHide){
-		$(this).animate({
-			left: 0
-		}, 100, function(){
-			//Animated and is now almost hidden
-		});
-	}
+    if(mubOptions.autoHide){
+        $(this).animate({
+            left: 0
+        }, 100, function(){
+            //Animated and is now almost hidden
+        });
+    }
 });
 
 $("#mubPlug-userlist").mouseout(function(){
-	if(mubOptions.autoHide){
-		setTimeout(function(){
-			$("#mubPlug-userlist").animate({
-				left: -180
-			}, 100, function(){
-				//Animated and is now almost hidden
-			});
-		}, 800);
-	}
+    if(mubOptions.autoHide){
+        setTimeout(function(){
+            $("#mubPlug-userlist").animate({
+                left: -180
+            }, 100, function(){
+                //Animated and is now almost hidden
+            });
+        }, 800);
+    }
 });
 
 $("#leaveAlertsButton").click(function(){
-	if(mubOptions.leaveAlerts){
-		mubOptions.leaveAlerts = false;
-		$(this).html(" - User leave alerts");
-	}else{
-		mubOptions.leaveAlerts = true;
-		$(this).html(" + User leave alerts");
-	}
-	return mubOptions.leaveAlerts;
-	mubMethods.save();
+    if(mubOptions.leaveAlerts){
+        mubOptions.leaveAlerts = false;
+        $(this).html(" - User leave alerts");
+    }else{
+        mubOptions.leaveAlerts = true;
+        $(this).html(" + User leave alerts");
+    }
+    return mubOptions.leaveAlerts;
+    mubMethods.save();
 });
 
 
 $("#joinAlertsButton").click(function(){
-	if(mubOptions.joinAlerts){
-		mubOptions.joinAlerts = false;
-		$(this).html(" - User join alerts");
-	}else{
-		mubOptions.joinAlerts = true;
-		$(this).html(" + User join alerts");
-	}
-	return mubOptions.joinAlerts;
-	mubMethods.save();
+    if(mubOptions.joinAlerts){
+        mubOptions.joinAlerts = false;
+        $(this).html(" - User join alerts");
+    }else{
+        mubOptions.joinAlerts = true;
+        $(this).html(" + User join alerts");
+    }
+    return mubOptions.joinAlerts;
+    mubMethods.save();
 });
 
 $("#autoWootButton").click(function(){
@@ -524,7 +526,7 @@ $("#userListButton").click(function(){
         $("#mubPlug-userlist").animate({
             left: 0
         }, 800, function(){
-			updateUserlist();
+            updateUserlist();
         });
     }
     mubMethods.save();
@@ -613,71 +615,71 @@ API.on(API.VOTE_UPDATE, colorUserlist);
 API.on(API.CURATE_UPDATE, assignCurateIcon);
 
 function userJoin(user){
-	if(mubOptions.joinAlerts){
-		sendChatUpdate(user.username+" just joined the room!", "", bassPlugBlue);
-	}
-	updateUserlist();
+    if(mubOptions.joinAlerts){
+        sendChatUpdate(user.username+" just joined the room!", "", bassPlugBlue);
+    }
+    updateUserlist();
 }
 
 function userLeave(user){
-	if(mubOptions.leaveAlerts){
-		sendChatUpdate(user.username+" just left the room!", "", bassPlugBlue);
-	}
-	updateUserlist();
+    if(mubOptions.leaveAlerts){
+        sendChatUpdate(user.username+" just left the room!", "", bassPlugBlue);
+    }
+    updateUserlist();
 }
 
 function updateUserlist(){
-	if(mubOptions.userListShown){
-    var users = API.getUsers();
-    $("#userListDiv").html("");
-    $("#usersPara").html( users.length + " users in room");
-    for(var usersWritten = 0; usersWritten < users.length; usersWritten++){
-        var userPara = $('<p>'); var userParaSpan = $('<span>'); var userParaImage = $('<img>'); var userParaName = $('<span>'); var userCurateImage = $('<img>');
-        userParaName.html(users[usersWritten].username).attr("id", users[usersWritten].username + "Entry").attr("class", "userParaName").attr("onClick", "mentionName(this)");
-        userPara.attr("class", "userListParagraph");
-        switch(users[usersWritten].permission){
-    	case 1:
-			userParaImage.attr("src", "http://i.imgur.com/nohDf9l.png").attr("class", "imageSpan");
-            userParaSpan.append(userParaImage);
-		break;
-		case 2:
-			userParaImage.attr("src", "http://i.imgur.com/bW75HNL.png").attr("class", "imageSpan");
-            userParaSpan.append(userParaImage);
-		break;
-		case 3:
-			userParaImage.attr("src", "http://i.imgur.com/PpHziJF.png").attr("class", "imageSpan");
-            userParaSpan.append(userParaImage);
-		break;
-		case 4:
-			userParaImage.attr("src", "http://i.imgur.com/mTLOMEi.png").attr("class", "imageSpan");
-            userParaSpan.append(userParaImage);
-		break;
-		case 5:
-			userParaImage.attr("src", "http://i.imgur.com/1gS3StB.png").attr("class", "imageSpan");
-            userParaSpan.append(userParaImage);
-		break;
-		case 9:
-			userParaImage.attr("src", "http://i.imgur.com/gEMSNwG.png").attr("class", "imageSpan");
-            userParaSpan.append(userParaImage);
-		break;
-		case 10:
-			userParaImage.attr("src", "http://i.imgur.com/KkElZ14.png").attr("class", "imageSpan");
-            userParaSpan.append(userParaImage);
-		break;
-		}
-        if(users[usersWritten].curated != false){
-            userCurateImage.attr("src", "http://i.imgur.com/mYOM9qa.png").attr("class", "imageSpan").attr("id", "curateImage");
-            userParaSpan.append(userCurateImage);
-        }else{
-            userCurateImage.remove();
+    if(mubOptions.userListShown){
+        var users = API.getUsers();
+        $("#userListDiv").html("");
+        $("#usersPara").html( users.length + " users in room");
+        for(var usersWritten = 0; usersWritten < users.length; usersWritten++){
+            var userPara = $('<p>'); var userParaSpan = $('<span>'); var userParaImage = $('<img>'); var userParaName = $('<span>'); var userCurateImage = $('<img>');
+            userParaName.html(users[usersWritten].username).attr("id", users[usersWritten].username + "Entry").attr("class", "userParaName").attr("onClick", "mentionName(this)");
+            userPara.attr("class", "userListParagraph");
+            switch(users[usersWritten].permission){
+                case 1:
+                    userParaImage.attr("src", "http://i.imgur.com/nohDf9l.png").attr("class", "imageSpan");
+                    userParaSpan.append(userParaImage);
+                    break;
+                case 2:
+                    userParaImage.attr("src", "http://i.imgur.com/bW75HNL.png").attr("class", "imageSpan");
+                    userParaSpan.append(userParaImage);
+                    break;
+                case 3:
+                    userParaImage.attr("src", "http://i.imgur.com/PpHziJF.png").attr("class", "imageSpan");
+                    userParaSpan.append(userParaImage);
+                    break;
+                case 4:
+                    userParaImage.attr("src", "http://i.imgur.com/mTLOMEi.png").attr("class", "imageSpan");
+                    userParaSpan.append(userParaImage);
+                    break;
+                case 5:
+                    userParaImage.attr("src", "http://i.imgur.com/1gS3StB.png").attr("class", "imageSpan");
+                    userParaSpan.append(userParaImage);
+                    break;
+                case 9:
+                    userParaImage.attr("src", "http://i.imgur.com/gEMSNwG.png").attr("class", "imageSpan");
+                    userParaSpan.append(userParaImage);
+                    break;
+                case 10:
+                    userParaImage.attr("src", "http://i.imgur.com/KkElZ14.png").attr("class", "imageSpan");
+                    userParaSpan.append(userParaImage);
+                    break;
+            }
+            if(users[usersWritten].curated != false){
+                userCurateImage.attr("src", "http://i.imgur.com/mYOM9qa.png").attr("class", "imageSpan").attr("id", "curateImage");
+                userParaSpan.append(userCurateImage);
+            }else{
+                userCurateImage.remove();
+            }
+            userParaSpan.attr("id", users[usersWritten].username + "Span").append(userParaName);
+            userPara.append(userParaSpan);
+            $("#userListDiv").append(userPara);
         }
-        userParaSpan.attr("id", users[usersWritten].username + "Span").append(userParaName);
-        userPara.append(userParaSpan);
-        $("#userListDiv").append(userPara);
+        colorUserlist();
+        updateWaitlistPara();
     }
-    colorUserlist();
-    updateWaitlistPara();
-}
 }
 
 function colorUserlist(obj){
@@ -990,3 +992,5 @@ setTimeout(function(){
             sendChatUpdate("Hallo mastar!!", "", "pink", "", "", "pointer", true, false);
             break;
     }}, 10000);
+
+checkStuff()
