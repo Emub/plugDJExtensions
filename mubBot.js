@@ -34,6 +34,7 @@ tacos[9] = "gross taco";
 AP[0] = "50aeaf683e083e18fa2d187e"; //Emub
 AP[1] = "50aeb19a96fba52c3ca07ca4"; //Queen
 AP[2] = "50aeb07e96fba52c3ca04ca8"; // DerpTheBass
+AP[3] = "50aeb607c3b97a2cb4c35ac1" // [#808]
 
 HAP[0] = "51f6c5c896fba549233faa8a"; // John
 
@@ -406,7 +407,7 @@ function recieveMessage(data){
 			}
 			break;
 			
-			case "mubBot.settings.maxLength":
+			case "maxlength":
 			if(authorized){
 				if(commands[1]==="disable"){
 					mubBot.settings.maxLength = 9999999;
@@ -454,7 +455,7 @@ function recieveMessage(data){
 		}
 		
 		// fan beggers
-		if(data.message.toLowerCase().indexOf("fan me") > -1 || data.message.toLowerCase().indexOf("fan 4 fan") > -1 || data.message.toLowerCase().indexOf("fan4fan") > -1){
+		if(data.message.toLowerCase().indexOf("fan me") > -1 || data.message.toLowerCase().indexOf("fan 4 fan") > -1 || data.message.toLowerCase().indexOf("fan4fan") > -1 || data.message.toLowerCase().indexOf("fans please") > -1 || data.message.toLowerCase().indexOf("fanpls") > -1 || data.message.toLowerCase().indexOf("fans pls") > -1){
 			if(mubBot.filters.begging){
 				API.moderateDeleteChat(data.chatID);
 				API.sendChat("@" + data.from + " Please don't ask for fans.");
