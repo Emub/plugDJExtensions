@@ -1,15 +1,24 @@
-var version = "0.012";
+var version = "0.013";
 var botName = API.getUser().username;
 var botNameMention = "@" + botName;
 var command = false;
-var historySkip = true;
-var swearFilter = true; var racismFilter = true; var beggerFilter = true; var ready = true;
+var ready = true;
 var chatCommand, authorized, HA, noAccess;
 var AP = new Array(); // short for authorized people.
 var HAP = new Array(); // short for half authorized people array.
 var swears = new Array(); var tacos = new Array(); var racism = new Array();
-var mentionedPosition; var mentionedName; var mentioned; var cooldownPeriod = 5000; var maxLength = 12; //measured in minutes
+var mentionedPosition; var mentionedName; var mentioned;
 var joined = new Date().getTime();
+
+var mubBot = {};
+mubBot.filters = {};
+mubBot.settings = {};
+mubBot.filters.swearing = true;
+mubBot.filters.racism = true;
+mubBot.filters.begging = true;
+mubBot.settings.coolDown = 5000;
+mubBot.settings.maxLength = 12; // measured in minutes
+mubBot.settings.historySkip = true;
 
 tacos[0] = "crispy taco";
 tacos[1] = "mexican taco";
@@ -48,14 +57,14 @@ racism[5] = "nizzle";
 API.on(API.HISTORY_UPDATE, historyUpdate);
 function historyUpdate(){
 	var song = API.getMedia();
-	if(testHistory() > 1 && historySkip){
+	if(testHistory() > 1 && mubBot.settings.historySkip){
 		API.moderateForceSkip();
 		API.sendChat("This song was skipped because it was in the history.");
 		woot();
 	}
-	if(song.duration > maxLength * 60){
+	if(song.duration > mubBot.settings.maxLength * 60){
 		API.moderateForceSkip();
-		API.sendChat("Max playtime is " + maxLength + " minutes, sorry.");
+		API.sendChat("Max playtime is " + mubBot.settings.maxLength + " minutes, sorry.");
 	}
 }
 
@@ -225,30 +234,30 @@ function recieveMessage(data){
 			break;
 			
 			case "history filter":
-				historySkip ? API.sendChat("History filter is enabled") : API.sendChat("History filter is disabled");
+				mubBot.settings.historySkip ? API.sendChat("History filter is enabled") : API.sendChat("History filter is disabled");
 			break;
 			
 			case "swear filter":
-				swearFilter ? API.sendChat("Swearing filter is enabled") : API.sendChat("Swearing filter is disabled");
+				mubBot.filters.swearing ? API.sendChat("Swearing filter is enabled") : API.sendChat("Swearing filter is disabled");
 			break;
 			
 			case "racism filter":
-				racismFilter ? API.sendChat("Racism filter is enabled") : API.sendChat("Racism filter is disabled");
+				mubBot.filters.racism ? API.sendChat("Racism filter is enabled") : API.sendChat("Racism filter is disabled");
 			break;
 			
 			case "begger filter":
-				beggerFilter ? API.sendChat("Begger filter is enabled") : API.sendChat("Begger filter is disabled");
+				mubBot.filters.begging ? API.sendChat("Begger filter is enabled") : API.sendChat("Begger filter is disabled");
 			break;
 			
 			case "toggle swearing filter":
 			case "toggle sf":
 			case "tsf":
 				if(authorized){
-					if(swearFilter){
-						swearFilter = false;
+					if(mubBot.filters.swearing){
+						mubBot.filters.swearing = false;
 						API.sendChat("Bot will no longer delete messages that include swear words");
 					}else{
-						swearFilter = true;
+						mubBot.filters.swearing = true;
 						API.sendChat("Bot will now delete messages that include swear words");
 					}
 				}else{
@@ -260,11 +269,11 @@ function recieveMessage(data){
 			case "toggle bf":
 			case "tbf":
 				if(authorized){
-					if(beggerFilter){
-						beggerFilter = false;
+					if(mubBot.filters.begging){
+						mubBot.filters.begging = false;
 						API.sendChat("Bot will no longer delete messages that include swear words");
 					}else{
-						beggerFilter = true;
+						mubBot.filters.begging = true;
 						API.sendChat("Bot will now delete messages that include swear words");
 					}
 				}else{
@@ -276,11 +285,11 @@ function recieveMessage(data){
 			case "toggle rf":
 			case "trf":
 				if(authorized){
-					if(racismFilter){
-						racismFilter = false;
+					if(mubBot.filters.racism){
+						mubBot.filters.racism = false;
 						API.sendChat("Bot will no longer delete messages that include racist words");
 					}else{
-						racismFilter = true;
+						mubBot.filters.racism = true;
 						API.sendChat("Bot will now delete messages that include racist words");
 					}
 				}else{
@@ -292,11 +301,11 @@ function recieveMessage(data){
 			case "toggle hf":
 			case "thf":
 				if(authorized){
-					if(historySkip){
-						historySkip = false;
+					if(mubBot.settings.historySkip){
+						mubBot.settings.historySkip = false;
 						API.sendChat("Bot will no longer autoskip songs that are in the rooms history.");
 					}else{
-						historySkip = true;
+						mubBot.settings.historySkip = true;
 						API.sendChat("Bot will now autoskip songs that are in the rooms history.");
 						if(testHistory() > 1) API.moderateForceSkip();
 					}
@@ -373,42 +382,42 @@ function recieveMessage(data){
 			case "status":
 				var response = "";
 				var elapsed = new Date().getTime() - joined;
-				swearFilter ? response = "Swear filter is enabled. - " : response = "Swear filter is disabled. - ";
-				racismFilter ? response = response + "Racism filter is enabled. - " : response = response + "Racism filter is disabled. - ";
-				beggerFilter ? response = response + "Begger filter is enabled." : response = response + "Begger filter is disabled.";
+				mubBot.filters.swearing ? response = "Swear filter is enabled. - " : response = "Swear filter is disabled. - ";
+				mubBot.filters.racism ? response = response + "Racism filter is enabled. - " : response = response + "Racism filter is disabled. - ";
+				mubBot.filters.begging ? response = response + "Begger filter is enabled." : response = response + "Begger filter is disabled.";
 				API.sendChat("Running for "+Math.round(elapsed/100000)+" minutes. - "+response);
 			break;
 			
 			case "cooldown":
 			if(authorized){
 				if(commands[1]==="disable"){
-					cooldownPeriod = 1;
+					mubBot.settings.coolDown = 1;
 					API.sendChat("Cooldown disabled");
 				}
 				if(commands[1] === "undefined"){
-					API.sendChat("The cooldown period is " + cooldownPeriod / 1000 + " seconds.");
+					API.sendChat("The cooldown period is " + mubBot.settings.coolDown / 1000 + " seconds.");
 				}else{
-					cooldownPeriod = commands[1] * 1000;
-					API.sendChat("New cooldown period is now " + cooldownPeriod / 1000 + " seconds.");
-					return cooldownPeriod;
+					mubBot.settings.coolDown = commands[1] * 1000;
+					API.sendChat("New cooldown period is now " + mubBot.settings.coolDown / 1000 + " seconds.");
+					return mubBot.settings.coolDown;
 				}
 			}else{
 				API.sendChat("You need level 9001 bot control to use this command!");
 			}
 			break;
 			
-			case "maxlength":
+			case "mubBot.settings.maxLength":
 			if(authorized){
 				if(commands[1]==="disable"){
-					maxLength = 9999999;
+					mubBot.settings.maxLength = 9999999;
 					API.sendChat("Max song length is now disabled");
 				}
 				if(commands[1] === "undefined"){
-					API.sendChat("The current max song length is " + maxLength + " minutes.");
+					API.sendChat("The current max song length is " + mubBot.settings.maxLength + " minutes.");
 				}else{
-					maxLength = commands[1];
-					API.sendChat("Max song length set to " + maxLength + " minutes.");
-					return maxLength;
+					mubBot.settings.maxLength = commands[1];
+					API.sendChat("Max song length set to " + mubBot.settings.maxLength + " minutes.");
+					return mubBot.settings.maxLength;
 				}
 			}
 			break;
@@ -417,12 +426,12 @@ function recieveMessage(data){
 			console.log("Cooldown not ready.");
 			if(commands[0] === "cooldown" && authorized){
 				if(commands[1]==="disable"){
-					cooldownPeriod = 1;
+					mubBot.settings.coolDown = 1;
 					API.sendChat("Cooldown disabled");
 				}else{
-					cooldownPeriod = commands[1] * 1000;
-					API.sendChat("New cooldown period is now " + cooldownPeriod / 1000 + " seconds.");
-					return cooldownPeriod;
+					mubBot.settings.coolDown = commands[1] * 1000;
+					API.sendChat("New cooldown period is now " + mubBot.settings.coolDown / 1000 + " seconds.");
+					return mubBot.settings.coolDown;
 				}
 			}
 		}
@@ -432,21 +441,21 @@ function recieveMessage(data){
 		
 		// swearing
 		for(var s = 0; s < swears.length; s++){
-			if(data.message.toLowerCase().indexOf(swears[s]) > -1 && swearFilter){
+			if(data.message.toLowerCase().indexOf(swears[s]) > -1 && mubBot.filters.swearing){
 				API.moderateDeleteChat(data.chatID);
 			}
 		}
 		
 		// racism
 		for(var a = 0; a < racism.length; a++){
-			if(data.message.toLowerCase().indexOf(racism[a]) > -1 && racismFilter){
+			if(data.message.toLowerCase().indexOf(racism[a]) > -1 && mubBot.filters.racism){
 				API.moderateDeleteChat(data.chatID);
 			}
 		}
 		
 		// fan beggers
 		if(data.message.toLowerCase().indexOf("fan me") > -1 || data.message.toLowerCase().indexOf("fan 4 fan") > -1 || data.message.toLowerCase().indexOf("fan4fan") > -1){
-			if(beggerFilter){
+			if(mubBot.filters.begging){
 				API.moderateDeleteChat(data.chatID);
 				API.sendChat("@" + data.from + " Please don't ask for fans.");
 			}
@@ -454,7 +463,7 @@ function recieveMessage(data){
 		
 	}
 	ready = false;
-	setTimeout(function(){ ready = true; }, cooldownPeriod);
+	setTimeout(function(){ ready = true; }, mubBot.settings.coolDown);
 }
 
 $("#playback").remove();
