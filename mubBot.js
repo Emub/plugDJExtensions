@@ -61,11 +61,9 @@ function historyUpdate(){
 	if(testHistory() > 1 && mubBot.settings.historySkip){
 		API.moderateForceSkip();
 		API.sendChat("This song was skipped because it was in the history.");
-		woot();
-	}
-	if(song.duration > mubBot.settings.maxLength * 60){
-		API.moderateForceSkip();
-		API.sendChat("Max playtime is " + mubBot.settings.maxLength + " minutes, sorry.");
+	}else if(song.duration > mubBot.settings.maxLength * 60){
+                setTimeout(function(){API.moderateForceSkip()},mubBot.settings.maxLength * 60);
+		API.sendChat("Song will be skipped at " + mubBot.settings.maxLength + " minutes");
 	}
 }
 
@@ -108,16 +106,18 @@ function getPermissions(username){
 }
 
 function testHistory(){
-	currentlyPlaying = API.getMedia();
-	history = API.getHistory();
-	caught = 0; length = 0;
-	for( ; length < history.length; length++){
-		if(currentlyPlaying.cid === history[length].media.cid){
-			caught++;
-		}
-	}
-	
-	return caught;
+    currentlyPlaying = API.getMedia();
+    history = API.getHistory();
+    caught = 0;
+    length = 0;
+    for( ; length < history.length; length++){
+        if(currentlyPlaying.cid === history[length].media.cid){
+            caught++;
+        }
+    }
+
+    return caught;
+    console.log(caught)
 }
 
 API.on(API.DJ_ADVANCE, woot);
