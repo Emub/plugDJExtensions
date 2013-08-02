@@ -1,4 +1,4 @@
-var version = "1.909";
+var version = "1.910";
 var customGreen = "#5bd708"; var bassPlugBlue = "#58FAF4";
 function initialize(){
 
@@ -611,6 +611,7 @@ function sendChatUpdate(text, color, textcolor, id, link, cursor, clickToDelete,
 API.on(API.HISTORY_UPDATE, checkStuff);
 API.on(API.USER_JOIN, userJoin);
 API.on(API.USER_LEAVE, updateUserlist);
+API.on(API.USER_LEAVE, userLeave);
 API.on(API.VOTE_UPDATE, colorUserlist);
 API.on(API.CURATE_UPDATE, assignCurateIcon);
 
