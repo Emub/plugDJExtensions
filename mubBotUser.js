@@ -412,10 +412,9 @@ function recieveMessage(data){
 				if(commands[1]==="disable"){
 					mubBot.settings.maxLength = 9999999;
 					API.sendChat("Max song length is now (almost) infinite");
-				}
-				if(commands[1] === "undefined"){
+				}else if(commands[1] === "undefined"){
 					API.sendChat("The current max song length is " + mubBot.settings.maxLength + " minutes.");
-				}else if(commands[1] !== "disable"){
+				}else{
 					mubBot.settings.maxLength = commands[1];
 					API.sendChat("Max song length set to " + mubBot.settings.maxLength + " minutes.");
 					return mubBot.settings.maxLength;
