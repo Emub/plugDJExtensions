@@ -1,9 +1,9 @@
-var version = "0.013";
+var version = "0.014";
 var botName = API.getUser().username;
 var botNameMention = "@" + botName;
 var command = false;
 var ready = true;
-var chatCommand, authorized, HA, noAccess;
+var chatCommand, authorized, HA, noAccess, skipOnExceed;
 var AP = new Array(); // short for authorized people.
 var HAP = new Array(); // short for half authorized people array.
 var swears = new Array(); var tacos = new Array(); var racism = new Array();
@@ -31,10 +31,11 @@ tacos[7] = "taco shell";
 tacos[8] = "delicious taco";
 tacos[9] = "gross taco";
 
-AP[0] = "50aeaf683e083e18fa2d187e"; //Emub
-AP[1] = "50aeb19a96fba52c3ca07ca4"; //Queen
+AP[0] = "50aeaf683e083e18fa2d187e"; // Emub
+AP[1] = "50aeb19a96fba52c3ca07ca4"; // Queen
 AP[2] = "50aeb07e96fba52c3ca04ca8"; // DerpTheBass
 AP[3] = "50aeb607c3b97a2cb4c35ac1" // [#808]
+AP[4] = "51264d96d6e4a966883b0702" // eBot
 
 HAP[0] = "51f6c5c896fba549233faa8a"; // John
 
@@ -57,13 +58,14 @@ racism[5] = "nizzle";
 
 API.on(API.HISTORY_UPDATE, historyUpdate);
 function historyUpdate(){
+	clearTimeout(skipOnExceed);
 	var song = API.getMedia();
 	if(testHistory() > 1 && mubBot.settings.historySkip){
 		API.moderateForceSkip();
 		API.sendChat("This song was skipped because it was in the history.");
 	}else if(song.duration > mubBot.settings.maxLength * 60){
-                setTimeout(function(){API.moderateForceSkip()},mubBot.settings.maxLength * 60);
-		API.sendChat("Song will be skipped at " + mubBot.settings.maxLength + " minutes");
+        skipOnExceed = setTimeout( function(){ API.moderateForceSkip(); }, mubBot.settings.maxLength * 60 * 1000);
+		API.sendChat("Song will be skipped " + mubBot.settings.maxLength + " minutes from now because it exceeds the max song length.");
 	}
 }
 
@@ -125,7 +127,6 @@ function woot(){
 	setTimeout(function(){
 		$("#button-vote-positive").click();
 	}, 10000);
-	historyUpdate();
 }
 
 // ---------------- Chat commands ----------------
@@ -415,7 +416,7 @@ function recieveMessage(data){
 				}
 				if(commands[1] === "undefined"){
 					API.sendChat("The current max song length is " + mubBot.settings.maxLength + " minutes.");
-				}else{
+				}else if(commands[1] !== "disable"){
 					mubBot.settings.maxLength = commands[1];
 					API.sendChat("Max song length set to " + mubBot.settings.maxLength + " minutes.");
 					return mubBot.settings.maxLength;
@@ -426,10 +427,10 @@ function recieveMessage(data){
 		}else{
 			console.log("Cooldown not ready.");
 			if(commands[0] === "cooldown" && authorized){
-				if(commands[1]==="disable"){
+				if(commands[1] === "disable"){
 					mubBot.settings.coolDown = 1;
 					API.sendChat("Cooldown disabled");
-				}else{
+				}else if(commands[1] !== "disable"){
 					mubBot.settings.coolDown = commands[1] * 1000;
 					API.sendChat("New cooldown period is now " + mubBot.settings.coolDown / 1000 + " seconds.");
 					return mubBot.settings.coolDown;
@@ -467,10 +468,5 @@ function recieveMessage(data){
 	setTimeout(function(){ ready = true; }, mubBot.settings.coolDown);
 }
 
-$("#playback").remove();
-$("#meta-frame").remove();
-$("#room-wheel").remove();
-$("#user-container").remove();
-$("#audience").remove();
-$("#booth-canvas").remove();
+$("#playback").remove(); $("#meta-frame").remove(); $("#room-wheel").remove(); $("#user-container").remove(); $("#audience").remove(); $("#booth-canvas").remove();
 API.sendChat("Running mubBot version "+version);
