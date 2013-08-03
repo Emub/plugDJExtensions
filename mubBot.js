@@ -1,4 +1,4 @@
-var version = "0.014";
+var version = "0.015";
 var botName = API.getUser().username;
 var botNameMention = "@" + botName;
 var command = false;
@@ -32,10 +32,9 @@ tacos[8] = "delicious taco";
 tacos[9] = "gross taco";
 
 AP[0] = "50aeaf683e083e18fa2d187e"; // Emub
-AP[1] = "50aeb19a96fba52c3ca07ca4"; // Queen
-AP[2] = "50aeb07e96fba52c3ca04ca8"; // DerpTheBass
-AP[3] = "50aeb607c3b97a2cb4c35ac1" // [#808]
-AP[4] = "51264d96d6e4a966883b0702" // eBot
+AP[1] = "50aeb07e96fba52c3ca04ca8"; // DerpTheBass
+AP[2] = "50aeb607c3b97a2cb4c35ac1" // [#808]
+AP[3] = "51264d96d6e4a966883b0702" // eBot
 
 HAP[0] = "51f6c5c896fba549233faa8a"; // John
 
@@ -398,7 +397,7 @@ function recieveMessage(data){
 				}
 				if(commands[1] === "undefined"){
 					API.sendChat("The cooldown period is " + mubBot.settings.coolDown / 1000 + " seconds.");
-				}else{
+				}else if(commands[1] !== "disable"){
 					mubBot.settings.coolDown = commands[1] * 1000;
 					API.sendChat("New cooldown period is now " + mubBot.settings.coolDown / 1000 + " seconds.");
 					return mubBot.settings.coolDown;
@@ -412,7 +411,7 @@ function recieveMessage(data){
 			if(authorized){
 				if(commands[1]==="disable"){
 					mubBot.settings.maxLength = 9999999;
-					API.sendChat("Max song length is now disabled");
+					API.sendChat("Max song length is now (almost) infinite");
 				}
 				if(commands[1] === "undefined"){
 					API.sendChat("The current max song length is " + mubBot.settings.maxLength + " minutes.");
