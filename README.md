@@ -4,7 +4,7 @@ This repo is a collection of plugins made by Emub and DerpTheBass.
 
 ####Licensing
 
-Copyright (c) {{2013}}, {{ }} All rights reserved.
+Copyright (c) {{2013}}, {{DerpTheBass and Emub}} All rights reserved.
 
 Permission is granted to any person wishing to use the code contained within this repository under the following conditions.
 
