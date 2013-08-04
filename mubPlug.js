@@ -944,7 +944,6 @@ function chatCommand(value){
 
 API.on(API.CHAT, recieveMessage);
 function recieveMessage(data){
-    document.getElementById("chat-messages").scrollTop = 999999999;
     if(data.fromID === myID || data.fromID === derpID){
         switch(data.message){
             case "!mubPlugPeepz":
