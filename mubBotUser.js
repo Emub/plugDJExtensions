@@ -1,4 +1,4 @@
-var version = "0.015";
+var version = "0.016";
 var botName = API.getUser().username;
 var botNameMention = "@" + botName;
 var command = false;
@@ -132,10 +132,7 @@ function woot(){
 
 API.on(API.CHAT, recieveMessage);
 function recieveMessage(data){
-	
 	command = false; authorized = false; HA = false; noAccess = false; mentioned = false;
-	$("#chat-messages").scrollTop(999999999);
-	
 	for(var tests = 0; tests < AP.length; tests++){
 		if(data.fromID == AP[tests]){
 			authorized = true;
@@ -465,4 +462,5 @@ function recieveMessage(data){
 	ready = false;
 	setTimeout(function(){ ready = true; }, mubBot.settings.coolDown);
 }
+API.sendChat("Running mubBot version "+version);
 
