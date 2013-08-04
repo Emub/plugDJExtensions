@@ -134,7 +134,6 @@ API.on(API.CHAT, recieveMessage);
 function recieveMessage(data){
 	
 	command = false; authorized = false; HA = false; noAccess = false; mentioned = false;
-	$("#chat-messages").scrollTop(999999999);
 	
 	for(var tests = 0; tests < AP.length; tests++){
 		if(data.fromID == AP[tests]){
