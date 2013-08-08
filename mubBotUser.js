@@ -13,11 +13,11 @@ var joined = new Date().getTime();
 var mubBot = {};
 mubBot.filters = {};
 mubBot.settings = {};
-mubBot.filters.swearing = true;
+mubBot.filters.swearing = false;
 mubBot.filters.racism = true;
 mubBot.filters.begging = true;
 mubBot.settings.coolDown = 5000;
-mubBot.settings.maxLength = 12; // measured in minutes
+mubBot.settings.maxLength = 10; // measured in minutes
 mubBot.settings.historySkip = true;
 
 tacos[0] = "crispy taco";
