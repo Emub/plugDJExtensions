@@ -28,9 +28,9 @@ mubBot.moderators.tempTrust = new Array();
 
 mubBot.settings.maxLength = 10; //minutes
 mubBot.settings.cooldown = 10; //seconds
-mubBot.settings.staffMeansAccess = true;
+mubBot.settings.staffMeansAccess = false;
 mubBot.settings.historyFilter = true;
-mubBot.settings.swearFilter = true;
+mubBot.settings.swearFilter = false;
 mubBot.settings.racismFilter = true;
 mubBot.settings.beggerFilter = true;
 mubBot.settings.interactive = true;
@@ -155,10 +155,6 @@ botMethods.getID = function(username){
 	}
 	
 	return "notFound";
-}
-
-botMethods.botEnviroment = function(){
-	$("#playback").remove(); $("#meta-frame").remove(); $("#room-wheel").remove(); $("#user-container").remove(); $("#audience").remove(); $("#booth-canvas").remove(); $("#footer-container").remove(); $("#dj-console").remove();
 }
 
 botMethods.historyUpdateEvent = function(data){
