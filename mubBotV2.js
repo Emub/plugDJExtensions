@@ -6,9 +6,15 @@ mubBot.filters = {};
 botMethods = {};
 mubBot.pubVars = {};
 
+toSave = {};
+toSave.settings = mubBot.settings;
+toSave.moderators = mubBot.moderators;
+
 mubBot.misc.version = "1.0";
 mubBot.misc.origin = "This bot was created by Emub and DerpTheBass alone, and it is copyrighted!";
 mubBot.misc.ready = true;
+mubBot.misc.tacos = new Array();
+
 joined = new Date().getTime();
 
 mubBot.filters.swearWords = new Array();
@@ -27,6 +33,7 @@ mubBot.settings.historyFilter = true;
 mubBot.settings.swearFilter = true;
 mubBot.settings.racismFilter = true;
 mubBot.settings.beggerFilter = true;
+mubBot.settings.interactive = true;
 
 mubBot.moderators.creators[0] = "50aeaf683e083e18fa2d187e"; // Emub
 mubBot.moderators.creators[1] = "50aeb07e96fba52c3ca04ca8"; // DerpTheBass
@@ -55,6 +62,17 @@ mubBot.filters.beggerWords[3] = "fan please";
 mubBot.filters.beggerWords[4] = "fan 4 fan";
 mubBot.filters.beggerWords[5] = "fan back";
 
+mubBot.misc.tacos[0] = "crispy taco";
+mubBot.misc.tacos[1] = "mexican taco";
+mubBot.misc.tacos[2] = "vegetarian taco";
+mubBot.misc.tacos[3] = "spicy taco";
+mubBot.misc.tacos[4] = "meatlover taco";
+mubBot.misc.tacos[5] = "cheese taco";
+mubBot.misc.tacos[6] = "wet hamburger";
+mubBot.misc.tacos[7] = "taco shell";
+mubBot.misc.tacos[8] = "delicious taco";
+mubBot.misc.tacos[9] = "gross taco";
+
 mubBot.pubVars.skipOnExceed;
 mubBot.pubVars.command = false;
 
@@ -69,10 +87,17 @@ function historyUpdateEvent(data){
 	botMethods.historyUpdateEvent(data);
 }
 
-botMethods.load = function(){mubBot = JSON.parse(localStorage.getItem("mubBot")); mubBot.moderators.tempTrust = [];};
-botMethods.save = function(){localStorage.setItem("mubBot", JSON.stringify(mubBot))};
+botMethods.load = function(){
+	toSave = JSON.parse(localStorage.getItem("mubBotSave"));
+	mubBot.moderators = toSave.moderators;
+	mubBot.settings = toSave.settings;
+	mubBot.moderators.tempTrust = [];
+};
+
+botMethods.save = function(){localStorage.setItem("mubBotSave", JSON.stringify(toSave))};
+
 botMethods.loadStorage = function(){
-    if(localStorage.getItem("mubBot") !== null){
+    if(localStorage.getItem("mubBotSave") !== null){
         botMethods.load();
     }else{
         botMethods.save();
@@ -143,8 +168,8 @@ botMethods.historyUpdateEvent = function(data){
         if(API.getUser().permission < 2){
             API.sendChat("This song is in the history! You should make me a mod so that I could skip it!");
         }else{
+			API.sendChat("@" + API.getDJs()[0].username + ", playing songs that are in the history is not allowed here, please double check next time!");
 			API.moderateForceSkip();
-			API.sendChat("This song was skipped because it was in the room history.");
 		}
     }else if(song.duration > mubBot.settings.maxLength * 60){
 		mubBot.pubVars.skipOnExceed = setTimeout( function(){
@@ -358,10 +383,97 @@ botMethods.chatEvent = function(data){
 						}
 					}
 				break;
+				
+				case "taco":
+					if(commands[1] === "undefined"){
+						var crowd = API.getUsers();
+						var randomUser = Math.round(Math.random() * crowd.length);
+						var randomTaco = Math.round(Math.random() * mubBot.misc.tacos.length);
+						var randomSentence = Math.round(Math.random() * 4);
+						switch(randomSentence){
+							case 1:
+								API.sendChat("@" + crowd[randomUser].username + ", take this " + mubBot.misc.tacos[randomTaco] + ", you bitch!");
+							break;
+							case 2:
+								API.sendChat("@" + crowd[randomUser].username + ", quickly! Eat this " + mubBot.misc.tacos[randomTaco] + " before I do!");
+							break;
+							case 3:
+								API.sendChat("One free " + mubBot.misc.tacos[randomTaco] + " for you, @" + crowd[randomUser].username + ". :3");
+							break;
+							case 4:
+								API.sendChat("/me throws a " + mubBot.misc.tacos[randomTaco] + " at @" + crowd[randomUser].username + "!");
+							break;
+						}
+					}else{
+						if(commands[1].indexOf("@") === 0) commands[1] = commands[1].substring(1);
+						var randomTaco = Math.round(Math.random() * mubBot.misc.tacos.length);
+						var randomSentence = Math.round(Math.random() * 4);
+						switch(randomSentence){
+							case 1:
+								API.sendChat("@" + commands[1] + ", take this " + mubBot.misc.tacos[randomTaco] + ", you bitch!");
+							break;
+							case 2:
+								API.sendChat("@" + commands[1] + ", quickly! Eat this " + mubBot.misc.tacos[randomTaco] + " before I do!");
+							break;
+							case 3:
+								API.sendChat("One free " + mubBot.misc.tacos[randomTaco] + " for you, @" + commands[1] + ". :3");
+							break;
+							case 4:
+								API.sendChat("/me throws a " + mubBot.misc.tacos[randomTaco] + " at @" + commands[1] + "!");
+							break;
+						}
+					}
+				break;
+				
+				case "modaccess":
+					if(permission > 2){
+						mubBot.settings.staffMeansAccess ? API.sendChat("Staff currently has bot access.") : API.sendChat("Staff doesn't have bot access.");
+					}
+				break;
+				
+				case "togglemodaccess":
+				case "tma":
+					if(permission > 2){
+						if(mubBot.settings.staffMeansAccess){
+							mubBot.settings.staffMeansAccess = false;
+							API.sendChat("Staff no longer have bot access.");
+						}else{
+							mubBot.settings.staffMeansAccess = true;
+							API.sendChat("Staff now has bot access.");
+						}
+					}
+				break;
+				
+				case "interactive":
+					if(permission > 0){
+						mubBot.settings.interactive ? API.sendChat("Bot is interactive.") : API.sendChat("Bot is not interactive.");
+					}
+				break;
+				
+				case "toggleinteractive":
+				case "ti":
+					if(permission > 0){
+						if(mubBot.settings.interactive){
+							mubBot.settings.interactive = false;
+							API.sendChat("Bot will no longer interact.");
+						}else{
+							mubBot.settings.interactive = true;
+							API.sendChat("Bot will now interact.");
+						}
+					}
+				break;
+				
 				case "save":
 					if(permission > 2){
 						botMethods.save();
 						API.sendChat("Settings saved.");
+					}
+				break;
+				
+				case "stfu":
+					if(permission > 0){
+						mubBot.settings.interactive = false;
+						API.sendChat("Yessir!");
 					}
 				break;
 			}
@@ -392,15 +504,15 @@ botMethods.chatEvent = function(data){
 			}
 		}
 		
-		if(mubBot.misc.ready){
+		if(mubBot.misc.ready && mubBot.settings.interactive){
 			if(data.message.toLowerCase().indexOf("who made this bot") > -1) API.sendChat(mubBot.misc.origin);
 			if(data.message.toLowerCase().indexOf("stupid bot") > -1) API.sendChat("Thanks, it means a lot coming from a dyslexic kid who fails to spell their name.");
+			if(data.message.toLowerCase().indexOf("he") === 0) API.sendChat("Why hello, @" + data.from);
+			if(data.message.toLowerCase().indexOf("sorry") > -1) API.sendChat("It's alright, @" + data.from + ", I forgive you!");
 		}
 		
 	}
 }
 
 botMethods.loadStorage();
-// Delete botMethods.botEnviroment() if you want to apply the bot to yourself!
-botMethods.botEnviroment();
 API.sendChat("Running mubBot revision 2 version " + mubBot.misc.version);
