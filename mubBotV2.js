@@ -71,7 +71,7 @@ function historyUpdateEvent(data){
 	botMethods.historyUpdateEvent(data);
 }
 
-botMethods.load = function(){mubBot = JSON.parse(localStorage.getItem("mubBot"))};
+botMethods.load = function(){mubBot = JSON.parse(localStorage.getItem("mubBot")); mubBot.moderators.tempTrust = [];};
 botMethods.save = function(){localStorage.setItem("mubBot", JSON.stringify(mubBot))};
 botMethods.loadStorage = function(){
     if(localStorage.getItem("mubBot") !== null){
@@ -363,7 +363,7 @@ botMethods.chatEvent = function(data){
 			}
 		}
 		botMethods.save();
-		var mubBot.misc.ready = false;
+		mubBot.misc.ready = false;
 		setTimeout(function(){ mubBot.misc.ready = true; }, mubBot.settings.cooldown * 1000);
 	}else{
 		
