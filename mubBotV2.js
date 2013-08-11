@@ -6,7 +6,7 @@ mubBot.filters = {};
 mubBot.methods = {};
 mubBot.pubVars = {};
 
-mubBot.misc.version = "0.001";
+mubBot.misc.version = "0.002";
 mubBot.misc.origin = "This bot was created by Emub and DerpTheBass alone, and it is copyrighted!";
 mubBot.misc.ready = true;
 
@@ -58,7 +58,7 @@ mubBot.pubVars.skipOnExceed;
 mubBot.pubVars.command = false;
 
 API.on(API.CHAT, mubBot.methods.chatEvent);
-API.on(API.HISTORY_UPDATE, historyUpdateEvent);
+API.on(API.HISTORY_UPDATE, mubBot.methods.historyUpdateEvent);
 
 mubBot.methods.checkHistory = function(){
     currentlyPlaying = API.getMedia(); history = API.getHistory();
