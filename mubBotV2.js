@@ -215,6 +215,7 @@ botMethods.chatEvent = function(data){
 					}else{
 						API.sendChat("Only bot creators can grant access to others.");
 					}
+					botMethods.save();
 				break;
 				
 				case "access":
@@ -357,10 +358,14 @@ botMethods.chatEvent = function(data){
 						}
 					}
 				break;
-				
+				case "save":
+					if(permission > 2){
+						botMethods.save();
+						API.sendChat("Settings saved.");
+					}
+				break;
 			}
 		}
-		botMethods.save();
 		mubBot.misc.ready = false;
 		setTimeout(function(){ mubBot.misc.ready = true; }, mubBot.settings.cooldown * 1000);
 	}else{
