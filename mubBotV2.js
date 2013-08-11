@@ -34,8 +34,6 @@ mubBot.moderators.creators[1] = "50aeb07e96fba52c3ca04ca8"; // DerpTheBass
 mubBot.moderators.admins[2] = "50aeb607c3b97a2cb4c35ac1"; // [#808]
 mubBot.moderators.admins[3] = "51264d96d6e4a966883b0702"; // eBot
 
-mubBot.moderators.trusted[0] = "51f6c5c896fba549233faa8a"; // John
-
 mubBot.filters.swearWords[0] = "fuck";
 mubBot.filters.swearWords[1] = "shit";
 mubBot.filters.swearWords[2] = "bitch";
