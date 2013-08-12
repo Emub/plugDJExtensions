@@ -197,7 +197,7 @@ botMethods.chatEvent = function(data){
 					if(permission > 0) $("#button-vote-positive").click();
 				break;
 				
-				case "skip":
+				case "skipthis":
 					permission > 2 ? API.moderateForceSkip() : API.sendChat("This commands requires being a mod admin!");
 				break;
 				
