@@ -10,7 +10,7 @@ toSave = {};
 toSave.settings = mubBot.settings;
 toSave.moderators = mubBot.moderators;
 
-mubBot.misc.version = "1.3";
+mubBot.misc.version = "1.4";
 mubBot.misc.origin = "This bot was created by Emub and DerpTheBass alone, and it is copyrighted!";
 mubBot.misc.ready = true;
 mubBot.misc.tacos = new Array();
@@ -349,7 +349,8 @@ botMethods.chatEvent = function(data){
 					mubBot.settings.racismFilter ? response = response + "Racism filter is enabled! - " : response = response + "Racism filter is disabled! - ";
 					mubBot.settings.historyFilter ? response = response + "History filter is enabled! - " : response = response + "History filter is disabled! - ";
 					response = response + "MaxLength is " + mubBot.settings.maxLength + " minutes - ";
-					response = response + "Cooldown is " + mubBot.settings.cooldown + " seconds";					
+					response = response + "Cooldown is " + mubBot.settings.cooldown + " seconds";
+					response = response + "Mod access is " + mubBot.settings.staffMeansAccess;
 					API.sendChat(response);
 				break;
 				
