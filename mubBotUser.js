@@ -170,8 +170,8 @@ botMethods.historyUpdateEvent = function(data){
 		}
     }else if(song.duration > mubBot.settings.maxLength * 60){
 		mubBot.pubVars.skipOnExceed = setTimeout( function(){
-			API.moderateForceSkip();
-			API.sendChat("@"+API.getDJS()[0].username+" You have now played for as long as this room allows, time to let someone else have the booth!");
+			API.sendChat("@"+API.getDJs()[0].username+" You have now played for as long as this room allows, time to let someone else have the booth!");
+		        API.moderateForceSkip();
 		}, mubBot.settings.maxLength * 60000);
 		API.sendChat("@"+API.getDJs()[0].username+" This song will be skipped " + mubBot.settings.maxLength + " minutes from now because it exceeds the max song length.");
 	}
