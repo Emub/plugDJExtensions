@@ -325,7 +325,7 @@ botMethods.chatEvent = function(data){
 				break;
 				
 				case "version":
-					API.sendChat("mubBot version " + mubBot.misc.version);
+					API.sendChat("mubBot user shell version " + mubBot.misc.version);
 				break;
 			
 				case "marco":
