@@ -28,9 +28,9 @@ mubBot.moderators.tempTrust = new Array();
 
 mubBot.settings.maxLength = 10; //minutes
 mubBot.settings.cooldown = 10; //seconds
-mubBot.settings.staffMeansAccess = false;
+mubBot.settings.staffMeansAccess = true;
 mubBot.settings.historyFilter = true;
-mubBot.settings.swearFilter = false;
+mubBot.settings.swearFilter = true;
 mubBot.settings.racismFilter = true;
 mubBot.settings.beggerFilter = true;
 mubBot.settings.interactive = true;
@@ -80,7 +80,7 @@ API.on(API.CHAT, chatEvent);
 API.on(API.HISTORY_UPDATE, historyUpdateEvent);
 
 function chatEvent(data){
-  botMethods.chatEvent(data);
+	botMethods.chatEvent(data);
 }
 
 function historyUpdateEvent(data){
@@ -156,6 +156,7 @@ botMethods.getID = function(username){
 	
 	return "notFound";
 }
+
 
 botMethods.historyUpdateEvent = function(data){
     clearTimeout(mubBot.pubVars.skipOnExceed);
@@ -503,7 +504,7 @@ botMethods.chatEvent = function(data){
 		if(mubBot.misc.ready && mubBot.settings.interactive){
 			if(data.message.toLowerCase().indexOf("who made this bot") > -1) API.sendChat(mubBot.misc.origin);
 			if(data.message.toLowerCase().indexOf("stupid bot") > -1) API.sendChat("Thanks, it means a lot coming from a dyslexic kid who fails to spell their name.");
-			if(data.message.toLowerCase().indexOf("he") === 0) API.sendChat("Why hello, @" + data.from);
+			if(data.message.toLowerCase().indexOf("he") > -1 || data.message.toLowerCase().indexOf("hi") > -1) API.sendChat("Why hello, @" + data.from);
 			if(data.message.toLowerCase().indexOf("sorry") > -1) API.sendChat("It's alright, @" + data.from + ", I forgive you!");
 		}
 		
@@ -511,4 +512,4 @@ botMethods.chatEvent = function(data){
 }
 
 botMethods.loadStorage();
-API.sendChat("Running mubBot revision 2 version " + mubBot.misc.version);
+API.sendChat("Running mubBot User Shell version " + mubBot.misc.version);
