@@ -10,7 +10,7 @@ toSave = {};
 toSave.settings = mubBot.settings;
 toSave.moderators = mubBot.moderators;
 
-mubBot.misc.version = "1.2";
+mubBot.misc.version = "1.3";
 mubBot.misc.origin = "This bot was created by Emub and DerpTheBass alone, and it is copyrighted!";
 mubBot.misc.ready = true;
 mubBot.misc.tacos = new Array();
@@ -165,8 +165,8 @@ botMethods.historyUpdateEvent = function(data){
         if(API.getUser().permission < 2){
             API.sendChat("This song is in the history! You should make me a mod so that I could skip it!");
         }else{
-			API.sendChat("@" + API.getDJs()[0].username + ", playing songs that are in the history is not allowed here, please double check next time!");
-			API.moderateForceSkip();
+			API.sendChat("@" + API.getDJs()[0].username + ", playing songs that are in the history isn't allowed, please check next time! Skipping..");
+			setTimeout(function(){API.moderateForceSkip()}, 1500)
 		}
     }else if(song.duration > mubBot.settings.maxLength * 60){
 		mubBot.pubVars.skipOnExceed = setTimeout( function(){
