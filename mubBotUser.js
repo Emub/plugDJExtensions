@@ -10,7 +10,7 @@ toSave = {};
 toSave.settings = mubBot.settings;
 toSave.moderators = mubBot.moderators;
 
-mubBot.misc.version = "1.0";
+mubBot.misc.version = "1.2";
 mubBot.misc.origin = "This bot was created by Emub and DerpTheBass alone, and it is copyrighted!";
 mubBot.misc.ready = true;
 mubBot.misc.tacos = new Array();
@@ -171,9 +171,9 @@ botMethods.historyUpdateEvent = function(data){
     }else if(song.duration > mubBot.settings.maxLength * 60){
 		mubBot.pubVars.skipOnExceed = setTimeout( function(){
 			API.moderateForceSkip();
-			API.sendChat("You have now played for as long as this room allows, time to let someone else have the booth!");
+			API.sendChat("@"+API.getDJS()[0].username+" You have now played for as long as this room allows, time to let someone else have the booth!");
 		}, mubBot.settings.maxLength * 60000);
-		API.sendChat("This song will be skipped " + mubBot.settings.maxLength + " minutes from now because it exceeds the max song length.");
+		API.sendChat("@"+API.getDJs()[0].username+" This song will be skipped " + mubBot.settings.maxLength + " minutes from now because it exceeds the max song length.");
 	}
 }
 
