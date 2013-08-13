@@ -10,7 +10,7 @@ toSave = {};
 toSave.settings = mubBot.settings;
 toSave.moderators = mubBot.moderators;
 
-mubBot.misc.version = "1.4";
+mubBot.misc.version = "1.5";
 mubBot.misc.origin = "This bot was created by Emub and DerpTheBass alone, and it is copyrighted!";
 mubBot.misc.ready = true;
 mubBot.misc.tacos = new Array();
@@ -46,14 +46,19 @@ mubBot.filters.swearWords[1] = "shit";
 mubBot.filters.swearWords[2] = "bitch";
 mubBot.filters.swearWords[3] = "cunt";
 mubBot.filters.swearWords[4] = "twat";
-mubBot.filters.swearWords[5] = "dumbass";
+mubBot.filters.swearWords[5] = "fag";
+mubBot.filters.swearWords[6] = "queer";
 
 mubBot.filters.racistWords[0] = "nigger";
-mubBot.filters.racistWords[1] = "nigguh";
-mubBot.filters.racistWords[2] = "nigga";
-mubBot.filters.racistWords[3] = "niggs";
-mubBot.filters.racistWords[4] = "niggz";
-mubBot.filters.racistWords[5] = "nizzle";
+mubBot.filters.racistWords[1] = "kike";
+mubBot.filters.racistWords[2] = "spick";
+mubBot.filters.racistWords[3] = "porchmonkey";
+mubBot.filters.racistWords[4] = "camel jockey";
+mubBot.filters.racistWords[5] = "towelhead";
+mubBot.filters.racistWords[6] = "towel head";
+mubBot.filters.racistWords[7] = "chink";
+mubBot.filters.racistWords[8] = "gook";
+mubBot.filters.racistWords[9] = "porch monkey";
 
 mubBot.filters.beggerWords[0] = "fan4fan";
 mubBot.filters.beggerWords[1] = "fan me";
@@ -61,6 +66,8 @@ mubBot.filters.beggerWords[2] = "fan pls";
 mubBot.filters.beggerWords[3] = "fan please";
 mubBot.filters.beggerWords[4] = "fan 4 fan";
 mubBot.filters.beggerWords[5] = "fan back";
+mubBot.filters.beggerWords[6] = "give me fans";
+mubBot.filters.beggerWords[7] = "gimme fans";
 
 mubBot.misc.tacos[0] = "crispy taco";
 mubBot.misc.tacos[1] = "mexican taco";
@@ -173,7 +180,7 @@ botMethods.historyUpdateEvent = function(data){
 			API.sendChat("@"+API.getDJs()[0].username+" You have now played for as long as this room allows, time to let someone else have the booth!");
 		        API.moderateForceSkip();
 		}, mubBot.settings.maxLength * 60000);
-		API.sendChat("@"+API.getDJs()[0].username+" This song will be skipped " + mubBot.settings.maxLength + " minutes from now because it exceeds the max song length.");
+		//API.sendChat("@"+API.getDJs()[0].username+" This song will be skipped " + mubBot.settings.maxLength + " minutes from now because it exceeds the max song length.");
 	}
 }
 
@@ -349,7 +356,7 @@ botMethods.chatEvent = function(data){
 					mubBot.settings.racismFilter ? response = response + "Racism filter is enabled! - " : response = response + "Racism filter is disabled! - ";
 					mubBot.settings.historyFilter ? response = response + "History filter is enabled! - " : response = response + "History filter is disabled! - ";
 					response = response + "MaxLength is " + mubBot.settings.maxLength + " minutes - ";
-					response = response + "Cooldown is " + mubBot.settings.cooldown + " seconds";
+					response = response + "Cooldown is " + mubBot.settings.cooldown + " seconds - ";
 					response = response + "Mod access is " + mubBot.settings.staffMeansAccess;
 					API.sendChat(response);
 				break;
