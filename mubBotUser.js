@@ -1,3 +1,4 @@
+
 var mubBot = {};
 mubBot.misc = {};
 mubBot.settings = {};
@@ -10,8 +11,9 @@ toSave = {};
 toSave.settings = mubBot.settings;
 toSave.moderators = mubBot.moderators;
 
-mubBot.misc.version = "1.5";
+mubBot.misc.version = "1.6";
 mubBot.misc.origin = "This bot was created by Emub and DerpTheBass alone, and it is copyrighted!";
+mubBot.misc.changelog = "Added changelog! (and made the other code a tiiiny bit shorter) <Emub>";
 mubBot.misc.ready = true;
 mubBot.misc.tacos = new Array();
 
@@ -483,6 +485,12 @@ botMethods.chatEvent = function(data){
 						API.sendChat("Yessir!");
 					}
 				break;
+				
+				case "changelog":
+					if(permission > 0){
+						API.sendChat("New in version " + mubBot.misc.version + " - " + mubBot.misc.changelog)
+					}
+				break;
 			}
 		}
 		mubBot.misc.ready = false;
@@ -512,14 +520,14 @@ botMethods.chatEvent = function(data){
 		}
 		
 		if(mubBot.misc.ready && mubBot.settings.interactive){
-			//if(data.message.toLowerCase().indexOf("who made this bot") > -1) API.sendChat(mubBot.misc.origin);
-			//if(data.message.toLowerCase().indexOf("stupid bot") > -1) API.sendChat("Thanks, it means a lot coming from a dyslexic kid who fails to spell their name.");
-			//if(data.message.toLowerCase().indexOf("he") > -1 || data.message.toLowerCase().indexOf("hi") > -1) API.sendChat("Why hello, @" + data.from);
-			//if(data.message.toLowerCase().indexOf("sorry") > -1) API.sendChat("It's alright, @" + data.from + ", I forgive you!");
+			/*if(data.message.toLowerCase().indexOf("who made this bot") > -1) API.sendChat(mubBot.misc.origin);
+			if(data.message.toLowerCase().indexOf("stupid bot") > -1) API.sendChat("Thanks, it means a lot coming from a dyslexic kid who fails to spell their name.");
+			if(data.message.toLowerCase().indexOf("he") > -1 || data.message.toLowerCase().indexOf("hi") > -1) API.sendChat("Why hello, @" + data.from);
+			if(data.message.toLowerCase().indexOf("sorry") > -1) API.sendChat("It's alright, @" + data.from + ", I forgive you!");*/
 		}
 		
 	}
 }
 
 botMethods.loadStorage();
-console.log("Running mubBot User Shell version "+mubBot.misc.version);
+console.log("Running mubBot User Shell version " + mubBot.misc.version);
