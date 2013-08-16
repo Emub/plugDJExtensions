@@ -522,3 +522,4 @@ botMethods.chatEvent = function(data){
 }
 
 botMethods.loadStorage();
+console.log("Running mubBot User Shell version "+mubBot.misc.version);
