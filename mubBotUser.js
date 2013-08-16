@@ -10,9 +10,9 @@ toSave = {};
 toSave.settings = mubBot.settings;
 toSave.moderators = mubBot.moderators;
 
-mubBot.misc.version = "1.601";
+mubBot.misc.version = "1.602";
 mubBot.misc.origin = "This bot was created by Emub and DerpTheBass alone, and it is copyrighted!";
-mubBot.misc.changelog = "Fixed tacos not working with names that have spaces <Emub>";
+mubBot.misc.changelog = "Made code more manageable <Emub>";
 mubBot.misc.ready = true;
 mubBot.misc.tacos = ["crispy taco", "mexian taco", "vegetarian taco", "spicy taco", "meatlover taco", "cheese taco", "wet hamburger", "taco shell", "delicious taco", "gross taco"];
 
