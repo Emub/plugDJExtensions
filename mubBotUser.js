@@ -10,10 +10,12 @@ toSave = {};
 toSave.settings = mubBot.settings;
 toSave.moderators = mubBot.moderators;
 
-mubBot.misc.version = "1.604";
+mubBot.misc.version = "1.7";
 mubBot.misc.origin = "This bot was created by Emub and DerpTheBass alone, and it is copyrighted!";
-mubBot.misc.changelog = "Fixed space errors <Emub>";
+mubBot.misc.changelog = "Added !lockskip command! :D <Emub>";
 mubBot.misc.ready = true;
+mubBot.misc.lockSkipping = false;
+mubBot.misc.lockSkipped = "0";
 mubBot.misc.tacos = new Array();
 
 joined = new Date().getTime();
@@ -92,7 +94,7 @@ function chatEvent(data){
 }
 
 function historyUpdateEvent(data){
-	botMethods.historyUpdateEvent(data);
+	setTimeout(function(){ botMethods.historyUpdateEvent(data); }, 500);
 }
 
 botMethods.load = function(){
@@ -168,6 +170,12 @@ botMethods.getID = function(username){
 
 botMethods.historyUpdateEvent = function(data){
     clearTimeout(mubBot.pubVars.skipOnExceed);
+	if(mubBot.misc.lockSkipping){
+		API.moderateAddDJ(mubBot.misc.lockSkipped);
+		mubBot.misc.lockSkipped = "0";
+		mubBot.misc.lockSkipping = false;
+		setTimeout(function(){ API.moderateRoomProps(false, true); }, 500);
+	}
     var song = API.getMedia();
     if(botMethods.checkHistory() > 0 && mubBot.settings.historyFilter){
         if(API.getUser().permission < 2){
@@ -494,6 +502,17 @@ botMethods.chatEvent = function(data){
 						API.sendChat("New in version " + mubBot.misc.version + " - " + mubBot.misc.changelog)
 					}
 				break;
+				
+				case "lockskip":
+					if(permission > 1){
+						API.moderateRoomProps(true, true);
+						mubBot.misc.lockSkipping = true;
+						mubBot.misc.lockSkipped = API.getDJs()[0].id;
+						setTimeout(function(){ API.moderateRemoveDJ(mubBot.misc.lockSkipped); }, 500);
+					}else{
+						API.sendChat("This command requires level 2 bot access!");
+					}
+				break;
 			}
 		}
 		mubBot.misc.ready = false;
@@ -523,10 +542,10 @@ botMethods.chatEvent = function(data){
 		}
 
 		if(mubBot.misc.ready && mubBot.settings.interactive){
-			/*if(data.message.toLowerCase().indexOf("who made this bot") > -1) API.sendChat(mubBot.misc.origin);
+			if(data.message.toLowerCase().indexOf("who made this bot") > -1) API.sendChat(mubBot.misc.origin);
 			if(data.message.toLowerCase().indexOf("stupid bot") > -1) API.sendChat("Thanks, it means a lot coming from a dyslexic kid who fails to spell their name.");
 			if(data.message.toLowerCase().indexOf("he") > -1 || data.message.toLowerCase().indexOf("hi") > -1) API.sendChat("Why hello, @" + data.from);
-			if(data.message.toLowerCase().indexOf("sorry") > -1) API.sendChat("It's alright, @" + data.from + ", I forgive you!");*/
+			if(data.message.toLowerCase().indexOf("sorry") > -1) API.sendChat("It's alright, @" + data.from + ", I forgive you!");
 		}
 
 	}
