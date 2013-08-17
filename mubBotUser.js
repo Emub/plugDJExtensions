@@ -195,7 +195,7 @@ botMethods.chatEvent = function(data){
 		var commands = chatCommand.split(" ");
 		commands.push("undefined");
 		
-		for(var i = 1; i < commands.length; i++){
+		for(var i = 2; i < commands.length; i++){
 			if(commands[i] !== "undefined") commands[1] = commands[1] + " " + commands[i];
 		}
 
