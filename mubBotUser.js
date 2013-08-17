@@ -3,16 +3,18 @@ mubBot.misc = {};
 mubBot.settings = {};
 mubBot.moderators = {};
 mubBot.filters = {};
-botMethods = {};
 mubBot.pubVars = {};
+mubBot.offenses = [];
+
+botMethods = {};
 
 toSave = {};
 toSave.settings = mubBot.settings;
 toSave.moderators = mubBot.moderators;
 
-mubBot.misc.version = "1.7";
+mubBot.misc.version = "1.8";
 mubBot.misc.origin = "This bot was created by Emub and DerpTheBass alone, and it is copyrighted!";
-mubBot.misc.changelog = "Added !lockskip command! :D <Emub>";
+mubBot.misc.changelog = "Added chat offenses, commands and loads of cool stuff <Emub>";
 mubBot.misc.ready = true;
 mubBot.misc.lockSkipping = false;
 mubBot.misc.lockSkipped = "0";
@@ -31,12 +33,14 @@ mubBot.moderators.tempTrust = new Array();
 
 mubBot.settings.maxLength = 10; //minutes
 mubBot.settings.cooldown = 10; //seconds
+mubBot.settings.offensesLast = 5; //minutes
 mubBot.settings.staffMeansAccess = true;
 mubBot.settings.historyFilter = true;
 mubBot.settings.swearFilter = true;
 mubBot.settings.racismFilter = true;
 mubBot.settings.beggerFilter = true;
 mubBot.settings.interactive = true;
+mubBot.settings.chatOffenses = true;
 
 mubBot.moderators.creators[0] = "50aeaf683e083e18fa2d187e"; // Emub
 mubBot.moderators.creators[1] = "50aeb07e96fba52c3ca04ca8"; // DerpTheBass
@@ -116,14 +120,13 @@ botMethods.loadStorage = function(){
 
 botMethods.checkHistory = function(){
     currentlyPlaying = API.getMedia(); history = API.getHistory();
-    caught = 0;
+    caught = -1;
     for(var i = 0; i < history.length; i++){
         if(currentlyPlaying.cid === history[i].media.cid){
             caught++;
         }
     }
-
-    caught--;
+	
     return caught;
 }
 
@@ -165,6 +168,115 @@ botMethods.getID = function(username){
 	}
 
 	return "notFound";
+}
+
+botMethods.removeOffense = function(type, id){
+	setTimeout(function(){
+		var found = false; var foundAs = 0;
+		for(var i = 0; i < mubBot.offenses.length; i++){
+			if(mubBot.offenses[i].ID = id){
+				found = true;
+				foundAs = i;
+			}
+		}
+		
+		if(found){
+			switch(type){
+				case "swear":
+					mubBot.offenses[foundAs].swearOffenses--;
+				break;
+				case "racism":
+					mubBot.offenses[foundAs].racismOffenses--;
+				break;
+				case "begging":
+					mubBot.offenses[foundAs].beggingOffenses--;
+				break;
+			}
+		}
+	}, mubBot.settings.offensesLast * 60000);
+}
+
+botMethods.addOffense = function(type, id){
+	if(id !== null){
+		newOffender = {};
+		newOffender.ID = id;
+		newOffender.swearOffenses = 0;
+		newOffender.racismOffenses = 0;
+		newOffender.beggingOffenses = 0;
+		
+		var isOffender = false; var offenderCount = 0;
+		for(var i = 0; i < mubBot.offenses.length; i++){
+			if(mubBot.offenses[i].ID = id){
+				isOffender = true;
+				offenderCount = i;
+			}
+		}
+		
+		switch(type){
+			case "swear":
+				if(isOffender){
+					mubBot.offenses[offenderCount].swearOffenses++;
+				}else{
+					newOffender.swearOffenses = 1;
+					mubBot.offenses.push(newOffender);
+				}
+			break;
+			case "racism":
+				if(isOffender){
+					mubBot.offenses[offenderCount].racismOffenses++;
+				}else{
+					newOffender.racismOffenses = 1;
+					mubBot.offenses.push(newOffender);
+				}
+			break;
+			case "begging":
+				if(isOffender){
+					mubBot.offenses[offenderCount].beggingOffenses++;
+				}else{
+					newOffender.beggingOffenses = 1;
+					mubBot.offenses.push(newOffender);
+				}
+			break;
+		}
+		
+		botMethods.removeOffense(type, mubBot.offenses[offenderCount].ID);
+	}
+}
+
+botMethods.getOffenses = function(type, id){
+	switch(type){
+		case "swear":
+			for(var i = 0; i < mubBot.offenses.length; i++){
+				if(mubBot.offenses[i].ID = id){
+					return mubBot.offenses[i].swearOffenses;
+				}
+			}
+		break;
+		case "racism":
+			for(var i = 0; i < mubBot.offenses.length; i++){
+				if(mubBot.offenses[i].ID = id){
+					return mubBot.offenses[i].racismOffenses;
+				}
+			}
+		break;
+		case "begging":
+			for(var i = 0; i < mubBot.offenses.length; i++){
+				if(mubBot.offenses[i].ID = id){
+					return mubBot.offenses[i].beggingOffenses;
+				}
+			}
+		break;
+		case "all":
+			for(var i = 0; i < mubBot.offenses.length; i++){
+				if(mubBot.offenses[i].ID = id){
+					var offenses = mubBot.offenses[i].beggingOffenses + mubBot.offenses[i].racismOffenses + mubBot.offenses[i].swearOffenses;
+					return offenses;
+				}
+			}
+		break;
+	}
+	
+	return 0;
 }
 
 
@@ -278,22 +390,38 @@ botMethods.chatEvent = function(data){
 
 				case "historyfilter":
 				case "hf":
-					if(permission > 0) mubBot.settings.historyFilter ? API.sendChat("History filter is enabled") : API.sendChat("History filter is disabled");
+					if(permission > 0) mubBot.settings.historyFilter ? API.sendChat("History filter is enabled.") : API.sendChat("History filter is disabled.");
 				break;
 
 				case "swearfilter":
 				case "sf":
-					if(permission > 0) mubBot.settings.swearFilter ? API.sendChat("Swearing filter is enabled") : API.sendChat("Swearing filter is disabled");
+					if(permission > 0) mubBot.settings.swearFilter ? API.sendChat("Swearing filter is enabled.") : API.sendChat("Swearing filter is disabled.");
 				break;
 
 				case "racismfilter":
 				case "rf":
-					if(permission > 0) mubBot.settings.racismFilter ? API.sendChat("Racism filter is enabled") : API.sendChat("Racism filter is disabled");
+					if(permission > 0) mubBot.settings.racismFilter ? API.sendChat("Racism filter is enabled.") : API.sendChat("Racism filter is disabled.");
 				break;
 
 				case "beggerfilter":
 				case "bf":
-					if(permission > 0) mubBot.settings.beggerFilter ? API.sendChat("Begger filter is enabled") : API.sendChat("Begger filter is disabled");
+					if(permission > 0) mubBot.settings.beggerFilter ? API.sendChat("Begger filter is enabled.") : API.sendChat("Begger filter is disabled.");
+				break;
+				
+				case "offenses":
+					if(permission > 0) mubBot.settings.chatOffenses ? API.sendChat("Chat offenses are being stored.") : API.sendChat("Chat offenses won't be remembered.");
+				break;
+				
+				case "to":
+					if(permission > 2){
+						if(mubBot.settings.chatOffenses){
+							mubBot.settings.chatOffenses = false;
+							API.sendChat("Bot will no longer remember offenses.");
+						}else{
+							mubBot.settings.chatOffenses = true;
+							API.sendChat("Bot will now remember offenses.");
+						}
+					}
 				break;
 
 				case "tsf":
@@ -363,7 +491,13 @@ botMethods.chatEvent = function(data){
 					if(permission > 0);
 					var response = "";
 					var currentTime = new Date().getTime();
-					response = "Running for " + Math.round((currentTime - joined) / 60000) + " minutes - ";
+					var minutes = Math.round((currentTime - joined) / 60000);
+					var hours = 0;
+					while(minutes > 59){
+						minutes = minutes - 60;
+						hours++;
+					}
+					hours === 0 ? response = "Running for " + minutes + " minutes - " : response = "Running for " + hours + "h and " + minutes + "m - ";
 					mubBot.settings.beggerFilter ? response = response + "Begger filter is enabled! - " : response = response + "Begger filter is disabled! - ";
 					mubBot.settings.swearFilter ? response = response + "Swear filter is enabled! - " : response = response + "Swear filter is disabled! - ";
 					mubBot.settings.racismFilter ? response = response + "Racism filter is enabled! - " : response = response + "Racism filter is disabled! - ";
@@ -513,6 +647,18 @@ botMethods.chatEvent = function(data){
 						API.sendChat("This command requires level 2 bot access!");
 					}
 				break;
+				
+				case "offenseslast":
+				case "ol":
+					if(permission > 0){
+						if(commands[1] === "undefined"){
+							API.sendChat("Offenses currently last " + mubBot.settings.offensesLast + " minutes.");
+						}else{
+							mubBot.settings.offensesLast = commands[1];
+							API.sendChat("Offenses now last for " + mubBot.settings.offensesLast + " minutes.");
+						}
+					}
+				break;
 			}
 		}
 		mubBot.misc.ready = false;
@@ -523,6 +669,8 @@ botMethods.chatEvent = function(data){
 		for(var s = 0; s < mubBot.filters.swearWords.length; s++){
 			if(data.message.toLowerCase().indexOf(mubBot.filters.swearWords[s]) > -1 && mubBot.settings.swearFilter){
 				API.moderateDeleteChat(data.chatID);
+				botMethods.addOffense("swear", data.fromID);
+				if(botMethods.getOffenses("swear", data.fromID) === 3 && mubBot.settings.chatOffenses) API.sendChat("@" + data.from + ", whoa! You should really quit saying such nasty words, they are not allowed in this room!");
 			}
 		}
 
@@ -530,6 +678,8 @@ botMethods.chatEvent = function(data){
 		for(var a = 0; a < mubBot.filters.racistWords.length; a++){
 			if(data.message.toLowerCase().indexOf(mubBot.filters.racistWords[a]) > -1 && mubBot.settings.racismFilter){
 				API.moderateDeleteChat(data.chatID);
+				botMethods.addOffense("racism", data.fromID);
+				if(botMethods.getOffenses("racism", data.fromID) === 3 && mubBot.settings.chatOffenses) API.sendChat("@" + data.from + ", listen up, buddy! We don't appreciate racism here!");
 			}
 		}
 
@@ -537,14 +687,15 @@ botMethods.chatEvent = function(data){
 		for(var a = 0; a < mubBot.filters.beggerWords.length; a++){
 			if(data.message.toLowerCase().indexOf(mubBot.filters.beggerWords[a]) > -1 && mubBot.settings.beggerFilter){
 				API.moderateDeleteChat(data.chatID);
-				API.sendChat("@" + data.from + ", please don't ask for fans.");
+				botMethods.addOffense("begging", data.fromID);
+				if(botMethods.getOffenses("begging", data.fromID) === 2 && mubBot.settings.chatOffenses) API.sendChat("@" + data.from + ", we do not allow asking for fans in this room!");
 			}
 		}
 
 		if(mubBot.misc.ready && mubBot.settings.interactive){
 			if(data.message.toLowerCase().indexOf("who made this bot") > -1) API.sendChat(mubBot.misc.origin);
 			if(data.message.toLowerCase().indexOf("stupid bot") > -1) API.sendChat("Thanks, it means a lot coming from a dyslexic kid who fails to spell their name.");
-			if(data.message.toLowerCase().indexOf("he") > -1 || data.message.toLowerCase().indexOf("hi") > -1) API.sendChat("Why hello, @" + data.from);
+			if(data.message.toLowerCase().indexOf("hello") === 0 || data.message.toLowerCase().indexOf("hi") === 0 || data.message.toLowerCase().indexOf("hey") === 0) API.sendChat("Why hello, @" + data.from);
 			if(data.message.toLowerCase().indexOf("sorry") > -1) API.sendChat("It's alright, @" + data.from + ", I forgive you!");
 		}
 
