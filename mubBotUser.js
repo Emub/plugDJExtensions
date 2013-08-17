@@ -434,7 +434,7 @@ botMethods.chatEvent = function(data){
 				break;
 
 				case "modaccess":
-					if(permission > 2){
+					if(permission > 0){
 						mubBot.settings.staffMeansAccess ? API.sendChat("Staff currently has bot access.") : API.sendChat("Staff doesn't have bot access.");
 					}
 				break;
