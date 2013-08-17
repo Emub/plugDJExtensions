@@ -10,9 +10,9 @@ toSave = {};
 toSave.settings = mubBot.settings;
 toSave.moderators = mubBot.moderators;
 
-mubBot.misc.version = "1.6";
+mubBot.misc.version = "1.603";
 mubBot.misc.origin = "This bot was created by Emub and DerpTheBass alone, and it is copyrighted!";
-mubBot.misc.changelog = "Added changelog! (and made the other code a tiiiny bit shorter) <Emub>";
+mubBot.misc.changelog = "(Maybe) fixed space errors <Emub>";
 mubBot.misc.ready = true;
 mubBot.misc.tacos = new Array();
 
@@ -194,6 +194,10 @@ botMethods.chatEvent = function(data){
 		chatCommand = data.message.substring(1);
 		var commands = chatCommand.split(" ");
 		commands.push("undefined");
+		
+		for(var i = 1; i < commands.length; i++){
+			if(commands[i] !== "undefined") commands[1] = commands[1] + " " + commands[i];
+		}
 
 		if(mubBot.misc.ready || permission > 2){
 			switch(commands[0].toLowerCase()){
