@@ -10,9 +10,9 @@ toSave = {};
 toSave.settings = mubBot.settings;
 toSave.moderators = mubBot.moderators;
 
-mubBot.misc.version = "1.603";
+mubBot.misc.version = "1.604";
 mubBot.misc.origin = "This bot was created by Emub and DerpTheBass alone, and it is copyrighted!";
-mubBot.misc.changelog = "(Maybe) fixed space errors <Emub>";
+mubBot.misc.changelog = "Fixed space errors <Emub>";
 mubBot.misc.ready = true;
 mubBot.misc.tacos = new Array();
 
