@@ -12,19 +12,15 @@ toSave = {};
 toSave.settings = mubBot.settings;
 toSave.moderators = mubBot.moderators;
 
-mubBot.misc.version = "1.8";
+mubBot.misc.version = "1.81";
 mubBot.misc.origin = "This bot was created by Emub and DerpTheBass alone, and it is copyrighted!";
-mubBot.misc.changelog = "Added chat offenses, commands and loads of cool stuff <Emub>";
+mubBot.misc.changelog = "Trusted bot users can now check other peoples access levels. <Emub>";
 mubBot.misc.ready = true;
 mubBot.misc.lockSkipping = false;
 mubBot.misc.lockSkipped = "0";
 mubBot.misc.tacos = new Array();
 
 joined = new Date().getTime();
-
-mubBot.filters.swearWords = new Array();
-mubBot.filters.racistWords = new Array();
-mubBot.filters.beggerWords = new Array();
 
 mubBot.moderators.creators = new Array();
 mubBot.moderators.admins = new Array();
@@ -48,44 +44,10 @@ mubBot.moderators.creators[1] = "50aeb07e96fba52c3ca04ca8"; // DerpTheBass
 mubBot.moderators.admins[2] = "50aeb607c3b97a2cb4c35ac1"; // [#808]
 mubBot.moderators.admins[3] = "51264d96d6e4a966883b0702"; // eBot
 
-mubBot.filters.swearWords[0] = "fuck";
-mubBot.filters.swearWords[1] = "shit";
-mubBot.filters.swearWords[2] = "bitch";
-mubBot.filters.swearWords[3] = "cunt";
-mubBot.filters.swearWords[4] = "twat";
-mubBot.filters.swearWords[5] = "fag";
-mubBot.filters.swearWords[6] = "queer";
-
-mubBot.filters.racistWords[0] = "nigger";
-mubBot.filters.racistWords[1] = "kike";
-mubBot.filters.racistWords[2] = "spick";
-mubBot.filters.racistWords[3] = "porchmonkey";
-mubBot.filters.racistWords[4] = "camel jockey";
-mubBot.filters.racistWords[5] = "towelhead";
-mubBot.filters.racistWords[6] = "towel head";
-mubBot.filters.racistWords[7] = "chink";
-mubBot.filters.racistWords[8] = "gook";
-mubBot.filters.racistWords[9] = "porch monkey";
-
-mubBot.filters.beggerWords[0] = "fan4fan";
-mubBot.filters.beggerWords[1] = "fan me";
-mubBot.filters.beggerWords[2] = "fan pls";
-mubBot.filters.beggerWords[3] = "fan please";
-mubBot.filters.beggerWords[4] = "fan 4 fan";
-mubBot.filters.beggerWords[5] = "fan back";
-mubBot.filters.beggerWords[6] = "give me fans";
-mubBot.filters.beggerWords[7] = "gimme fans";
-
-mubBot.misc.tacos[0] = "crispy taco";
-mubBot.misc.tacos[1] = "mexican taco";
-mubBot.misc.tacos[2] = "vegetarian taco";
-mubBot.misc.tacos[3] = "spicy taco";
-mubBot.misc.tacos[4] = "meatlover taco";
-mubBot.misc.tacos[5] = "cheese taco";
-mubBot.misc.tacos[6] = "wet hamburger";
-mubBot.misc.tacos[7] = "taco shell";
-mubBot.misc.tacos[8] = "delicious taco";
-mubBot.misc.tacos[9] = "gross taco";
+mubBot.filters.swearWords = ["fuck", "shit", "bitch", "cunt", "twat", "fag", "queer"];
+mubBot.filters.racistWords = ["nigger", "kike", "spick", "porchmonkey", "camel jockey", "towelhead", "towel head", "chink", "gook", "porch monkey"];
+mubBot.filters.beggerWords = ["fan4fan", "fan me", "fan pls", "fans pls", "fan please", "fan 4 fan", "f a n 4 f a n", "fans please", "fan back", "give me fans", "gimme fans", "gimme fan", "give me fan"];
+mubBot.misc.tacos = ["crispy taco", "mexican taco", "vegetarian taco", "spicy taco", "meatlover taco", "cheese taco", "wet hamburger", "taco shell", "delicious taco", "gross taco"];
 
 mubBot.pubVars.skipOnExceed;
 mubBot.pubVars.command = false;
@@ -385,6 +347,22 @@ botMethods.chatEvent = function(data){
 						}
 					}else{
 						API.sendChat("@" + data.from + ", you have level " + permission + " access");
+					}
+				break;
+				
+				case "offenses":
+					if(commands[1] !== "undefined"){
+						if(commands[1].indexOf("@") === 0) commands[1] = commands[1].substring(1);
+						if(permission > 0){
+
+							var userOffenses = botMethods.getOffenses("all", botMethods.getID(commands[1]));
+							API.sendChat("@" + commands[1] + ", has " + userOffenses + " recorded chat offenses.");
+
+						}else{
+							API.sendChat("You must be at least a trusted bot user to check others access levels!");
+						}
+					}else{
+						API.sendChat("You have " + botMethods.getOffenses("all", data.fromID) + " offenses recorded. (Offenses are kept for " + mubBot.settings.offensesLast + " minutes)");
 					}
 				break;
 
