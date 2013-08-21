@@ -1,4 +1,5 @@
 
+
 var mubBot = {};
 mubBot.misc = {};
 mubBot.settings = {};
@@ -361,18 +362,19 @@ botMethods.chatEvent = function(data){
 				break;
 
 				case "status":
-					if(permission > 0);
-					var response = "";
-					var currentTime = new Date().getTime();
-					response = "Running for " + Math.round((currentTime - joined) / 60000) + " minutes - ";
-					mubBot.settings.beggerFilter ? response = response + "Begger filter is enabled! - " : response = response + "Begger filter is disabled! - ";
-					mubBot.settings.swearFilter ? response = response + "Swear filter is enabled! - " : response = response + "Swear filter is disabled! - ";
-					mubBot.settings.racismFilter ? response = response + "Racism filter is enabled! - " : response = response + "Racism filter is disabled! - ";
-					mubBot.settings.historyFilter ? response = response + "History filter is enabled! - " : response = response + "History filter is disabled! - ";
-					response = response + "MaxLength is " + mubBot.settings.maxLength + " minutes - ";
-					response = response + "Cooldown is " + mubBot.settings.cooldown + " seconds - ";
-					response = response + "Mod access is " + mubBot.settings.staffMeansAccess;
-					API.sendChat(response);
+					if(permission > 0){
+						var response = "";
+						var currentTime = new Date().getTime();
+						response = "Running for " + Math.round((currentTime - joined) / 60000) + " minutes - ";
+						mubBot.settings.beggerFilter ? response = response + "Begger filter is enabled! - " : response = response + "Begger filter is disabled! - ";
+						mubBot.settings.swearFilter ? response = response + "Swear filter is enabled! - " : response = response + "Swear filter is disabled! - ";
+						mubBot.settings.racismFilter ? response = response + "Racism filter is enabled! - " : response = response + "Racism filter is disabled! - ";
+						mubBot.settings.historyFilter ? response = response + "History filter is enabled! - " : response = response + "History filter is disabled! - ";
+						response = response + "MaxLength is " + mubBot.settings.maxLength + " minutes - ";
+						response = response + "Cooldown is " + mubBot.settings.cooldown + " seconds - ";
+						response = response + "Mod access is " + mubBot.settings.staffMeansAccess;
+						API.sendChat(response);
+					}
 				break;
 
 				case "maxlength":
