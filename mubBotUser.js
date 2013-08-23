@@ -1,5 +1,3 @@
-
-
 var mubBot = {};
 mubBot.misc = {};
 mubBot.settings = {};
@@ -12,9 +10,9 @@ toSave = {};
 toSave.settings = mubBot.settings;
 toSave.moderators = mubBot.moderators;
 
-mubBot.misc.version = "1.7";
+mubBot.misc.version = "1.8";
 mubBot.misc.origin = "This bot was created by Emub and DerpTheBass alone, and it is copyrighted!";
-mubBot.misc.changelog = "Added !lockskip command! :D <Emub>";
+mubBot.misc.changelog = "Added !linkify and !songlink -Derp";
 mubBot.misc.ready = true;
 mubBot.misc.lockSkipping = false;
 mubBot.misc.lockSkipped = "0";
@@ -211,6 +209,20 @@ botMethods.chatEvent = function(data){
 
 		if(mubBot.misc.ready || permission > 2){
 			switch(commands[0].toLowerCase()){
+			       case "linkify":
+                                   if(commands[1] === "undefined"){
+                                       API.sendChat("@" + obj.from + " You need to put a link!");
+                                   }else if(commands[1].toLowerCase().indexOf("plug.dj" || "bug.dj") === -1){
+                                       API.sendChat("http://"+commands[1]);
+                                   }else{
+                                       API.sendChat("Nice try! Advertising is not allowed in this room.");
+                                   }
+                                break;
+                                
+                                case "songlink":
+                                     API.sendChat("@"+obj.from+" "+"http://youtu.be/"+API.getMedia().cid);
+                                break;
+                                
 				case "meh":
 					if(permission > 0) $("#button-vote-negative").click();
 				break;
