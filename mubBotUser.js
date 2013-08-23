@@ -212,7 +212,7 @@ botMethods.chatEvent = function(data){
 			       case "linkify":
                                    if(commands[1] === "undefined"){
                                        API.sendChat("@" + data.from + " You need to put a link!");
-                                   }else if(commands[1].toLowerCase().indexOf("plug.dj" || "bug.dj") === -1){
+                                   }else if(commands[1].toLowerCase().indexOf("plug.dj") === -1 && commands[1].toLowerCase().indexOf("bug.dj") === -1){
                                        API.sendChat("http://"+commands[1]);
                                    }else{
                                        API.sendChat("Nice try! Advertising is not allowed in this room.");
