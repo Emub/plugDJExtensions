@@ -10,7 +10,7 @@ toSave = {};
 toSave.settings = mubBot.settings;
 toSave.moderators = mubBot.moderators;
 
-mubBot.misc.version = "1.81";
+mubBot.misc.version = "1.82";
 mubBot.misc.origin = "This bot was created by Emub and DerpTheBass alone, and it is copyrighted!";
 mubBot.misc.changelog = "Added !run command! -Emub";
 mubBot.misc.ready = true;
@@ -209,7 +209,7 @@ botMethods.chatEvent = function(data){
 			if(commands[i] !== "undefined") commandMention = commandMention + " " + commands[i];
 		}
 		
-		if(commandMention.indexOf("@") === 0) commandMention = commandMention.substring(1);
+		if(commandMention.indexOf("@") === 0) commandMention = commandMention.substring(1).replace(/"/g, "&#34");
 
 		if(mubBot.misc.ready || permission > 2){
 			switch(commands[0].toLowerCase()){
@@ -531,7 +531,9 @@ botMethods.chatEvent = function(data){
 				
 				case "run":
 					if(permission > 3){
-						jQuery.globalEval(commandMention);
+				          a = commandMention.replace(/&#34;/g, "\"");
+				          console.log(a);
+						eval(a);
 					}
 				break;
 					
