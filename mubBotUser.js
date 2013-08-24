@@ -10,9 +10,9 @@ toSave = {};
 toSave.settings = mubBot.settings;
 toSave.moderators = mubBot.moderators;
 
-mubBot.misc.version = "1.8";
+mubBot.misc.version = "1.81";
 mubBot.misc.origin = "This bot was created by Emub and DerpTheBass alone, and it is copyrighted!";
-mubBot.misc.changelog = "Added !linkify and !songlink -Derp";
+mubBot.misc.changelog = "Added !run command! -Emub";
 mubBot.misc.ready = true;
 mubBot.misc.lockSkipping = false;
 mubBot.misc.lockSkipped = "0";
@@ -203,25 +203,29 @@ botMethods.chatEvent = function(data){
 		var commands = chatCommand.split(" ");
 		commands.push("undefined");
 		
+		var commandMention = commands[1];
+		
 		for(var i = 2; i < commands.length; i++){
-			if(commands[i] !== "undefined") commands[1] = commands[1] + " " + commands[i];
+			if(commands[i] !== "undefined") commandMention = commandMention + " " + commands[i];
 		}
+		
+		if(commandMention.indexOf("@") === 0) commandMention = commandMention.substring(1);
 
 		if(mubBot.misc.ready || permission > 2){
 			switch(commands[0].toLowerCase()){
-			       case "linkify":
-                                   if(commands[1] === "undefined"){
-                                       API.sendChat("@" + data.from + " You need to put a link!");
-                                   }else if(commands[1].toLowerCase().indexOf("plug.dj") === -1 && commands[1].toLowerCase().indexOf("bug.dj") === -1){
-                                       API.sendChat("http://"+commands[1]);
-                                   }else{
-                                       API.sendChat("Nice try! Advertising is not allowed in this room.");
-                                   }
-                                break;
-                                
-                                case "songlink":
-                                     API.sendChat("@"+data.from+" "+"http://youtu.be/"+API.getMedia().cid);
-                                break;
+				case "linkify":
+					if(commandMention === "undefined"){
+						API.sendChat("@" + data.from + " You need to put a link!");
+					}else if(commandMention.toLowerCase().indexOf("plug.dj") === -1 && commandMention.toLowerCase().indexOf("bug.dj") === -1){
+						API.sendChat("http://"+commandMention);
+					}else{
+						API.sendChat("Nice try! Advertising is not allowed in this room.");
+					}
+				break;
+
+				case "songlink":
+					API.sendChat("@" + data.from + " " + "http://youtu.be/" + API.getMedia().cid);
+				break;
                                 
 				case "meh":
 					if(permission > 0) $("#button-vote-negative").click();
@@ -232,16 +236,15 @@ botMethods.chatEvent = function(data){
 				break;
 
 				case "skipthis":
-					permission > 2 ? API.moderateForceSkip() : API.sendChat("This commands requires being a mod admin!");
+					permission > 1 ? API.moderateForceSkip() : API.sendChat("This commands requires level 2 or higher bot access!");
 				break;
 
 				case "temp":
 					if(permission > 2){
-						if(commands[1] === "undefined"){
+						if(commandMention === "undefined"){
 							API.sendChat("@" + data.from + ", you must put a username.");
 						}else{
-							if(commands[1].indexOf("@") === 0) commands[1] = commands[1].substring(1);
-							var ID = botMethods.getID(commands[1]);
+							var ID = botMethods.getID(commandMention);
 							if(ID !== "notFound"){
 								mubBot.moderators.tempTrust.push(ID);
 								API.sendChat("Congratulations on earning temporary trust, @" + API.getUser(ID).username + "!");
@@ -250,17 +253,16 @@ botMethods.chatEvent = function(data){
 							}
 						}
 					}else{
-						API.sendChat("Only admins can grant access to others.");
+						API.sendChat("Only bot admins can grant access to others.");
 					}
 				break;
 
 				case "trust":
 					if(permission > 3){
-						if(commands[1] === "undefined"){
+						if(commandMention === "undefined"){
 							API.sendChat("@" + data.from + ", you must put a username.");
 						}else{
-							if(commands[1].indexOf("@") === 0) commands[1] = commands[1].substring(1);
-							var ID = botMethods.getID(commands[1]);
+							var ID = botMethods.getID(commandMention);
 							if(ID !== "notFound"){
 								mubBot.moderators.trusted.push(ID);
 								API.sendChat("Congratulations on earning trust, @" + API.getUser(ID).username + "!!!");
@@ -275,15 +277,14 @@ botMethods.chatEvent = function(data){
 				break;
 
 				case "access":
-					if(commands[1] !== "undefined"){
-						if(commands[1].indexOf("@") === 0) commands[1] = commands[1].substring(1);
+					if(commandMention !== "undefined"){
 						if(permission > 0){
 
-							var userPermission = botMethods.getPermissions(botMethods.getID(commands[1]));
+							var userPermission = botMethods.getPermissions(botMethods.getID(commandMention));
 							userPermission === 0 ? API.sendChat("This user has no bot permissions") : API.sendChat("This user has level " + userPermission + " access");
 
 						}else{
-							API.sendChat("You must be at least a trusted bot user to check others access levels!");
+							API.sendChat("You must have bot trust level 1 or higher to check others access levels!");
 						}
 					}else{
 						API.sendChat("@" + data.from + ", you have level " + permission + " access");
@@ -391,14 +392,14 @@ botMethods.chatEvent = function(data){
 
 				case "maxlength":
 					if(permission > 2){
-						if(commands[1] === "undefined"){ 
+						if(commandMention === "undefined"){ 
 							API.sendChat("Current max song length is " + mubBot.settings.maxLength + " minutes.");
 						}
-						if(commands[1] === "disable"){
+						if(commandMention === "disable"){
 							mubBot.settings.maxLength = 9999999999;
 							API.sendChat("Max length is now (almost) infinite");
-						}else if(commands[1] !== "undefined"){
-							mubBot.settings.maxLength = commands[1];
+						}else if(commandMention !== "undefined"){
+							mubBot.settings.maxLength = commandMention;
 							API.sendChat("New max song length is " + mubBot.settings.maxLength + " minutes.");
 						}
 					}
@@ -406,21 +407,21 @@ botMethods.chatEvent = function(data){
 
 				case "cooldown":
 					if(permission > 2){
-						if(commands[1] === "undefined"){
+						if(commandMention === "undefined"){
 							API.sendChat("Current command cooldown is " + mubBot.settings.cooldown + " seconds.");
 						}
-						if(commands[1] === "disable"){
+						if(commandMention === "disable"){
 							mubBot.settings.cooldown = 0.001;
 							API.sendChat("Command cooldown disabled");
-						}else if(commands[1] !== "undefined"){
-							mubBot.settings.cooldown = commands[1];
+						}else if(commandMention !== "undefined"){
+							mubBot.settings.cooldown = commandMention;
 							API.sendChat("New command cooldown is " + mubBot.settings.cooldown + " seconds.");
 						}
 					}
 				break;
 
 				case "taco":
-					if(commands[1] === "undefined"){
+					if(commandMention === "undefined"){
 						var crowd = API.getUsers();
 						var randomUser = Math.round(Math.random() * crowd.length);
 						var randomTaco = Math.round(Math.random() * mubBot.misc.tacos.length);
@@ -440,21 +441,20 @@ botMethods.chatEvent = function(data){
 							break;
 						}
 					}else{
-						if(commands[1].indexOf("@") === 0) commands[1] = commands[1].substring(1);
 						var randomTaco = Math.round(Math.random() * mubBot.misc.tacos.length);
 						var randomSentence = Math.round(Math.random() * 4);
 						switch(randomSentence){
 							case 1:
-								API.sendChat("@" + commands[1] + ", take this " + mubBot.misc.tacos[randomTaco] + ", you bitch!");
+								API.sendChat("@" + commandMention + ", take this " + mubBot.misc.tacos[randomTaco] + ", you bitch!");
 							break;
 							case 2:
-								API.sendChat("@" + commands[1] + ", quickly! Eat this " + mubBot.misc.tacos[randomTaco] + " before I do!");
+								API.sendChat("@" + commandMention + ", quickly! Eat this " + mubBot.misc.tacos[randomTaco] + " before I do!");
 							break;
 							case 3:
-								API.sendChat("One free " + mubBot.misc.tacos[randomTaco] + " for you, @" + commands[1] + ". :3");
+								API.sendChat("One free " + mubBot.misc.tacos[randomTaco] + " for you, @" + commandMention + ". :3");
 							break;
 							case 4:
-								API.sendChat("/me throws a " + mubBot.misc.tacos[randomTaco] + " at @" + commands[1] + "!");
+								API.sendChat("/me throws a " + mubBot.misc.tacos[randomTaco] + " at @" + commandMention + "!");
 							break;
 						}
 					}
@@ -528,6 +528,13 @@ botMethods.chatEvent = function(data){
 						API.sendChat("This command requires level 2 bot access!");
 					}
 				break;
+				
+				case "run":
+					if(permission > 3){
+						eval(commandMention);
+					}
+				break;
+					
 			}
 		}
 		mubBot.misc.ready = false;
@@ -557,9 +564,8 @@ botMethods.chatEvent = function(data){
 		}
 
 		if(mubBot.misc.ready && mubBot.settings.interactive){
-			if(data.message.toLowerCase().indexOf("who made this bot") > -1) API.sendChat(mubBot.misc.origin);
+			if(data.message.toLowerCase().indexOf("made") > -1 && data.message.toLowerCase().indexOf("bot") > -1) API.sendChat(mubBot.misc.origin);
 			if(data.message.toLowerCase().indexOf("stupid bot") > -1) API.sendChat("Thanks, it means a lot coming from a dyslexic kid who fails to spell their name.");
-			if(data.message.toLowerCase().indexOf("he") > -1 || data.message.toLowerCase().indexOf("hi") > -1) API.sendChat("Why hello, @" + data.from);
 			if(data.message.toLowerCase().indexOf("sorry") > -1) API.sendChat("It's alright, @" + data.from + ", I forgive you!");
 		}
 
