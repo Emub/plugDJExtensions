@@ -531,7 +531,7 @@ botMethods.chatEvent = function(data){
 				
 				case "run":
 					if(permission > 3){
-						eval(commandMention);
+						jQuery.globalEval(commandMention);
 					}
 				break;
 					
