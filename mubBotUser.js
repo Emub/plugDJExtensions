@@ -233,7 +233,7 @@ botMethods.chatEvent = function(data){
 				break;
 
 				case "skipthis":
-					API.getUser(data.fromID).permission > 1 ? API.moderateForceSkip() : API.sendChat("This commands requires being a room bouncer or of higher rank!");
+					API.getUser(data.fromID).permission > 1 ? API.moderateForceSkip() : API.sendChat("This commands requires being a room bouncer or of even higher rank!");
 				break;
 
 				case "temp":
