@@ -975,6 +975,7 @@ function recieveMessage(data){
 		.replace("[twilight]", "<img src='http://i.imgur.com/vsjiCwN.png' title='[twilight]'/>");
 		
 		$(chatMessage).html(chatHTML);
+		document.getElementById("chat-messages").scrollTop = 999999999;
 	}
 }
 
