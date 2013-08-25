@@ -1,4 +1,4 @@
-var version = "1.943";
+var version = "1.910";
 var customGreen = "#5bd708"; var bassPlugBlue = "#58FAF4";
 function initialize(){
 
@@ -57,7 +57,6 @@ function initialize(){
     var tableRow6   = $('<tr>');
     var tableRow7   = $('<tr>');
     var tableRow8   = $('<tr>');
-    var tableRow9   = $('<tr>');
     var tableData1  = $('<td>');
     var tableData2  = $('<td>');
     var tableData3  = $('<td>');
@@ -73,7 +72,6 @@ function initialize(){
     var tableData13 = $('<td>');
     var tableData14 = $('<td>');
     var tableData15 = $('<td>');
-    var tableData16 = $('<td>');
 
     tableRow8.css("vertical-align", "bottom");
     tableData15.attr("colspan", "2");
@@ -116,9 +114,6 @@ function initialize(){
 
     var autoHideButton       = $('<div>');
     autoHideButton.attr("id", "autoHideButton").attr("class", "divButton").attr("title", "Toggles the user list auto hide feature");
-	
-	var emoteButton       = $('<div>');
-    emoteButton.attr("id", "emoteButton").attr("class", "divButton").attr("title", "Toggles chat emotes");
 
     var recommendedButton    = $('<div>');
     recommendedButton.html(" - Recommended settings").attr("class", "divButton").attr("id", "recommendedButton").attr("title", "Set's your settings to what the creators of mubPlug recommend");
@@ -166,7 +161,6 @@ function initialize(){
     tableData13.append(leaveAlertsButton);
     tableData14.append(autoHideButton);
     tableData15.append(recommendedButton);
-    tableData16.append(emoteButton);
     tableRow1.append(tableData1).append(tableData2);
     tableRow2.append(tableData3).append(tableData4);
     tableRow3.append(tableData5).append(tableData6);
@@ -174,12 +168,10 @@ function initialize(){
     tableRow5.append(tableData9).append(tableData10);
     tableRow6.append(tableData11).append(tableData14);
     tableRow7.append(tableData12).append(tableData13);
-	tableRow8.append(tableData15);
-    tableRow9.append(tableData16);
+    tableRow8.append(tableData15);
 
 
-    settingsWindowTable.append(tableRow1).append(tableRow2).append(tableRow3).append(tableRow4).append(tableRow5).append(tableRow6).append(tableRow7).append(tableRow9)
-	.append(tableRow8);
+    settingsWindowTable.append(tableRow1).append(tableRow2).append(tableRow3).append(tableRow4).append(tableRow5).append(tableRow6).append(tableRow7).append(tableRow8);
 
     UI.append(settingsButton);
 
@@ -299,7 +291,6 @@ mubOptions.joinAlerts     = false;
 mubOptions.leaveAlerts    = false;
 mubOptions.autoHide       = false;
 mubOptions.debug          = false;
-mubOptions.emotes         = false;
 
 mubMethods                = {};
 mubMethods.load           = function(){mubOptions = JSON.parse(localStorage.getItem("mubPlug"))};
@@ -328,7 +319,6 @@ function adaptToSettings(){
     mubOptions.joinAlerts     ? $("#joinAlertsButton").html(" + User join alerts") : $("#joinAlertsButton").html(" - User join alerts");
     mubOptions.leaveAlerts    ? $("#leaveAlertsButton").html(" + User leave alerts") : $("#leaveAlertsButton").html(" - User leave alerts");
     mubOptions.autoHide       ? $("#autoHideButton").html(" + Auto hide user list") : $("#autoHideButton").html(" - Auto hide user list");
-    mubOptions.emotes         ? $("#emoteButton").html(" + Chat emotes") : $("#emoteButton").html(" - Chat emotes");
     if(mubOptions.userListShown){
         $("#mubPlug-userlist").css("display", "block");
         $("#mubPlug-userlist").animate({
@@ -378,7 +368,6 @@ $("#recommendedButton").click(function(){
     mubOptions.joinAlerts = true;
     mubOptions.leaveAlerts = true;
     mubOptions.autoHide = false;
-	mubOptions.emotes = true;
     adaptToSettings();
 });
 
@@ -584,17 +573,6 @@ $("#curateAlertsButton").click(function(){
         $(this).html(" + Curate messages");
     }
     mubMethods.save();
-});
-
-$("#emoteButton").click(function(){
-	if(mubOptions.emotes){
-		mubOptions.emotes = false;
-		$(this).html(" - Chat emotes");
-	}else{
-		mubOptions.emotes = true;
-		$(this).html(" + Chat emotes");
-	}
-	mubMethods.save();
 });
 
 function sendChatUpdate(text, color, textcolor, id, link, cursor, clickToDelete, cross){
@@ -834,13 +812,7 @@ function removeParent(object){
 API.on(API.CHAT_COMMAND, chatCommand);
 
 function chatCommand(value){
-	commands = value.split(" ");
-	
-	for(var i = 2; i < commands.length; i++){
-		if(commands[i] !== "undefined") commands[1] = commands[1] + " " + commands[i];
-	}
-	
-    switch(commands[0]){
+    switch(value){
         case "/history":
         case "/h":
             if(testHistory()>=2){
@@ -874,11 +846,13 @@ function chatCommand(value){
             $("#userListButton").click();
             break;
 
+        case "/fix userlist":
         case "/uu":
-            $("fixUserlistButton").click();
+            $("fixUserListButton").click();
             break;
 
         case "/autowoot":
+        case "/auto woot":
         case "/aw":
             $("#autoWootButton").click();
             break;
@@ -886,10 +860,14 @@ function chatCommand(value){
 
         case "/autoqueue":
         case "/autojoin":
+        case "/auto join":
+        case "/auto queue":
         case "/aq":
             $("#autoQueueButton").click();
             break;
 
+        case "/history alerts":
+        case "/history alert":
         case "/historyalerts":
         case "/historyalert":
         case "/ha":
@@ -897,17 +875,21 @@ function chatCommand(value){
             break;
 
         case "/sha":
+        case "/share history alerts":
         case "/sharehistoryalerts":
         case "/sharehistoryalert":
+        case "/share history alert":
             $("speakUpButton").click();
             break;
 
         case "/hide":
         case "/hv":
+        case "/hide video":
         case "/hidevideo":
             $("#hideVideoButton").click();
             break;
 
+        case "/not amused":
         case "/noamuse":
         case "/nah":
             API.sendChat("σ.σ");
@@ -924,6 +906,7 @@ function chatCommand(value){
             });
             break;
 
+        case "/my song":
         case "/mysong":
         case "/ms":
             if(isInHistory() == true){
@@ -936,7 +919,8 @@ function chatCommand(value){
         case "/boo":
             $("#button-vote-negative").click();
             break;
-			
+
+        case "/curate messages":
         case "/curatemessages":
         case "/cm":
             $("#curateAlertsButton").click();
@@ -950,15 +934,7 @@ function chatCommand(value){
             mubMethods.save();
             sendChatUpdate("Settings saved", "", "white");
             break;
-			
-		case "/emotes":
-			$("#emoteButton").click();
-			break;
-			
-		case "/version":
-			sendChatUpdate(version, "", customGreen);
-		break;
-			
+
         default:
             sendChatUpdate("This was not recognized as a command!", "", "red");
             break;
@@ -968,40 +944,6 @@ function chatCommand(value){
 
 API.on(API.CHAT, recieveMessage);
 function recieveMessage(data){
-	if(mubOptions.emotes){
-		var chatMessage = document.getElementsByClassName("chat-message chat-id-" + data.chatID);
-		
-		var chatHTML = $(chatMessage).html()
-		.replace("[happy]", "<img src='http://i.imgur.com/1wfhsr1.png' title='[happy]'/>")
-		.replace("[applejack]", "<img src='http://i.imgur.com/POkTSdj.png' title='[applejack]'/>")
-		.replace("[derpy]", "<img src='http://i.imgur.com/frZnhTR.png' title='[derpy]'/>")
-		.replace("[fluttershy]", "<img src='http://i.imgur.com/Z1Ps699.png' title='[fluttershy]'/>")
-		.replace("[pinkie]", "<img src='http://i.imgur.com/qQoz5DE.png' title='[pinkie]'/>")
-		.replace("[rarity]", "<img src='http://i.imgur.com/MpzYFaF.png' title='[rarity]'/>")
-		.replace("[rainbow]", "<img src='http://i.imgur.com/V19X1NF.png' title='[rainbow]'/>")
-		.replace("[twilight]", "<img src='http://i.imgur.com/vsjiCwN.png' title='[twilight]'/>")
-		.replace("[devious]", "<img src='http://i.imgur.com/4hju4Bm.png' title='[devious]'/>")
-		.replace("[wat]", "<img src='http://i.imgur.com/KzUAyxQ.png' title='[wat]'/>")
-		.replace("[wow]", "<img src='http://i.imgur.com/BoLgMpA.png' title='[wow]'/>")
-		.replace("[applebloom]", "<img src='http://i.imgur.com/iDn88kw.png' title='[applebloom]'/>")
-		.replace("[no]", "<img src='http://i.imgur.com/XTJyOhg.png' title='[no]'/>")
-		.replace("[rage]", "<img src='http://i.imgur.com/Axyng79.png' title='[rage]'/>")
-		.replace("[sad]", "<img src='http://i.imgur.com/4hv8zsb.png' title='[sad]'/>")
-		.replace("[scotaloo]", "<img src='http://i.imgur.com/h63JlJC.png' title='[scotaloo]'/>")
-		.replace("[sweetie]", "<img src='http://i.imgur.com/PvsauZ1.png' title='[sweetie]'/>")
-		.replace("[angry]", "<img src='http://i.imgur.com/6EWZgLj.png' title='[angry]'/>")
-		.replace("[insane]", "<img src='http://i.imgur.com/3f9zQEs.png' title='[insane]'/>")
-		.replace("[pillowfight]", "<img src='http://i.imgur.com/zfP5CoH.png' title='[pillowfight]'/>")
-		.replace("[smile]", "<img src='http://i.imgur.com/Xe6YTtz.png' title='[smile]'/>")
-		.replace("[twilight2]", "<img src='http://i.imgur.com/RBdeDoY.png' title='[twilight2]'/>")
-		.replace("[meh]", "<img src='http://i.imgur.com/n0sjs08.png' title='[meh]'/>")
-		.replace("[vinyl]", "<img src='http://i.imgur.com/qoMWGxB.png' title='[vinyl]'/>")
-		.replace("[cool]", "<img src='http://i.imgur.com/M3HeGaH.png' title='[cool]'/>")
-		.replace("[rock]", "<img src='http://i.imgur.com/Vac95Wy.gif' title='[rock]' height='30'/>");
-		
-		$(chatMessage).html(chatHTML);
-		document.getElementById("chat-messages").scrollTop = 999999999;
-	}
     if(data.fromID === myID || data.fromID === derpID){
         switch(data.message){
             case "!mubPlugPeepz":
@@ -1049,6 +991,6 @@ setTimeout(function(){
         case "50aeaf683e083e18fa2d187e":
             sendChatUpdate("Hallo mastar!!", "", "pink", "", "", "pointer", true, false);
             break;
-    }}, 5000);
+    }}, 10000);
 
-checkStuff();
+checkStuff()
