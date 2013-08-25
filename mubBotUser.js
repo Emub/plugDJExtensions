@@ -233,7 +233,7 @@ botMethods.chatEvent = function(data){
 				break;
 
 				case "skipthis":
-					API.getUser(data.fromID).permission > 1 ? API.moderateForceSkip() : API.sendChat("This commands requires being a room bouncer or of even higher rank!");
+					API.getUser(data.fromID).permission > 1 ? API.moderateForceSkip() : API.sendChat("This commands requires being a room bouncer or of higher rank!");
 				break;
 
 				case "temp":
@@ -536,6 +536,10 @@ botMethods.chatEvent = function(data){
 				        console.log(a);
 						eval(a);
 					}
+				break;
+				
+				case "mubplug":
+					API.sendChat("mubPlug is a plug.dj extensions, made by the same developers who made me! Download link here: http://bit.ly/mubPlug");
 				break;
 					
 			}
