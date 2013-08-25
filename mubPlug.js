@@ -175,12 +175,12 @@ function initialize(){
     tableRow5.append(tableData9).append(tableData10);
     tableRow6.append(tableData11).append(tableData14);
     tableRow7.append(tableData12).append(tableData13);
+	tableRow8.append(tableData15);
     tableRow9.append(tableData16);
-	
-    tableRow8.append(tableData15);
 
 
-    settingsWindowTable.append(tableRow1).append(tableRow2).append(tableRow3).append(tableRow4).append(tableRow5).append(tableRow6).append(tableRow7).append(tableRow8).append(tableRow9);
+    settingsWindowTable.append(tableRow1).append(tableRow2).append(tableRow3).append(tableRow4).append(tableRow5).append(tableRow6).append(tableRow7).append(tableRow9)
+	.append(tableRow8);
 
     UI.append(settingsButton);
 
@@ -329,7 +329,7 @@ function adaptToSettings(){
     mubOptions.joinAlerts     ? $("#joinAlertsButton").html(" + User join alerts") : $("#joinAlertsButton").html(" - User join alerts");
     mubOptions.leaveAlerts    ? $("#leaveAlertsButton").html(" + User leave alerts") : $("#leaveAlertsButton").html(" - User leave alerts");
     mubOptions.autoHide       ? $("#autoHideButton").html(" + Auto hide user list") : $("#autoHideButton").html(" - Auto hide user list");
-    mubOptions.emotes         ? $("#autoHideButton").html(" + Chat emotes") : $("#autoHideButton").html(" - Chat emotes");
+    mubOptions.emotes         ? $("#emoteButton").html(" + Chat emotes") : $("#emoteButton").html(" - Chat emotes");
     if(mubOptions.userListShown){
         $("#mubPlug-userlist").css("display", "block");
         $("#mubPlug-userlist").animate({
