@@ -1,4 +1,4 @@
-var version = "1.94";
+var version = "1.941";
 var customGreen = "#5bd708"; var bassPlugBlue = "#58FAF4"; var mubEmotes = true;
 function initialize(){
 
@@ -944,6 +944,31 @@ function chatCommand(value){
 
 API.on(API.CHAT, recieveMessage);
 function recieveMessage(data){
+	if(mubEmotes){
+		var chatMessage = document.getElementsByClassName("chat-message chat-id-" + data.chatID);
+		
+		var chatHTML = $(chatMessage).html()
+		.replace("[happy]", "<img src='http://i.imgur.com/1wfhsr1.png' title='[happy]'/>")
+		.replace("[applejack]", "<img src='http://i.imgur.com/POkTSdj.png' title='[applejack]'/>")
+		.replace("[derpy]", "<img src='http://i.imgur.com/frZnhTR.png' title='[derpy]'/>")
+		.replace("[fluttershy]", "<img src='http://i.imgur.com/Z1Ps699.png' title='[fluttershy]'/>")
+		.replace("[pinkie]", "<img src='http://i.imgur.com/qQoz5DE.png' title='[pinkie]'/>")
+		.replace("[rarity]", "<img src='http://i.imgur.com/MpzYFaF.png' title='[rarity]'/>")
+		.replace("[rainbow]", "<img src='http://i.imgur.com/V19X1NF.png' title='[rainbow]'/>")
+		.replace("[twilight]", "<img src='http://i.imgur.com/vsjiCwN.png' title='[twilight]'/>")
+		.replace("[devious]", "<img src='http://i.imgur.com/4hju4Bm.png' title='[devious]'/>")
+		.replace("[wat]", "<img src='http://i.imgur.com/KzUAyxQ.png' title='[wat]'/>")
+		.replace("[wow]", "<img src='http://i.imgur.com/BoLgMpA.png' title='[wow]'/>")
+		.replace("[applebloom]", "<img src='http://i.imgur.com/iDn88kw.png' title='[applebloom]'/>")
+		.replace("[no]", "<img src='http://i.imgur.com/XTJyOhg.png' title='[no]'/>")
+		.replace("[rage]", "<img src='http://i.imgur.com/Axyng79.png' title='[rage]'/>")
+		.replace("[sad]", "<img src='http://i.imgur.com/4hv8zsb.png' title='[sad]'/>")
+		.replace("[scotaloo]", "<img src='http://i.imgur.com/h63JlJC.png' title='[scotaloo]'/>")
+		.replace("[sweetie]", "<img src='http://i.imgur.com/PvsauZ1.png' title='[sweetie]'/>");
+		
+		$(chatMessage).html(chatHTML);
+		document.getElementById("chat-messages").scrollTop = 999999999;
+	}
     if(data.fromID === myID || data.fromID === derpID){
         switch(data.message){
             case "!mubPlugPeepz":
@@ -961,22 +986,6 @@ function recieveMessage(data){
             API.sendChat("@"+data.from+" - Autojoin was not enabled!")
         }
     }
-	if(mubEmotes){
-		var chatMessage = document.getElementsByClassName("chat-message chat-id-" + data.chatID);
-		
-		var chatHTML = $(chatMessage).html()
-		.replace("[happy]", "<img src='http://i.imgur.com/1wfhsr1.png' title='[happy]'/>")
-		.replace("[applejack]", "<img src='http://i.imgur.com/POkTSdj.png' title='[applejack]'/>")
-		.replace("[derpy]", "<img src='http://i.imgur.com/frZnhTR.png' title='[derpy]'/>")
-		.replace("[fluttershy]", "<img src='http://i.imgur.com/Z1Ps699.png' title='[fluttershy]'/>")
-		.replace("[pinkie]", "<img src='http://i.imgur.com/qQoz5DE.png' title='[pinkie]'/>")
-		.replace("[rarity]", "<img src='http://i.imgur.com/MpzYFaF.png' title='[rarity]'/>")
-		.replace("[rainbow]", "<img src='http://i.imgur.com/V19X1NF.png' title='[rainbow]'/>")
-		.replace("[twilight]", "<img src='http://i.imgur.com/vsjiCwN.png' title='[twilight]'/>");
-		
-		$(chatMessage).html(chatHTML);
-		document.getElementById("chat-messages").scrollTop = 999999999;
-	}
 }
 
 updateUserlist();
