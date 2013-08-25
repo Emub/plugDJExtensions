@@ -1,5 +1,4 @@
-
-var version = "1.942";
+var version = "1.943";
 var customGreen = "#5bd708"; var bassPlugBlue = "#58FAF4";
 function initialize(){
 
@@ -956,6 +955,10 @@ function chatCommand(value){
 			$("#emoteButton").click();
 			break;
 			
+		case "/version":
+			sendChatUpdate(version, "", customGreen);
+		break;
+			
         default:
             sendChatUpdate("This was not recognized as a command!", "", "red");
             break;
@@ -990,7 +993,10 @@ function recieveMessage(data){
 		.replace("[insane]", "<img src='http://i.imgur.com/3f9zQEs.png' title='[insane]'/>")
 		.replace("[pillowfight]", "<img src='http://i.imgur.com/zfP5CoH.png' title='[pillowfight]'/>")
 		.replace("[smile]", "<img src='http://i.imgur.com/Xe6YTtz.png' title='[smile]'/>")
-		.replace("[twilight2]", "<img src='http://i.imgur.com/RBdeDoY.png' title='[twilight2]'/>");
+		.replace("[twilight2]", "<img src='http://i.imgur.com/RBdeDoY.png' title='[twilight2]'/>")
+		.replace("[meh]", "<img src='http://i.imgur.com/n0sjs08.png' title='[meh]'/>")
+		.replace("[vinyl]", "<img src='http://i.imgur.com/qoMWGxB.png' title='[vinyl]'/>")
+		.replace("[rock]", "<img src='http://i717.photobucket.com/albums/ww173/prestonjjrtr/Smileys/bth_Smiley01-1.gif' title='[rock]'/>");
 		
 		$(chatMessage).html(chatHTML);
 		document.getElementById("chat-messages").scrollTop = 999999999;
