@@ -996,7 +996,7 @@ function recieveMessage(data){
 		.replace("[twilight2]", "<img src='http://i.imgur.com/RBdeDoY.png' title='[twilight2]'/>")
 		.replace("[meh]", "<img src='http://i.imgur.com/n0sjs08.png' title='[meh]'/>")
 		.replace("[vinyl]", "<img src='http://i.imgur.com/qoMWGxB.png' title='[vinyl]'/>")
-		.replace("[rock]", "<img src='http://i717.photobucket.com/albums/ww173/prestonjjrtr/Smileys/bth_Smiley01-1.gif' title='[rock]'/>");
+		.replace("[rock]", "<img src='http://i.imgur.com/Vac95Wy.gif' title='[rock]' height='30'/>");
 		
 		$(chatMessage).html(chatHTML);
 		document.getElementById("chat-messages").scrollTop = 999999999;
