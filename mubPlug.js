@@ -1,4 +1,4 @@
-var version = "1.941";
+var version = "1.94";
 var customGreen = "#5bd708"; var bassPlugBlue = "#58FAF4"; var mubEmotes = true;
 function initialize(){
 
@@ -812,7 +812,13 @@ function removeParent(object){
 API.on(API.CHAT_COMMAND, chatCommand);
 
 function chatCommand(value){
-    switch(value){
+	commands = value.split(" ");
+	
+	for(var i = 2; i < commands.length; i++){
+		if(commands[i] !== "undefined") commands[1] = commands[1] + " " + commands[i];
+	}
+	
+    switch(commands[0]){
         case "/history":
         case "/h":
             if(testHistory()>=2){
@@ -846,13 +852,11 @@ function chatCommand(value){
             $("#userListButton").click();
             break;
 
-        case "/fix userlist":
         case "/uu":
-            $("fixUserListButton").click();
+            $("fixUserlistButton").click();
             break;
 
         case "/autowoot":
-        case "/auto woot":
         case "/aw":
             $("#autoWootButton").click();
             break;
@@ -860,14 +864,10 @@ function chatCommand(value){
 
         case "/autoqueue":
         case "/autojoin":
-        case "/auto join":
-        case "/auto queue":
         case "/aq":
             $("#autoQueueButton").click();
             break;
 
-        case "/history alerts":
-        case "/history alert":
         case "/historyalerts":
         case "/historyalert":
         case "/ha":
@@ -875,21 +875,17 @@ function chatCommand(value){
             break;
 
         case "/sha":
-        case "/share history alerts":
         case "/sharehistoryalerts":
         case "/sharehistoryalert":
-        case "/share history alert":
             $("speakUpButton").click();
             break;
 
         case "/hide":
         case "/hv":
-        case "/hide video":
         case "/hidevideo":
             $("#hideVideoButton").click();
             break;
 
-        case "/not amused":
         case "/noamuse":
         case "/nah":
             API.sendChat("σ.σ");
@@ -906,7 +902,6 @@ function chatCommand(value){
             });
             break;
 
-        case "/my song":
         case "/mysong":
         case "/ms":
             if(isInHistory() == true){
@@ -919,8 +914,7 @@ function chatCommand(value){
         case "/boo":
             $("#button-vote-negative").click();
             break;
-
-        case "/curate messages":
+			
         case "/curatemessages":
         case "/cm":
             $("#curateAlertsButton").click();
@@ -934,7 +928,7 @@ function chatCommand(value){
             mubMethods.save();
             sendChatUpdate("Settings saved", "", "white");
             break;
-
+			
         default:
             sendChatUpdate("This was not recognized as a command!", "", "red");
             break;
