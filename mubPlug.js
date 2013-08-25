@@ -1,3 +1,4 @@
+
 var version = "1.942";
 var customGreen = "#5bd708"; var bassPlugBlue = "#58FAF4";
 function initialize(){
@@ -179,7 +180,7 @@ function initialize(){
     tableRow8.append(tableData15);
 
 
-    settingsWindowTable.append(tableRow1).append(tableRow2).append(tableRow3).append(tableRow4).append(tableRow5).append(tableRow6).append(tableRow7).append(tableRow8);
+    settingsWindowTable.append(tableRow1).append(tableRow2).append(tableRow3).append(tableRow4).append(tableRow5).append(tableRow6).append(tableRow7).append(tableRow8).append(tableRow9);
 
     UI.append(settingsButton);
 
