@@ -1,5 +1,5 @@
 var version = "1.942";
-var customGreen = "#5bd708"; var bassPlugBlue = "#58FAF4"; var mubOptions.emotes = true;
+var customGreen = "#5bd708"; var bassPlugBlue = "#58FAF4";
 function initialize(){
 
     var css = $('<link>');
