@@ -1,4 +1,4 @@
-var version = "1.94";
+var version = "1.941";
 var customGreen = "#5bd708"; var bassPlugBlue = "#58FAF4"; var mubEmotes = true;
 function initialize(){
 
@@ -958,7 +958,12 @@ function recieveMessage(data){
 		.replace("[rage]", "<img src='http://i.imgur.com/Axyng79.png' title='[rage]'/>")
 		.replace("[sad]", "<img src='http://i.imgur.com/4hv8zsb.png' title='[sad]'/>")
 		.replace("[scotaloo]", "<img src='http://i.imgur.com/h63JlJC.png' title='[scotaloo]'/>")
-		.replace("[sweetie]", "<img src='http://i.imgur.com/PvsauZ1.png' title='[sweetie]'/>");
+		.replace("[sweetie]", "<img src='http://i.imgur.com/PvsauZ1.png' title='[sweetie]'/>")
+		.replace("[angry]", "<img src='http://i.imgur.com/6EWZgLj.png' title='[angry]'/>")
+		.replace("[insane]", "<img src='http://i.imgur.com/3f9zQEs.png' title='[insane]'/>")
+		.replace("[pillowfight]", "<img src='http://i.imgur.com/zfP5CoH.png' title='[pillowfight]'/>")
+		.replace("[smile]", "<img src='http://i.imgur.com/Xe6YTtz.png' title='[smile]'/>")
+		.replace("[twilight2]", "<img src='http://i.imgur.com/RBdeDoY.png' title='[twilight2]'/>");
 		
 		$(chatMessage).html(chatHTML);
 		document.getElementById("chat-messages").scrollTop = 999999999;
