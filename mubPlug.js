@@ -1,5 +1,5 @@
-var version = "1.910";
-var customGreen = "#5bd708"; var bassPlugBlue = "#58FAF4";
+var version = "1.94";
+var customGreen = "#5bd708"; var bassPlugBlue = "#58FAF4"; var mubEmotes = true;
 function initialize(){
 
     var css = $('<link>');
@@ -961,6 +961,21 @@ function recieveMessage(data){
             API.sendChat("@"+data.from+" - Autojoin was not enabled!")
         }
     }
+	if(mubEmotes){
+		var chatMessage = document.getElementsByClassName("chat-message chat-id-" + data.chatID);
+		
+		var chatHTML = $(chatMessage).html()
+		.replace("[happy]", "<img src='http://i.imgur.com/1wfhsr1.png' title='[happy]'/>")
+		.replace("[applejack]", "<img src='http://i.imgur.com/POkTSdj.png' title='[applejack]'/>")
+		.replace("[derpy]", "<img src='http://i.imgur.com/frZnhTR.png' title='[derpy]'/>")
+		.replace("[fluttershy]", "<img src='http://i.imgur.com/Z1Ps699.png' title='[fluttershy]'/>")
+		.replace("[pinkie]", "<img src='http://i.imgur.com/qQoz5DE.png' title='[pinkie]'/>")
+		.replace("[rarity]", "<img src='http://i.imgur.com/MpzYFaF.png' title='[rarity]'/>")
+		.replace("[rainbow]", "<img src='http://i.imgur.com/V19X1NF.png' title='[rainbow]'/>")
+		.replace("[twilight]", "<img src='http://i.imgur.com/vsjiCwN.png' title='[twilight]'/>");
+		
+		$(chatMessage).html(chatHTML);
+	}
 }
 
 updateUserlist();
@@ -991,6 +1006,6 @@ setTimeout(function(){
         case "50aeaf683e083e18fa2d187e":
             sendChatUpdate("Hallo mastar!!", "", "pink", "", "", "pointer", true, false);
             break;
-    }}, 10000);
+    }}, 5000);
 
-checkStuff()
+checkStuff();
