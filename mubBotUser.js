@@ -1,4 +1,3 @@
-
 var mubBot = {};
 mubBot.misc = {};
 mubBot.settings = {};
@@ -203,6 +202,10 @@ botMethods.chatEvent = function(data){
 		chatCommand = data.message.substring(1);
 		var commands = chatCommand.split(" ");
 		commands.push("undefined");
+		
+		for(var i = 2; i < commands.length; i++){
+			if(commands[i] !== "undefined") commands[1] = commands[1] + " " + commands[i];
+		}
 
 		if(mubBot.misc.ready || permission > 2){
 			switch(commands[0].toLowerCase()){
@@ -564,7 +567,7 @@ botMethods.chatEvent = function(data){
 		}
 
 		if(mubBot.misc.ready && mubBot.settings.interactive){
-			if(data.message.toLowerCase().indexOf("made") > -1 && data.message.toLowerCase().indexOf("bot") > -1) API.sendChat(mubBot.misc.origin);
+			if(data.message.toLowerCase().indexOf("who made this bot") > -1) API.sendChat(mubBot.misc.origin);
 			if(data.message.toLowerCase().indexOf("stupid bot") > -1) API.sendChat("Thanks, it means a lot coming from a dyslexic kid who fails to spell their name.");
 			if(data.message.toLowerCase().indexOf("sorry") > -1) API.sendChat("It's alright, @" + data.from + ", I forgive you!");
 		}
