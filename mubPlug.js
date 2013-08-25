@@ -57,6 +57,7 @@ function initialize(){
     var tableRow6   = $('<tr>');
     var tableRow7   = $('<tr>');
     var tableRow8   = $('<tr>');
+    var tableRow9   = $('<tr>');
     var tableData1  = $('<td>');
     var tableData2  = $('<td>');
     var tableData3  = $('<td>');
