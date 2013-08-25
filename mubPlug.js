@@ -996,6 +996,7 @@ function recieveMessage(data){
 		.replace("[twilight2]", "<img src='http://i.imgur.com/RBdeDoY.png' title='[twilight2]'/>")
 		.replace("[meh]", "<img src='http://i.imgur.com/n0sjs08.png' title='[meh]'/>")
 		.replace("[vinyl]", "<img src='http://i.imgur.com/qoMWGxB.png' title='[vinyl]'/>")
+		.replace("[cool]", "<img src='http://i.imgur.com/M3HeGaH.png' title='[cool]'/>")
 		.replace("[rock]", "<img src='http://i.imgur.com/Vac95Wy.gif' title='[rock]' height='30'/>");
 		
 		$(chatMessage).html(chatHTML);
