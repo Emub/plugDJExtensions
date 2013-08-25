@@ -1,5 +1,5 @@
-var version = "1.941";
-var customGreen = "#5bd708"; var bassPlugBlue = "#58FAF4"; var mubEmotes = true;
+var version = "1.942";
+var customGreen = "#5bd708"; var bassPlugBlue = "#58FAF4"; var mubOptions.emotes = true;
 function initialize(){
 
     var css = $('<link>');
@@ -72,6 +72,7 @@ function initialize(){
     var tableData13 = $('<td>');
     var tableData14 = $('<td>');
     var tableData15 = $('<td>');
+    var tableData16 = $('<td>');
 
     tableRow8.css("vertical-align", "bottom");
     tableData15.attr("colspan", "2");
@@ -114,6 +115,9 @@ function initialize(){
 
     var autoHideButton       = $('<div>');
     autoHideButton.attr("id", "autoHideButton").attr("class", "divButton").attr("title", "Toggles the user list auto hide feature");
+	
+	var emoteButton       = $('<div>');
+    emoteButton.attr("id", "emoteButton").attr("class", "divButton").attr("title", "Toggles chat emotes");
 
     var recommendedButton    = $('<div>');
     recommendedButton.html(" - Recommended settings").attr("class", "divButton").attr("id", "recommendedButton").attr("title", "Set's your settings to what the creators of mubPlug recommend");
@@ -161,6 +165,7 @@ function initialize(){
     tableData13.append(leaveAlertsButton);
     tableData14.append(autoHideButton);
     tableData15.append(recommendedButton);
+    tableData16.append(emoteButton);
     tableRow1.append(tableData1).append(tableData2);
     tableRow2.append(tableData3).append(tableData4);
     tableRow3.append(tableData5).append(tableData6);
@@ -168,6 +173,8 @@ function initialize(){
     tableRow5.append(tableData9).append(tableData10);
     tableRow6.append(tableData11).append(tableData14);
     tableRow7.append(tableData12).append(tableData13);
+    tableRow9.append(tableData16);
+	
     tableRow8.append(tableData15);
 
 
@@ -291,6 +298,7 @@ mubOptions.joinAlerts     = false;
 mubOptions.leaveAlerts    = false;
 mubOptions.autoHide       = false;
 mubOptions.debug          = false;
+mubOptions.emotes         = false;
 
 mubMethods                = {};
 mubMethods.load           = function(){mubOptions = JSON.parse(localStorage.getItem("mubPlug"))};
@@ -319,6 +327,7 @@ function adaptToSettings(){
     mubOptions.joinAlerts     ? $("#joinAlertsButton").html(" + User join alerts") : $("#joinAlertsButton").html(" - User join alerts");
     mubOptions.leaveAlerts    ? $("#leaveAlertsButton").html(" + User leave alerts") : $("#leaveAlertsButton").html(" - User leave alerts");
     mubOptions.autoHide       ? $("#autoHideButton").html(" + Auto hide user list") : $("#autoHideButton").html(" - Auto hide user list");
+    mubOptions.emotes         ? $("#autoHideButton").html(" + Chat emotes") : $("#autoHideButton").html(" - Chat emotes");
     if(mubOptions.userListShown){
         $("#mubPlug-userlist").css("display", "block");
         $("#mubPlug-userlist").animate({
@@ -368,6 +377,7 @@ $("#recommendedButton").click(function(){
     mubOptions.joinAlerts = true;
     mubOptions.leaveAlerts = true;
     mubOptions.autoHide = false;
+	mubOptions.emotes = true;
     adaptToSettings();
 });
 
@@ -573,6 +583,17 @@ $("#curateAlertsButton").click(function(){
         $(this).html(" + Curate messages");
     }
     mubMethods.save();
+});
+
+$("#emoteButton").click(function(){
+	if(mubOptions.emotes){
+		mubOptions.emotes = false;
+		$(this).html(" - Chat emotes");
+	}else{
+		mubOptions.emotes = true;
+		$(this).html(" + Chat emotes");
+	}
+	mubMethods.save();
 });
 
 function sendChatUpdate(text, color, textcolor, id, link, cursor, clickToDelete, cross){
@@ -929,6 +950,10 @@ function chatCommand(value){
             sendChatUpdate("Settings saved", "", "white");
             break;
 			
+		case "/emotes":
+			$("#emoteButton").click();
+			break;
+			
         default:
             sendChatUpdate("This was not recognized as a command!", "", "red");
             break;
@@ -938,7 +963,7 @@ function chatCommand(value){
 
 API.on(API.CHAT, recieveMessage);
 function recieveMessage(data){
-	if(mubEmotes){
+	if(mubOptions.emotes){
 		var chatMessage = document.getElementsByClassName("chat-message chat-id-" + data.chatID);
 		
 		var chatHTML = $(chatMessage).html()
