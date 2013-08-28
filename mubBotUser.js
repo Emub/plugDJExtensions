@@ -218,6 +218,33 @@ botMethods.chatEvent = function(data){
 			        		API.sendChat("Weird Songs - http://playmc.pw/plug/WeirdDay.html");
 			        	}
 			        	break;
+			        	        case "weirdday":
+			        	if(commands[1] === "undefined"){
+			        	API.sendChat("Weird Songs - http://playmc.pw/plug/WeirdDay.html");
+			        	}else if(commands[1].indexOf("@") > -1){
+			        		API.sendChat(commands[1]+" Weird Songs - http://playmc.pw/plug/WeirdDay.html");
+			        	}else{
+			        		API.sendChat("Weird Songs - http://playmc.pw/plug/WeirdDay.html");
+			        	}
+			        	break;
+			        	        case "wierd":
+			        	if(commands[1] === "undefined"){
+			        	API.sendChat("Weird Songs - http://playmc.pw/plug/WeirdDay.html");
+			        	}else if(commands[1].indexOf("@") > -1){
+			        		API.sendChat(commands[1]+" Weird Songs - http://playmc.pw/plug/WeirdDay.html");
+			        	}else{
+			        		API.sendChat("Weird Songs - http://playmc.pw/plug/WeirdDay.html");
+			        	}
+			        	break;
+			        	        case "wierdday":
+			        	if(commands[1] === "undefined"){
+			        	API.sendChat("Weird Songs - http://playmc.pw/plug/WeirdDay.html");
+			        	}else if(commands[1].indexOf("@") > -1){
+			        		API.sendChat(commands[1]+" Weird Songs - http://playmc.pw/plug/WeirdDay.html");
+			        	}else{
+			        		API.sendChat("Weird Songs - http://playmc.pw/plug/WeirdDay.html");
+			        	}
+			        	break;
 			        case "rules":
 			        	if(commands[1] === "undefined"){
 			        		API.sendChat("Room Rules - http://goo.gl/GBl4e");
@@ -234,6 +261,15 @@ botMethods.chatEvent = function(data){
 			        		API.sendChat(commands[1]+" In this room, only music related to My Little Pony: Friendship is Magic is allowed. This includes PMVs.");
 			        	}else{
 			        		API.sendChat("In this room, only music related to My Little Pony: Friendship is Magic is allowed. This includes PMVs.");
+			        	}
+			        	break;
+			         case "commands":
+			        	if(commands[1] === "undefined"){
+			        		API.sendChat("Bot Commands - http://playmc.pw/plug/commands.html");
+			        	}else if(commands[1].indexOf("@") > -1){
+			        		API.sendChat(commands[1]+" Bot Commands - http://playmc.pw/plug/commands.html");
+			        	}else{
+			        		API.sendChat("Bot Commands - http://playmc.pw/plug/commands.html");
 			        	}
 			        	break;
 				case "linkify":
