@@ -10,9 +10,9 @@ toSave = {};
 toSave.settings = mubBot.settings;
 toSave.moderators = mubBot.moderators;
 
-mubBot.misc.version = "1.83";
+mubBot.misc.version = "1.84";
 mubBot.misc.origin = "This bot was created by Emub and DerpTheBass alone, and it is copyrighted!";
-mubBot.misc.changelog = "Fixed space errors";
+mubBot.misc.changelog = "Added links for FiM and !commands";
 mubBot.misc.ready = true;
 mubBot.misc.lockSkipping = false;
 mubBot.misc.lockSkipped = "0";
@@ -209,7 +209,33 @@ botMethods.chatEvent = function(data){
 
 		if(mubBot.misc.ready || permission > 2){
 			switch(commands[0].toLowerCase()){
-			
+			        case "weird" || "weirdday" || "wierd" || "wierdday":
+			        	if(commands[1] === "undefined"){
+			        	API.sendChat("Weird Songs - http://playmc.pw/plug/WeirdDay.html");
+			        	}else if(commands[1].indexOf("@") > -1){
+			        		API.sendChat(commands[1]+" Weird Songs - http://playmc.pw/plug/WeirdDay.html");
+			        	}else{
+			        		API.sendChat("Weird Songs - http://playmc.pw/plug/WeirdDay.html");
+			        	}
+			        	break;
+			        case "rules":
+			        	if(commands[1] === "undefined"){
+			        		API.sendChat("Room Rules - http://goo.gl/GBl4e");
+			        	}else if(commands[1].indexOf("@") > -1){
+			        		API.sendChat(commands[1]+" Room Rules - http://goo.gl/GBl4e");
+			        	}else{
+			        		API.sendChat("Room Rules - http://goo.gl/GBl4e");
+			        	}
+			        	break;
+			        case "theme":
+			        	if(commands[1] === "undefined"){
+			        		API.sendChat("In this room, only music related to My Little Pony: Friendship is Magic is allowed. This includes PMVs.");
+			        	}else if(commands[1].indexOf("@") > -1){
+			        		API.sendChat(commands[1]+" In this room, only music related to My Little Pony: Friendship is Magic is allowed. This includes PMVs.");
+			        	}else{
+			        		API.sendChat("In this room, only music related to My Little Pony: Friendship is Magic is allowed. This includes PMVs.");
+			        	}
+			        	break;
 				case "linkify":
 					if(commands[1] === "undefined"){
 						API.sendChat("@" + data.from + " You need to put a link!");
@@ -539,7 +565,7 @@ botMethods.chatEvent = function(data){
 				break;
 				
 				case "mubplug":
-					API.sendChat("mubPlug is a plug.dj extensions, made by the same developers who made me! Download link here: http://bit.ly/mubPlug");
+					API.sendChat("http://bit.ly/mubPlug");
 				break;
 					
 			}
