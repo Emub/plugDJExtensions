@@ -406,10 +406,13 @@ botMethods.chatEvent = function(data){
 				break;
 				
 				case "die":
-					API.getUser(data.fromID).permission > 2 ? 
+					if(API.getUser(data.fromID).permission > 2){
 					API.off(API.CHAT, chatEvent);
-					API.off(API.HISTORY_UPDATE, historyUpdateEvent) : API.sendChat("This commands requires being a room bouncer or of higher rank!"); 
+					API.off(API.HISTORY_UPDATE, historyUpdateEvent)
 						API.sendChat("Bot is now dead!");
+					}else {
+				    	API.sendChat("This commands requires being a room bouncer or of higher rank!"); 
+					}
 					break;
 				case "thf":
 					if(permission > 2){
