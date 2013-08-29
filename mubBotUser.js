@@ -127,10 +127,6 @@ botMethods.checkHistory = function(){
     return caught;
 }
 
-botMethods.woot = function(){
-    $("#button-vote-positive").click();
-}
-
 botMethods.getPermissions = function(id){
 	for(var i = 0; i < mubBot.moderators.creators.length; i++){
         if(mubBot.moderators.creators[i] === id) return 4;
@@ -408,6 +404,9 @@ botMethods.chatEvent = function(data){
 						}
 					}
 				break;
+				
+				case "die":
+					if(permission > 0) API.off(API.CHAT, chatEvent);API.off(API.HISTORY_UPDATE, historyUpdateEvent);
 
 				case "thf":
 					if(permission > 2){
