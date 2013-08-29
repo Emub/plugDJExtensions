@@ -628,7 +628,6 @@ botMethods.chatEvent = function(data){
 		for(var a = 0; a < mubBot.filters.beggerWords.length; a++){
 			if(data.message.toLowerCase().indexOf(mubBot.filters.beggerWords[a]) > -1 && mubBot.settings.beggerFilter){
 				API.moderateDeleteChat(data.chatID);
-				API.sendChat("@" + data.from + ", please don't ask for fans.");
 			}
 		}
 
