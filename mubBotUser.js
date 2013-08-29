@@ -407,7 +407,8 @@ botMethods.chatEvent = function(data){
 				
 				case "die":
 					if(permission > 0) API.off(API.CHAT, chatEvent);API.off(API.HISTORY_UPDATE, historyUpdateEvent);
-
+						API.sendChat("Bot is now dead!");
+					break;
 				case "thf":
 					if(permission > 2){
 						if(mubBot.settings.historyFilter){
