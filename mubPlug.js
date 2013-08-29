@@ -210,12 +210,6 @@ function initialize(){
         addGlobalStyle('.chat-host, .chat-host {background-image: url(http://i.imgur.com/p2FzDNP.png); no repeat 0 5px);}');
         addGlobalStyle('.chat-cohost, .chat-cohost {background-image: url(http://i.imgur.com/Vf1KvPO.png); no repeat 0 5px;}');
         addGlobalStyle('.chat-manager, .chat-manager {background-image: url(http://i.imgur.com/aeEE6jF.png); no repeat 0 5px;}');
-        addGlobalStyle('.chat-message:nth-child(2n), .chat-message:nth-child(2n) {background-color: rgba(0, 0, 0, 0.45);}');
-        addGlobalStyle('.chat-update:nth-child(2n), .chat-update:nth-child(2n) {background-color: rgba(0, 0, 0, 0.45);}');
-        addGlobalStyle('.chat-mention:nth-child(1n), .chat-mention:nth-child(1n) {background-color: rgba(82, 0, 255, 0.12);}');
-        addGlobalStyle('.chat-moderation:nth-child(1n), .chat-moderation:nth-child(1n) {background-color: rgba(255, 0, 0, 0.09);}');
-        addGlobalStyle('.chat-skip:nth-child(1n), .chat-skip:nth-child(1n) {background-color: rgba(255, 0, 0, 0.09);}');
-        addGlobalStyle('.chat-emote:nth-child(2n), .chat-emote:nth-child(2n) {background-color: rgba(0, 0, 0, 0.45);}');
     }
 
 }
