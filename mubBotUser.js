@@ -10,9 +10,9 @@ toSave = {};
 toSave.settings = mubBot.settings;
 toSave.moderators = mubBot.moderators;
 
-mubBot.misc.version = "1.84";
+mubBot.misc.version = "1.841";
 mubBot.misc.origin = "This bot was created by Emub and DerpTheBass alone, and it is copyrighted!";
-mubBot.misc.changelog = "Added links for FiM and !commands";
+mubBot.misc.changelog = "I just fixed the status, ok? -Emub";
 mubBot.misc.ready = true;
 mubBot.misc.lockSkipping = false;
 mubBot.misc.lockSkipped = "0";
@@ -445,7 +445,13 @@ botMethods.chatEvent = function(data){
 					if(permission > 0){
 						var response = "";
 						var currentTime = new Date().getTime();
-						response = "Running for " + Math.round((currentTime - joined) / 60000) + " minutes - ";
+						var minutes = Math.round((currentTime - joined) / 60000);
+						var hours = 0;
+						while(minutes > 60){
+							minutes = minutes - 60;
+							hours++;
+						}
+						hours == 0 ? response = "Running for " + minutes + " minutes - " : response = "Running for " + hours + "h " + minutes + "m - ";
 						mubBot.settings.beggerFilter ? response = response + "Begger filter is enabled! - " : response = response + "Begger filter is disabled! - ";
 						mubBot.settings.swearFilter ? response = response + "Swear filter is enabled! - " : response = response + "Swear filter is disabled! - ";
 						mubBot.settings.racismFilter ? response = response + "Racism filter is enabled! - " : response = response + "Racism filter is disabled! - ";
