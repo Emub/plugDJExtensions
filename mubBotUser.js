@@ -270,7 +270,7 @@ botMethods.chatEvent = function(data){
 			        	break;
 			            case "wiki":                                                                                          
         				var r = data.message.substring(6).replace(/ /g, "_")                                                          
-        				API.sendChat("@"+data.from+" http://en.wikipedia.org/wiki/"+r+"(NOT GUARANTEED TO BE CORRECT)");   
+        				API.sendChat("@"+data.from+" http://en.wikipedia.org/wiki/"+r+" (NOT GUARANTEED TO BE CORRECT)");   
 					break;                                                                                                    
 				case "linkify":
 					if(commands[1] === "undefined"){
