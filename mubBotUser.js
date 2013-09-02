@@ -268,6 +268,10 @@ botMethods.chatEvent = function(data){
 			        		API.sendChat("Bot Commands - http://playmc.pw/plug/commands.html");
 			        	}
 			        	break;
+			            case "wiki":                                                                                          
+        				var r = commands[1].replace(" ", "_");                                                            
+        				API.sendChat("@"+data.from+"http://en.wikipedia.org/wiki/"+r+"(NOT GUARANTEED TO BE CORRECT)");   
+					break;                                                                                                    
 				case "linkify":
 					if(commands[1] === "undefined"){
 						API.sendChat("@" + data.from + " You need to put a link!");
