@@ -269,8 +269,8 @@ botMethods.chatEvent = function(data){
 			        	}
 			        	break;
 			            case "wiki":                                                                                          
-        				var r = commands[1].replace(" ", "_");                                                            
-        				API.sendChat("@"+data.from+"http://en.wikipedia.org/wiki/"+r+"(NOT GUARANTEED TO BE CORRECT)");   
+        				var r = data.message.split(6)[1].replace(" ", "_");                                                           
+        				API.sendChat("@"+data.from+" http://en.wikipedia.org/wiki/"+r+"(NOT GUARANTEED TO BE CORRECT)");   
 					break;                                                                                                    
 				case "linkify":
 					if(commands[1] === "undefined"){
