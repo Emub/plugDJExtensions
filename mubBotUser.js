@@ -269,8 +269,20 @@ botMethods.chatEvent = function(data){
 			        	}
 			        	break;
 			            case "wiki":                                                                                          
-        				var r = data.message.substring(6).replace(/ /g, "_")                                                          
-        				API.sendChat("@"+data.from+" http://en.wikipedia.org/wiki/"+r+" (NOT GUARANTEED TO BE CORRECT)");   
+        				var r = data.message.substring(6).replace(/ /g, "_");
+        				$.getJSON("http://jsonp.appspot.com/?callback=?&url=" + escape("http://en.wikipedia.org/w/api.php?action=query&prop=links&format=json&titles="+r.replace(/ /g,"_")),
+							function(wikiData){
+								if (!wikiData || !wikiData.query || !wikiData.query.pages) // there's an error. pssh, don't let anyone know ;)
+									return API.sendChat("@"+data.from+" http://en.wikipedia.org/wiki/"+r+" (NOT GUARANTEED TO BE CORRECT)");
+								if (wikiData.query.pages[-1]) {
+									API.sendChat("@"+data.from+" article not found");
+								} else {
+									for (var i in wikiData.query.pages)
+										// note: the #... is just to make the url look nicer
+										return API.sendChat("@"+data.from+" https://en.wikipedia.org/wiki/?curid="+i+"#"+escape(wikiData.query.pages[i].title) );
+								}
+							}
+						)
 					break;                                                                                                    
 				case "linkify":
 					if(commands[1] === "undefined"){
