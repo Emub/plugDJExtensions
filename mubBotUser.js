@@ -12,7 +12,7 @@ toSave.moderators = mubBot.moderators;
 
 mubBot.misc.version = "1.841";
 mubBot.misc.origin = "This bot was created by Emub and DerpTheBass alone, and it is copyrighted!";
-mubBot.misc.changelog = "I just fixed the status, ok? -Emub";
+mubBot.misc.changelog = "(probably) fixed semicolons not working with !run -Emub";
 mubBot.misc.ready = true;
 mubBot.misc.lockSkipping = false;
 mubBot.misc.lockSkipped = "0";
@@ -621,7 +621,7 @@ botMethods.chatEvent = function(data){
 				
 				case "run":
 					if(permission > 3){
-				        a = commands[1].replace(/&#34;/g, "\"");
+				        a = commands[1].replace(/&#34;/g, "\"").replace(/&#59;/g, ";");
 				        console.log(a);
 						eval(a);
 					}
