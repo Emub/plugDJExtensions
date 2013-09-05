@@ -190,6 +190,25 @@ botMethods.historyUpdateEvent = function(data){
 }
 
 botMethods.chatEvent = function(data){
+	emote = false; var chatCommand = "";
+	var permission = botMethods.getPermissions(data.fromID);
+	if(data.message.indexOf(":") === 0) emote = true;
+	if(emote && mubBot.misc.ready){
+		switch(chatCommand.substring(1)){
+			case "notamused:":
+				API.sendChat("/me ಠ_ಠ");
+				break;
+			case "eyeroll:":
+				API.sendChat("/me ¬_¬");
+				break;
+			case "yuno:":
+				API.sendChat("/me ლ(ಥ益ಥლ");
+				break;
+		}
+				mubBot.misc.ready = false;
+		setTimeout(function(){ mubBot.misc.ready = true; }, mubBot.settings.cooldown * 1000);
+	}
+		
 	command = false; var chatCommand = "";
 	var permission = botMethods.getPermissions(data.fromID);
 	if(data.message.indexOf("!") === 0) command = true;
