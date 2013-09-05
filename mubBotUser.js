@@ -193,10 +193,7 @@ botMethods.chatEvent = function(data){
     command = false; var chatCommand = "";
     var permission = botMethods.getPermissions(data.fromID);
     if(data.message.indexOf("!") === 0) command = true;
-    emote = false; var chatCommand = "";
-    if(data.message.indexOf(":") === 0) emote = true;
     if(command){
-
         chatCommand = data.message.substring(1);
         var commands = chatCommand.split(" ");
         commands.push("undefined");
@@ -637,24 +634,7 @@ botMethods.chatEvent = function(data){
         }
         mubBot.misc.ready = false;
         setTimeout(function(){ mubBot.misc.ready = true; }, mubBot.settings.cooldown * 1000);
-    }else if(emote){
-        if(mubBot.misc.ready){
-            switch(chatCommand.substring(1)){
-                case "notamused:":
-                    API.sendChat("/me ಠ_ಠ");
-                    break;
-                case "eyeroll:":
-                    API.sendChat("/me ¬_¬");
-                    break;
-                case "yuno:":
-                    API.sendChat("/me ლ(ಥ益ಥლ");
-                    break;
-            }
-            mubBot.misc.ready = false;
-            setTimeout(function(){ mubBot.misc.ready = true; }, mubBot.settings.cooldown * 1000);
-        }
     }else{
-
         // swearing
         for(var s = 0; s < mubBot.filters.swearWords.length; s++){
             if(data.message.toLowerCase().indexOf(mubBot.filters.swearWords[s]) > -1 && mubBot.settings.swearFilter){
