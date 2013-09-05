@@ -125,7 +125,7 @@ botMethods.checkHistory = function(){
 
     caught--;
     return caught;
-}
+};
 
 botMethods.getPermissions = function(id){
     for(var i = 0; i < mubBot.moderators.creators.length; i++){
@@ -148,7 +148,7 @@ botMethods.getPermissions = function(id){
     if(API.getUser(id).permission > 3 && mubBot.settings.staffMeansAccess) return 3;
 
     return 0;
-}
+};
 
 botMethods.getID = function(username){
     var users = API.getUsers();
@@ -161,7 +161,7 @@ botMethods.getID = function(username){
     }
 
     return "notFound";
-}
+};
 
 
 botMethods.historyUpdateEvent = function(data){
@@ -187,7 +187,7 @@ botMethods.historyUpdateEvent = function(data){
         }, mubBot.settings.maxLength * 60000);
         //API.sendChat("@"+API.getDJs()[0].username+" This song will be skipped " + mubBot.settings.maxLength + " minutes from now because it exceeds the max song length.");
     }
-}
+};
 
 botMethods.chatEvent = function(data){
     command = false; var chatCommand = "";
@@ -282,7 +282,7 @@ botMethods.chatEvent = function(data){
                                     return API.sendChat("@"+data.from+" https://en.wikipedia.org/wiki/?curid="+i+"#"+escape(wikiData.query.pages[i].title) );
                             }
                         }
-                    )
+                    );
                     break;
                 case "linkify":
                     if(commands[1] === "undefined"){
@@ -667,7 +667,6 @@ botMethods.chatEvent = function(data){
     }
 };
 botMethods.chatEvent = function(data){
-    botMethods.chatEvent(data){
         emote = false; var chatCommand = "";
         if(data.message.indexOf(":") === 0) emote = true;
         if(emote && mubBot.misc.ready){
@@ -685,7 +684,6 @@ botMethods.chatEvent = function(data){
             mubBot.misc.ready = false;
             setTimeout(function(){ mubBot.misc.ready = true; }, mubBot.settings.cooldown * 1000);
         }
-    }
 };
     botMethods.loadStorage();
     console.log("Running mubBot User Shell version " + mubBot.misc.version);
