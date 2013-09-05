@@ -665,7 +665,7 @@ botMethods.chatEvent = function(data){
         }
 
     }
-}
+};
 botMethods.chatEvent = function(data){
     botMethods.chatEvent(data){
         emote = false; var chatCommand = "";
@@ -686,6 +686,6 @@ botMethods.chatEvent = function(data){
             setTimeout(function(){ mubBot.misc.ready = true; }, mubBot.settings.cooldown * 1000);
         }
     }
-}
+};
     botMethods.loadStorage();
     console.log("Running mubBot User Shell version " + mubBot.misc.version);
