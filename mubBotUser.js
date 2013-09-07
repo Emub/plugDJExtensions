@@ -51,6 +51,7 @@ mubBot.filters.swearWords[3] = "cunt";
 mubBot.filters.swearWords[4] = "twat";
 mubBot.filters.swearWords[5] = "fag";
 mubBot.filters.swearWords[6] = "queer";
+mubBot.filters.swearWords[7] = "dumbass";
 
 mubBot.filters.racistWords[0] = "nigger";
 mubBot.filters.racistWords[1] = "kike";
@@ -62,6 +63,9 @@ mubBot.filters.racistWords[6] = "towel head";
 mubBot.filters.racistWords[7] = "chink";
 mubBot.filters.racistWords[8] = "gook";
 mubBot.filters.racistWords[9] = "porch monkey";
+mubBot.filters.racistWords[10] = "nigguh";
+mubBot.filters.racistWords[11] = "niglet";
+mubBot.filters.racistWords[12] = "nigga";
 
 mubBot.filters.beggerWords[0] = "fan4fan";
 mubBot.filters.beggerWords[1] = "fan me";
@@ -680,8 +684,3 @@ console.log("Running mubBot User Shell version " + mubBot.misc.version);
     SC.initialize({
         client_id: 'eae62c8e7a30564e9831b9e43f1d484a'
 });
-    
-
-
-
-
