@@ -674,12 +674,15 @@ botMethods.chatEvent = function(data){
 botMethods.loadStorage();
 console.log("Running mubBot User Shell version " + mubBot.misc.version);
 
-$.getScript('http://connect.soundcloud.com/sdk.js');
+setTimeout(function(){
+    
+    $.getScript('http://connect.soundcloud.com/sdk.js');
 
-$(function(){
     SC.initialize({
         client_id: 'eae62c8e7a30564e9831b9e43f1d484a'
 });
-});
+    
+}, 5000)
+
 
 
