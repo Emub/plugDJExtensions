@@ -1,9 +1,3 @@
-$(function(){
-  $.getScript('http://connect.soundcloud.com/sdk.js');
-SC.initialize({
-  client_id: 'eae62c8e7a30564e9831b9e43f1d484a'
-});
-}
 var mubBot = {};
 mubBot.misc = {};
 mubBot.settings = {};
@@ -303,7 +297,7 @@ botMethods.chatEvent = function(data){
                     if(API.getMedia().format == 1){
                     API.sendChat("@" + data.from + " " + "http://youtu.be/" + API.getMedia().cid);
                     }else{
-                      id = API.getMedia().cid;
+                      var id = API.getMedia().cid;
                         SC.get('/tracks', { ids: id,}, function(tracks) {
                             API.sendChat("@"+data.from+" "+tracks[0].permalink_url);
                         });
@@ -679,3 +673,9 @@ botMethods.chatEvent = function(data){
 };
     botMethods.loadStorage();
     console.log("Running mubBot User Shell version " + mubBot.misc.version);
+    $(function(){
+  $.getScript('http://connect.soundcloud.com/sdk.js');
+SC.initialize({
+  client_id: 'eae62c8e7a30564e9831b9e43f1d484a'
+});
+}
