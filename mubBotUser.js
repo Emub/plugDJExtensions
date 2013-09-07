@@ -673,9 +673,13 @@ botMethods.chatEvent = function(data){
 };
     botMethods.loadStorage();
     console.log("Running mubBot User Shell version " + mubBot.misc.version);
-    $(function(){
+    
   $.getScript('http://connect.soundcloud.com/sdk.js');
-SC.initialize({
-  client_id: 'eae62c8e7a30564e9831b9e43f1d484a'
+  
+$(function(){
+    SC.initialize({
+  client_id: 'eae62c8e7a30564e9831b9e43f1d484a';
 });
-}
+});
+
+
