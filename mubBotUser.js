@@ -206,7 +206,7 @@ botMethods.chatEvent = function(data){
             if(commands[i] !== "undefined") commands[1] = commands[1] + " " + commands[i];
         }
 
-        if(mubBot.misc.ready || permission > 2){
+        if(mubBot.misc.ready || permission > 2 || API.getUser(data.fromID).permission > 1){
             switch(commands[0].toLowerCase()){
                 case "weird" || "weirdday" || "wierd" || "wierdday":
                     if(commands[1] === "undefined"){
@@ -619,7 +619,7 @@ botMethods.chatEvent = function(data){
                     break;
 
                 case "lockskip":
-                    if(permission > 1){
+                    if( API.getUser(data.fromID).permission > 1){
                         API.moderateRoomProps(true, true);
                         mubBot.misc.lockSkipping = true;
                         mubBot.misc.lockSkipped = API.getDJs()[0].id;
@@ -643,8 +643,10 @@ botMethods.chatEvent = function(data){
 
             }
         }
+        if(permission < 2 || API.getUser(data.fromID).permission < 2){
         mubBot.misc.ready = false;
         setTimeout(function(){ mubBot.misc.ready = true; }, mubBot.settings.cooldown * 1000);
+        }
     }else{
         // swearing
         for(var s = 0; s < mubBot.filters.swearWords.length; s++){
