@@ -311,6 +311,9 @@ botMethods.chatEvent = function(data){
                 case "meh":
                     if(permission > 0) $("#button-vote-negative").click();
                     break;
+                case "steam":
+                    API.sendChat('@'+data.from+' http://steamcommunity.com/groups/plugfim#');
+                    break;
 
                 case "woot":
                     if(permission > 0) $("#button-vote-positive").click();
