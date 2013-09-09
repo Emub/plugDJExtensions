@@ -1,4 +1,5 @@
-var version = "1.911";
+$(function(){
+var version = "1.912";
 var customGreen = "#5bd708"; var bassPlugBlue = "#58FAF4";
 function initialize(){
 
@@ -886,7 +887,7 @@ function chatCommand(value){
         case "/not amused":
         case "/noamuse":
         case "/nah":
-            API.sendChat("σ.σ");
+            API.sendChat("Ïƒ.Ïƒ");
             break;
 
         case "/settings":
@@ -994,3 +995,4 @@ setTimeout(function(){
     }}, 10000);
 
 checkStuff()
+});
