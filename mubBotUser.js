@@ -194,6 +194,8 @@ botMethods.historyUpdateEvent = function(data){
 };
 
 botMethods.chatEvent = function(data){
+    if (API.getMedia().cid == 'bzwBtnTRnRU' && data.message.indexOf('nana') > -1) API.moderateDeleteChat(data.chatID);
+    
     command = false; var chatCommand = "";
     var permission = botMethods.getPermissions(data.fromID);
     if(data.message.indexOf("!") === 0) command = true;
