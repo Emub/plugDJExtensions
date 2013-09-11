@@ -548,16 +548,16 @@ botMethods.chatEvent = function(data){
                         var randomSentence = Math.round(Math.random() * 4);
                         switch(randomSentence){
                             case 1:
-                                API.sendChat("@" + commands[1] + ", take this " + mubBot.misc.tacos[randomTaco] + ", you bitch!");
+                                API.sendChat("@" + commands[1].replace(/&#39;/g, "'") + ", take this " + mubBot.misc.tacos[randomTaco] + ", you bitch!");
                                 break;
                             case 2:
-                                API.sendChat("@" + commands[1] + ", quickly! Eat this " + mubBot.misc.tacos[randomTaco] + " before I do!");
+                                API.sendChat("@" + commands[1].replace(/&#39;/g, "'" + ", quickly! Eat this " + mubBot.misc.tacos[randomTaco] + " before I do!");
                                 break;
                             case 3:
-                                API.sendChat("One free " + mubBot.misc.tacos[randomTaco] + " for you, @" + commands[1] + ". :3");
+                                API.sendChat("One free " + mubBot.misc.tacos[randomTaco] + " for you, @" + commands[1].replace(/&#39;/g, "'" + ". :3");
                                 break;
                             case 4:
-                                API.sendChat("/me throws a " + mubBot.misc.tacos[randomTaco] + " at @" + commands[1] + "!");
+                                API.sendChat("/me throws a " + mubBot.misc.tacos[randomTaco] + " at @" + commands[1].replace(/&#39;/g, "'" + "!");
                                 break;
                         }
                     }
