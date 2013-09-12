@@ -595,7 +595,6 @@ botMethods.chatEvent = function(data){
                         }
                     }else{
                         if(commands[1].indexOf("@") === 0) commands[1] = commands[1].substring(1);
-                        var randomTaco = Math.round(Math.random() * mubBot.misc.tacos.length);
                         var randomSentence = Math.round(Math.random() * 4);
                         switch(randomSentence){
                             case 1:
@@ -604,10 +603,10 @@ botMethods.chatEvent = function(data){
                             case 2:
                                 API.sendChat("/me drowns @"+commands[1].replace(/&#39;/g, "'")+" in batter");
                                 break;
-                            case 3:
+                            case 4:
                                 API.sendChat("/me hands an anthrax laced cookie to @"+commands[1].replace(/&#39;/g, "'"));
                                 break;
-                            case 4:
+                            case 3:
                                 API.sendChat("/me shows @"+commands[1].replace(/&#39;/g, "'")+" the power of friendship. BY SLAPPING THEM WITH A COOKIE");
                                 break;
                         }
