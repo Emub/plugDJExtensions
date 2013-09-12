@@ -563,7 +563,7 @@ botMethods.chatEvent = function(data){
                                 break;
                         }
                     }
-                    case "hug":
+                case "hug":
                     if(commands[1] === "undefined"){
                         var crowd = API.getUsers();
                         var randomUser = Math.round(Math.random() * crowd.length);
@@ -575,7 +575,18 @@ botMethods.chatEvent = function(data){
                             API.sendChat('/me hugs @'+commands[1]);
                     }
                     break;
-
+                case "unhug":
+                    if(commands[1] === "undefined"){
+                        var crowd = API.getUsers();
+                        var randomUser = Math.round(Math.random() * crowd.length);
+                            API.sendChat("/me rapes @" + crowd[randomUser].username);
+                    }else{
+                        if(commands[1].indexOf("@") === 0) commands[1] = commands[1].substring(1);
+                        var randomTaco = Math.round(Math.random() * mubBot.misc.tacos.length);
+                        var randomSentence = Math.round(Math.random() * 4);
+                            API.sendChat('/me rapes @'+commands[1]);
+                    }
+                    break;
                 case "modaccess":
                     if(permission > 0){
                         mubBot.settings.staffMeansAccess ? API.sendChat("Staff currently has bot access.") : API.sendChat("Staff doesn't have bot access.");
