@@ -574,15 +574,43 @@ botMethods.chatEvent = function(data){
                             API.sendChat('/me hugs @'+commands[1].replace(/&#39;/g, "'"));
                     }
                     break;
-                case "unhug":
+                  case "cookie":
                     if(commands[1] === "undefined"){
                         var crowd = API.getUsers();
                         var randomUser = Math.round(Math.random() * crowd.length);
-                            API.sendChat("/me rapes @" + crowd[randomUser].username);
+                        var randomSentence = Math.round(Math.random() * 4);
+                        switch(randomSentence){
+                            case 1:
+                                API.sendChat("/me throws a STICK OF DYNAMITE at @"+crowd[randomUser]);
+                                break;
+                            case 2:
+                                API.sendChat("/me drowns @"+crowd[randomuser]+" in batter");
+                                break;
+                            case 3:
+                                API.sendChat("/me hands an anthrax laced cookie to @"+crowd[randomUser]);
+                                break;
+                            case 4:
+                                API.sendChat("/me shows @"+crowd[randomUser]+" the power of friendship. BY SLAPPING THEM WITH A COOKIE");
+                                break;
+                        }
                     }else{
                         if(commands[1].indexOf("@") === 0) commands[1] = commands[1].substring(1);
+                        var randomTaco = Math.round(Math.random() * mubBot.misc.tacos.length);
                         var randomSentence = Math.round(Math.random() * 4);
-                            API.sendChat('/me rapes @'+commands[1].replace(/&#39;/g, "'"));
+                        switch(randomSentence){
+                            case 1:
+                                API.sendChat("/me throws a STICK OF DYNAMITE at @"+commands[1].replace(/&#39;/g, "'"));
+                                break;
+                            case 2:
+                                API.sendChat("/me drowns @"+commands[1].replace(/&#39;/g, "'")+" in batter");
+                                break;
+                            case 3:
+                                API.sendChat("/me hands an anthrax laced cookie to @"+commands[1].replace(/&#39;/g, "'"));
+                                break;
+                            case 4:
+                                API.sendChat("/me shows @"+commands[1].replace(/&#39;/g, "'")+" the power of friendship. BY SLAPPING THEM WITH A COOKIE");
+                                break;
+                        }
                     }
                     break;
                 case "modaccess":
