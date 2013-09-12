@@ -578,7 +578,7 @@ botMethods.chatEvent = function(data){
                     if(commands[1] === "undefined"){
                         var crowd = API.getUsers();
                         var randomUser = Math.round(Math.random() * crowd.length);
-                        var randomSentence = Math.floor(Math.random() * 4-1+1);
+                        var randomSentence = Math.floor(Math.random() * 4);
                         switch(randomSentence){
                             case 1:
                                 API.sendChat("/me throws a STICK OF DYNAMITE at @"+crowd[randomUser].username);
@@ -595,7 +595,7 @@ botMethods.chatEvent = function(data){
                         }
                     }else{
                         if(commands[1].indexOf("@") === 0) commands[1] = commands[1].substring(1);
-                        var randomSentence = Math.floor(Math.random() * 4-1+1);
+                        var randomSentence = Math.floor(Math.random() * 4);
                         switch(randomSentence){
                             case 1:
                                 API.sendChat("/me throws a STICK OF DYNAMITE at @"+commands[1].replace(/&#39;/g, "'").replace(/&amp;/g, "&"));
