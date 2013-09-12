@@ -553,13 +553,13 @@ botMethods.chatEvent = function(data){
                                 API.sendChat("@" + commands[1].replace(/&#39;/g, "'").replace(/&amp;/g, "&") + ", take this " + mubBot.misc.tacos[randomTaco] + ", you bitch!");
                                 break;
                             case 2:
-                                API.sendChat("@" + commands[1].replace(/&#39;/g, "'").replace(/&amp;/g, "&" + ", quickly! Eat this " + mubBot.misc.tacos[randomTaco] + " before I do!");
+                                API.sendChat("@" + commands[1].replace(/&#39;/g, "'").replace(/&amp;/g, "&") + ", quickly! Eat this " + mubBot.misc.tacos[randomTaco] + " before I do!");
                                 break;
                             case 3:
-                                API.sendChat("One free " + mubBot.misc.tacos[randomTaco] + " for you, @" + commands[1].replace(/&#39;/g, "'").replace(/&amp;/g, "&" + ". :3");
+                                API.sendChat("One free " + mubBot.misc.tacos[randomTaco] + " for you, @" + commands[1].replace(/&#39;/g, "'").replace(/&amp;/g, "&") + ". :3");
                                 break;
                             case 4:
-                                API.sendChat("/me throws a " + mubBot.misc.tacos[randomTaco] + " at @" + commands[1].replace(/&#39;/g, "'").replace(/&amp;/g, "&" + "!");
+                                API.sendChat("/me throws a " + mubBot.misc.tacos[randomTaco] + " at @" + commands[1].replace(/&#39;/g, "'").replace(/&amp;/g, "&") + "!");
                                 break;
                         }
                     }
@@ -571,7 +571,7 @@ botMethods.chatEvent = function(data){
                             API.sendChat("/me hugs @" + crowd[randomUser].username);
                     }else{
                         if(commands[1].indexOf("@") === 0) commands[1] = commands[1].substring(1);
-                            API.sendChat('/me hugs @'+commands[1].replace(/&#39;/g, "'").replace(/&amp;/g, "&");
+                            API.sendChat('/me hugs @'+commands[1].replace(/&#39;/g, "'").replace(/&amp;/g, "&"));
                     }
                     break;
                   case "cookie":
@@ -598,16 +598,16 @@ botMethods.chatEvent = function(data){
                         var randomSentence = Math.floor(Math.random() * 4-1+1);
                         switch(randomSentence){
                             case 1:
-                                API.sendChat("/me throws a STICK OF DYNAMITE at @"+commands[1].replace(/&#39;/g, "'").replace(/&amp;/g, "&");
+                                API.sendChat("/me throws a STICK OF DYNAMITE at @"+commands[1].replace(/&#39;/g, "'").replace(/&amp;/g, "&"));
                                 break;
                             case 2:
-                                API.sendChat("/me drowns @"+commands[1].replace(/&#39;/g, "'").replace(/&amp;/g, "&"+" in batter");
+                                API.sendChat("/me drowns @"+commands[1].replace(/&#39;/g, "'").replace(/&amp;/g, "&")+" in batter");
                                 break;
                             case 4:
-                                API.sendChat("/me hands an anthrax laced cookie to @"+commands[1].replace(/&#39;/g, "'").replace(/&amp;/g, "&");
+                                API.sendChat("/me hands an anthrax laced cookie to @"+commands[1].replace(/&#39;/g, "'").replace(/&amp;/g, "&"));
                                 break;
                             case 3:
-                                API.sendChat("/me shows @"+commands[1].replace(/&#39;/g, "'").replace(/&amp;/g, "&"+" the power of friendship. BY SLAPPING THEM WITH A COOKIE");
+                                API.sendChat("/me shows @"+commands[1].replace(/&#39;/g, "'").replace(/&amp;/g, "&")+" the power of friendship. BY SLAPPING THEM WITH A COOKIE");
                                 break;
                         }
                     }
