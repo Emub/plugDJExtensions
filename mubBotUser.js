@@ -476,7 +476,7 @@ botMethods.chatEvent = function(data){
                     if(permission > 0){
                         var response = "";
                         var currentTime = new Date().getTime();
-                        var minutes = Math.round((currentTime - joined) / 60000);
+                        var minutes = Math.floor((currentTime - joined) / 60000);
                         var hours = 0;
                         while(minutes > 60){
                             minutes = minutes - 60;
@@ -527,9 +527,9 @@ botMethods.chatEvent = function(data){
                 case "taco":
                     if(commands[1] === "undefined"){
                         var crowd = API.getUsers();
-                        var randomUser = Math.round(Math.random() * crowd.length);
-                        var randomTaco = Math.round(Math.random() * mubBot.misc.tacos.length);
-                        var randomSentence = Math.round(Math.random() * 3);
+                        var randomUser = Math.floor(Math.random() * crowd.length);
+                        var randomTaco = Math.floor(Math.random() * mubBot.misc.tacos.length);
+                        var randomSentence = Math.floor(Math.random() * 3);
                         switch(randomSentence){
                             case 0:
                                 API.sendChat("@" + crowd[randomUser].username + ", take this " + mubBot.misc.tacos[randomTaco] + ", you bitch!");
@@ -546,8 +546,8 @@ botMethods.chatEvent = function(data){
                         }
                     }else{
                         if(commands[1].indexOf("@") === 0) commands[1] = commands[1].substring(1);
-                        var randomTaco = Math.round(Math.random() * mubBot.misc.tacos.length);
-                        var randomSentence = Math.round(Math.random() * 3);
+                        var randomTaco = Math.floor(Math.random() * mubBot.misc.tacos.length);
+                        var randomSentence = Math.floor(Math.random() * 3);
                         switch(randomSentence){
                             case 0:
                                 API.sendChat("@" + commands[1].replace(/&#39;/g, "'").replace(/&amp;/g, "&") + ", take this " + mubBot.misc.tacos[randomTaco] + ", you bitch!");
@@ -567,7 +567,7 @@ botMethods.chatEvent = function(data){
                 case "hug":
                     if(commands[1] === "undefined"){
                         var crowd = API.getUsers();
-                        var randomUser = Math.round(Math.random() * crowd.length);
+                        var randomUser = Math.floor(Math.random() * crowd.length);
                             API.sendChat("/me hugs @" + crowd[randomUser].username);
                     }else{
                         if(commands[1].indexOf("@") === 0) commands[1] = commands[1].substring(1);
@@ -577,7 +577,7 @@ botMethods.chatEvent = function(data){
                   case "cookie":
                     if(commands[1] === "undefined"){
                         var crowd = API.getUsers();
-                        var randomUser = Math.round(Math.random() * crowd.length);
+                        var randomUser = Math.floor(Math.random() * crowd.length);
                         var randomSentence = Math.floor(Math.random() * 3);
                         switch(randomSentence){
                             case 0:
