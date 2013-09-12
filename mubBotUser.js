@@ -563,6 +563,7 @@ botMethods.chatEvent = function(data){
                                 break;
                         }
                     }
+                    break;
                 case "hug":
                     if(commands[1] === "undefined"){
                         var crowd = API.getUsers();
@@ -570,7 +571,6 @@ botMethods.chatEvent = function(data){
                             API.sendChat("/me hugs @" + crowd[randomUser].username);
                     }else{
                         if(commands[1].indexOf("@") === 0) commands[1] = commands[1].substring(1);
-                            var randomSentence = Math.round(Math.random() * 4);
                             API.sendChat('/me hugs @'+commands[1].replace(/&#39;/g, "'"));
                     }
                     break;
