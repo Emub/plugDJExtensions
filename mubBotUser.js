@@ -10,9 +10,9 @@ toSave = {};
 toSave.settings = mubBot.settings;
 toSave.moderators = mubBot.moderators;
 
-mubBot.misc.version = "1.841";
+mubBot.misc.version = "1.842";
 mubBot.misc.origin = "This bot was created by Emub and DerpTheBass alone, and it is copyrighted!";
-mubBot.misc.changelog = "(probably) fixed semicolons not working with !run -Emub";
+mubBot.misc.changelog = "Added !hug";
 mubBot.misc.ready = true;
 mubBot.misc.lockSkipping = false;
 mubBot.misc.lockSkipped = "0";
@@ -562,6 +562,17 @@ botMethods.chatEvent = function(data){
                                 API.sendChat("/me throws a " + mubBot.misc.tacos[randomTaco] + " at @" + commands[1].replace(/&#39;/g, "'") + "!");
                                 break;
                         }
+                    }
+                    case "hug":
+                    if(commands[1] === "undefined"){
+                        var crowd = API.getUsers();
+                        var randomUser = Math.round(Math.random() * crowd.length);
+                            API.sendChat("/me hugs @" + crowd[randomUser].username);
+                    }else{
+                        if(commands[1].indexOf("@") === 0) commands[1] = commands[1].substring(1);
+                        var randomTaco = Math.round(Math.random() * mubBot.misc.tacos.length);
+                        var randomSentence = Math.round(Math.random() * 4);
+                            API.sendChat('/me hugs @'+commands[1]);
                     }
                     break;
 
