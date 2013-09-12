@@ -570,9 +570,8 @@ botMethods.chatEvent = function(data){
                             API.sendChat("/me hugs @" + crowd[randomUser].username);
                     }else{
                         if(commands[1].indexOf("@") === 0) commands[1] = commands[1].substring(1);
-                        var randomTaco = Math.round(Math.random() * mubBot.misc.tacos.length);
-                        var randomSentence = Math.round(Math.random() * 4);
-                            API.sendChat('/me hugs @'+commands[1]);
+                            var randomSentence = Math.round(Math.random() * 4);
+                            API.sendChat('/me hugs @'+commands[1].replace(/&#39;/g, "'"));
                     }
                     break;
                 case "unhug":
@@ -582,9 +581,8 @@ botMethods.chatEvent = function(data){
                             API.sendChat("/me rapes @" + crowd[randomUser].username);
                     }else{
                         if(commands[1].indexOf("@") === 0) commands[1] = commands[1].substring(1);
-                        var randomTaco = Math.round(Math.random() * mubBot.misc.tacos.length);
                         var randomSentence = Math.round(Math.random() * 4);
-                            API.sendChat('/me rapes @'+commands[1]);
+                            API.sendChat('/me rapes @'+commands[1].replace(/&#39;/g, "'"));
                     }
                     break;
                 case "modaccess":
