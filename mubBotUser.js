@@ -529,36 +529,36 @@ botMethods.chatEvent = function(data){
                         var crowd = API.getUsers();
                         var randomUser = Math.round(Math.random() * crowd.length);
                         var randomTaco = Math.round(Math.random() * mubBot.misc.tacos.length);
-                        var randomSentence = Math.round(Math.random() * 4);
+                        var randomSentence = Math.round(Math.random() * 3);
                         switch(randomSentence){
-                            case 1:
+                            case 0:
                                 API.sendChat("@" + crowd[randomUser].username + ", take this " + mubBot.misc.tacos[randomTaco] + ", you bitch!");
                                 break;
-                            case 2:
+                            case 1:
                                 API.sendChat("@" + crowd[randomUser].username + ", quickly! Eat this " + mubBot.misc.tacos[randomTaco] + " before I do!");
                                 break;
-                            case 3:
+                            case 2:
                                 API.sendChat("One free " + mubBot.misc.tacos[randomTaco] + " for you, @" + crowd[randomUser].username + ". :3");
                                 break;
-                            case 4:
+                            case 3:
                                 API.sendChat("/me throws a " + mubBot.misc.tacos[randomTaco] + " at @" + crowd[randomUser].username + "!");
                                 break;
                         }
                     }else{
                         if(commands[1].indexOf("@") === 0) commands[1] = commands[1].substring(1);
                         var randomTaco = Math.round(Math.random() * mubBot.misc.tacos.length);
-                        var randomSentence = Math.round(Math.random() * 4);
+                        var randomSentence = Math.round(Math.random() * 3);
                         switch(randomSentence){
-                            case 1:
+                            case 0:
                                 API.sendChat("@" + commands[1].replace(/&#39;/g, "'").replace(/&amp;/g, "&") + ", take this " + mubBot.misc.tacos[randomTaco] + ", you bitch!");
                                 break;
-                            case 2:
+                            case 1:
                                 API.sendChat("@" + commands[1].replace(/&#39;/g, "'").replace(/&amp;/g, "&") + ", quickly! Eat this " + mubBot.misc.tacos[randomTaco] + " before I do!");
                                 break;
-                            case 3:
+                            case 2:
                                 API.sendChat("One free " + mubBot.misc.tacos[randomTaco] + " for you, @" + commands[1].replace(/&#39;/g, "'").replace(/&amp;/g, "&") + ". :3");
                                 break;
-                            case 4:
+                            case 3:
                                 API.sendChat("/me throws a " + mubBot.misc.tacos[randomTaco] + " at @" + commands[1].replace(/&#39;/g, "'").replace(/&amp;/g, "&") + "!");
                                 break;
                         }
@@ -578,32 +578,32 @@ botMethods.chatEvent = function(data){
                     if(commands[1] === "undefined"){
                         var crowd = API.getUsers();
                         var randomUser = Math.round(Math.random() * crowd.length);
-                        var randomSentence = Math.floor(Math.random() * 4);
+                        var randomSentence = Math.floor(Math.random() * 3);
                         switch(randomSentence){
-                            case 1:
+                            case 0:
                                 API.sendChat("/me throws a STICK OF DYNAMITE at @"+crowd[randomUser].username);
                                 break;
-                            case 2:
+                            case 1:
                                 API.sendChat("/me drowns @"+crowd[randomUser].username+" in batter");
                                 break;
-                            case 3:
+                            case 2:
                                 API.sendChat("/me hands an anthrax laced cookie to @"+crowd[randomUser].username);
                                 break;
-                            case 4:
+                            case 3:
                                 API.sendChat("/me shows @"+crowd[randomUser].username+" the power of friendship. BY SLAPPING THEM WITH A COOKIE");
                                 break;
                         }
                     }else{
                         if(commands[1].indexOf("@") === 0) commands[1] = commands[1].substring(1);
-                        var randomSentence = Math.floor(Math.random() * 4);
+                        var randomSentence = Math.floor(Math.random() * 3);
                         switch(randomSentence){
-                            case 1:
+                            case 0:
                                 API.sendChat("/me throws a STICK OF DYNAMITE at @"+commands[1].replace(/&#39;/g, "'").replace(/&amp;/g, "&"));
                                 break;
-                            case 2:
+                            case 1:
                                 API.sendChat("/me drowns @"+commands[1].replace(/&#39;/g, "'").replace(/&amp;/g, "&")+" in batter");
                                 break;
-                            case 4:
+                            case 2:
                                 API.sendChat("/me hands an anthrax laced cookie to @"+commands[1].replace(/&#39;/g, "'").replace(/&amp;/g, "&"));
                                 break;
                             case 3:
