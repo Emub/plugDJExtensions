@@ -581,16 +581,16 @@ botMethods.chatEvent = function(data){
                         var randomSentence = Math.round(Math.random() * 4);
                         switch(randomSentence){
                             case 1:
-                                API.sendChat("/me throws a STICK OF DYNAMITE at @"+crowd[randomUser]);
+                                API.sendChat("/me throws a STICK OF DYNAMITE at @"+crowd[randomUser].username);
                                 break;
                             case 2:
-                                API.sendChat("/me drowns @"+crowd[randomuser]+" in batter");
+                                API.sendChat("/me drowns @"+crowd[randomUser].username+" in batter");
                                 break;
                             case 3:
-                                API.sendChat("/me hands an anthrax laced cookie to @"+crowd[randomUser]);
+                                API.sendChat("/me hands an anthrax laced cookie to @"+crowd[randomUser].username);
                                 break;
                             case 4:
-                                API.sendChat("/me shows @"+crowd[randomUser]+" the power of friendship. BY SLAPPING THEM WITH A COOKIE");
+                                API.sendChat("/me shows @"+crowd[randomUser].username+" the power of friendship. BY SLAPPING THEM WITH A COOKIE");
                                 break;
                         }
                     }else{
