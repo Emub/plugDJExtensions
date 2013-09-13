@@ -11,7 +11,7 @@ toSave.settings = mubBot.settings;
 toSave.moderators = mubBot.moderators;
 toSave.autoSkip = mubBot.autoSkip;
 
-mubBot.misc.version = "2.0.01";
+mubBot.misc.version = "2.0.02";
 mubBot.misc.origin = "This bot was created by Emub and DerpTheBass alone, and it is copyrighted!";
 mubBot.misc.changelog = "Added !hug";
 mubBot.misc.ready = true;
@@ -148,7 +148,7 @@ API.on(API.CHAT, function(data){
         switch(command[0].toLowerCase()){
             case "marco":
                 API.sendChat("Polo");
-                    if(mubBot.admins.indexOf(fromID) > -1 ||API.getUser(fromID).permission < 2){
+                    if(mubBot.admins.indexOf(fromID) == -1 || API.getUser(fromID).permission < 2){
                     mubBot.misc.ready = false;
                 setTimeout(function(){ mubBot.misc.ready = true; }, mubBot.settings.cooldown * 1000);
                 }
@@ -164,7 +164,7 @@ API.on(API.CHAT, function(data){
                 }else{
                     API.sendChat("Weird Songs - http://playmc.pw/plug/WeirdDay.html");
                 }
-                if(mubBot.admins.indexOf(fromID) > -1 ||API.getUser(fromID).permission < 2){
+                if(mubBot.admins.indexOf(fromID) == -1 || API.getUser(fromID).permission < 2){
                     mubBot.misc.ready = false;
                     setTimeout(function(){ mubBot.misc.ready = true; }, mubBot.settings.cooldown * 1000);
                  }
@@ -178,7 +178,7 @@ API.on(API.CHAT, function(data){
                 }else{
                     API.sendChat("Room Rules - http://goo.gl/GBl4e");
                 }
-                if(mubBot.admins.indexOf(fromID) > -1 ||API.getUser(fromID).permission < 2){
+                if(mubBot.admins.indexOf(fromID) == -1 || API.getUser(fromID).permission < 2){
                     mubBot.misc.ready = false;
                     setTimeout(function(){ mubBot.misc.ready = true; }, mubBot.settings.cooldown * 1000);
                  }
@@ -192,7 +192,7 @@ API.on(API.CHAT, function(data){
                 }else{
                     API.sendChat("In this room, only music related to My Little Pony: Friendship is Magic is allowed. This includes PMVs.");
                 }
-                if(mubBot.admins.indexOf(fromID) > -1 ||API.getUser(fromID).permission < 2){
+                if(mubBot.admins.indexOf(fromID) == -1 || API.getUser(fromID).permission < 2){
                     mubBot.misc.ready = false;
                     setTimeout(function(){ mubBot.misc.ready = true; }, mubBot.settings.cooldown * 1000);
                  }
@@ -206,7 +206,7 @@ API.on(API.CHAT, function(data){
                 }else{
                     API.sendChat("Bot Commands - http://playmc.pw/plug/commands.html");
                 }
-                                if(mubBot.admins.indexOf(fromID) > -1 ||API.getUser(fromID).permission < 2){
+                                if(mubBot.admins.indexOf(fromID) == -1 || API.getUser(fromID).permission < 2){
                     mubBot.misc.ready = false;
                     setTimeout(function(){ mubBot.misc.ready = true; }, mubBot.settings.cooldown * 1000);
                  }
@@ -227,7 +227,7 @@ API.on(API.CHAT, function(data){
                         }
                     }
                 );
-                                if(mubBot.admins.indexOf(fromID) > -1 ||API.getUser(fromID).permission < 2){
+                                if(mubBot.admins.indexOf(fromID) == -1 || API.getUser(fromID).permission < 2){
                     mubBot.misc.ready = false;
                     setTimeout(function(){ mubBot.misc.ready = true; }, mubBot.settings.cooldown * 1000);
                  }
@@ -241,7 +241,7 @@ API.on(API.CHAT, function(data){
                 }else{
                     API.sendChat("http://steamcommunity.com/groups/plugfim#");
                 }
-                                if(mubBot.admins.indexOf(fromID) > -1 ||API.getUser(fromID).permission < 2){
+                                if(mubBot.admins.indexOf(fromID) == -1 || API.getUser(fromID).permission < 2){
                     mubBot.misc.ready = false;
                     setTimeout(function(){ mubBot.misc.ready = true; }, mubBot.settings.cooldown * 1000);
                  }
@@ -255,7 +255,7 @@ API.on(API.CHAT, function(data){
                 }else{
                     API.sendChat("http://goo.gl/NjSO6j");
                 }
-                                if(mubBot.admins.indexOf(fromID) > -1 ||API.getUser(fromID).permission < 2){
+                                if(mubBot.admins.indexOf(fromID) == -1 || API.getUser(fromID).permission < 2){
                     mubBot.misc.ready = false;
                     setTimeout(function(){ mubBot.misc.ready = true; }, mubBot.settings.cooldown * 1000);
                  }
@@ -269,7 +269,7 @@ API.on(API.CHAT, function(data){
                 }else{
                     API.sendChat("Nice try! Advertising is not allowed in this room.");
                 }
-                                if(mubBot.admins.indexOf(fromID) > -1 ||API.getUser(fromID).permission < 2){
+                                if(mubBot.admins.indexOf(fromID) == -1 || API.getUser(fromID).permission < 2){
                     mubBot.misc.ready = false;
                     setTimeout(function(){ mubBot.misc.ready = true; }, mubBot.settings.cooldown * 1000);
                  }
@@ -284,7 +284,7 @@ API.on(API.CHAT, function(data){
                         API.sendChat("@"+data.from+" "+tracks[0].permalink_url);
                     });
                 }
-                                if(mubBot.admins.indexOf(fromID) > -1 ||API.getUser(fromID).permission < 2){
+                                if(mubBot.admins.indexOf(fromID) == -1 || API.getUser(fromID).permission < 2){
                     mubBot.misc.ready = false;
                     setTimeout(function(){ mubBot.misc.ready = true; }, mubBot.settings.cooldown * 1000);
                  }
@@ -292,7 +292,7 @@ API.on(API.CHAT, function(data){
 
             case "mubplug":
                 API.sendChat("http://pastebin.com/GwwFEAhX");
-                                if(mubBot.admins.indexOf(fromID) > -1 ||API.getUser(fromID).permission < 2){
+                                if(mubBot.admins.indexOf(fromID) == -1 || API.getUser(fromID).permission < 2){
                     mubBot.misc.ready = false;
                     setTimeout(function(){ mubBot.misc.ready = true; }, mubBot.settings.cooldown * 1000);
                  }
@@ -406,7 +406,7 @@ API.on(API.CHAT, function(data){
 
             case "version":
                 API.sendChat("mubBot user shell version " + mubBot.misc.version);
-                                if(mubBot.admins.indexOf(fromID) > -1 ||API.getUser(fromID).permission < 2){
+                                if(mubBot.admins.indexOf(fromID) == -1 || API.getUser(fromID).permission < 2){
                     mubBot.misc.ready = false;
                     setTimeout(function(){ mubBot.misc.ready = true; }, mubBot.settings.cooldown * 1000);
                  }
@@ -417,7 +417,7 @@ API.on(API.CHAT, function(data){
             case "authors":
             case "creator":
                 API.sendChat(mubBot.misc.origin);
-                                if(mubBot.admins.indexOf(fromID) > -1 ||API.getUser(fromID).permission < 2){
+                                if(mubBot.admins.indexOf(fromID) == -1 || API.getUser(fromID).permission < 2){
                     mubBot.misc.ready = false;
                     setTimeout(function(){ mubBot.misc.ready = true; }, mubBot.settings.cooldown * 1000);
                  }
@@ -639,7 +639,7 @@ API.on(API.CHAT, function(data){
                             break;
                     }
                 }
-                                if(mubBot.admins.indexOf(fromID) > -1 ||API.getUser(fromID).permission < 2){
+                                if(mubBot.admins.indexOf(fromID) == -1 || API.getUser(fromID).permission < 2){
                     mubBot.misc.ready = false;
                     setTimeout(function(){ mubBot.misc.ready = true; }, mubBot.settings.cooldown * 1000);
                  }
@@ -681,7 +681,7 @@ API.on(API.CHAT, function(data){
                             break;
                     }
                 }
-                                if(mubBot.admins.indexOf(fromID) > -1 ||API.getUser(fromID).permission < 2){
+                                if(mubBot.admins.indexOf(fromID) == -1 || API.getUser(fromID).permission < 2){
                     mubBot.misc.ready = false;
                     setTimeout(function(){ mubBot.misc.ready = true; }, mubBot.settings.cooldown * 1000);
                  }
@@ -826,21 +826,21 @@ msg = data.message.toLowerCase(), chatID = data.chatID, fromID = data.fromID;
     if(mubBot.misc.ready || mubBot.admins.indexOf(fromID) > -1 ||API.getUser(fromID).permission > 1){
         if(msg.indexOf(':eyeroll:') > -1){
             API.sendChat('/me ¬_¬');
-                            if(mubBot.admins.indexOf(fromID) > -1 ||API.getUser(fromID).permission < 2){
+                            if(mubBot.admins.indexOf(fromID) == -1 || API.getUser(fromID).permission < 2){
                     mubBot.misc.ready = false;
                     setTimeout(function(){ mubBot.misc.ready = true; }, mubBot.settings.cooldown * 1000);
                  }
         }
         if(msg.indexOf(':notamused:') > -1){
             API.sendChat('/me ಠ_ಠ');
-                            if(mubBot.admins.indexOf(fromID) > -1 ||API.getUser(fromID).permission < 2){
+                            if(mubBot.admins.indexOf(fromID) == -1 || API.getUser(fromID).permission < 2){
                     mubBot.misc.ready = false;
                     setTimeout(function(){ mubBot.misc.ready = true; }, mubBot.settings.cooldown * 1000);
                  }
         }
         if(msg.indexOf(':yuno:') > -1){
             API.sendChat('/me ლ(ಥ益ಥლ');
-                            if(mubBot.admins.indexOf(fromID) > -1 ||API.getUser(fromID).permission < 2){
+                            if(mubBot.admins.indexOf(fromID) == -1 || API.getUser(fromID).permission < 2){
                     mubBot.misc.ready = false;
                     setTimeout(function(){ mubBot.misc.ready = true; }, mubBot.settings.cooldown * 1000);
                  }
