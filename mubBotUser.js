@@ -9,10 +9,11 @@ mubBot.pubVars = {};
 toSave = {};
 toSave.settings = mubBot.settings;
 toSave.moderators = mubBot.moderators;
+toSave.autoSkip = mubBot.autoSkip;
 
-mubBot.misc.version = "1.842";
+mubBot.misc.version = "2.0.00";
 mubBot.misc.origin = "This bot was created by Emub and DerpTheBass alone, and it is copyrighted!";
-mubBot.misc.changelog = "Added !hug";
+mubBot.misc.changelog = "Rewrote the whole bot, basically";
 mubBot.misc.ready = true;
 mubBot.misc.lockSkipping = false;
 mubBot.misc.lockSkipped = "0";
@@ -37,65 +38,25 @@ mubBot.settings.swearFilter = true;
 mubBot.settings.racismFilter = true;
 mubBot.settings.beggerFilter = true;
 mubBot.settings.interactive = true;
+mubBot.settings.ruleSkip = true;
 
-mubBot.moderators.creators[0] = "50aeaf683e083e18fa2d187e"; // Emub
-mubBot.moderators.creators[1] = "50aeb07e96fba52c3ca04ca8"; // DerpTheBass
+                        //Emub                      DerpTheBass                 [#808]                          eBot
+mubBot.admins = ["50aeaf683e083e18fa2d187e", "50aeb07e96fba52c3ca04ca8", "50aeb607c3b97a2cb4c35ac1", "51264d96d6e4a966883b0702"];
 
-mubBot.moderators.admins[2] = "50aeb607c3b97a2cb4c35ac1"; // [#808]
-mubBot.moderators.admins[3] = "51264d96d6e4a966883b0702"; // eBot
+mubBot.filters.swearWords = ["fuck","shit","bitch","cunt","twat","fag","queer","dumbass"];
 
-mubBot.filters.swearWords[0] = "fuck";
-mubBot.filters.swearWords[1] = "shit";
-mubBot.filters.swearWords[2] = "bitch";
-mubBot.filters.swearWords[3] = "cunt";
-mubBot.filters.swearWords[4] = "twat";
-mubBot.filters.swearWords[5] = "fag";
-mubBot.filters.swearWords[6] = "queer";
-mubBot.filters.swearWords[7] = "dumbass";
+mubBot.filters.racistWords = ["nigger","kike","spick","porchmonkey","camel jockey","towelhead","towel head","chink","gook","porch monkey"];
 
-mubBot.filters.racistWords[0] = "nigger";
-mubBot.filters.racistWords[1] = "kike";
-mubBot.filters.racistWords[2] = "spick";
-mubBot.filters.racistWords[3] = "porchmonkey";
-mubBot.filters.racistWords[4] = "camel jockey";
-mubBot.filters.racistWords[5] = "towelhead";
-mubBot.filters.racistWords[6] = "towel head";
-mubBot.filters.racistWords[7] = "chink";
-mubBot.filters.racistWords[8] = "gook";
-mubBot.filters.racistWords[9] = "porch monkey";
-mubBot.filters.racistWords[10] = "nigguh";
-mubBot.filters.racistWords[11] = "niglet";
-mubBot.filters.racistWords[12] = "nigga";
+mubBot.filters.beggerWords = ["fan4fan","fan me","fan pls","fan please","fan 4 fan","fan back","give me fans","gimme fans","fan back"];
 
-mubBot.filters.beggerWords[0] = "fan4fan";
-mubBot.filters.beggerWords[1] = "fan me";
-mubBot.filters.beggerWords[2] = "fan pls";
-mubBot.filters.beggerWords[3] = "fan please";
-mubBot.filters.beggerWords[4] = "fan 4 fan";
-mubBot.filters.beggerWords[5] = "fan back";
-mubBot.filters.beggerWords[6] = "give me fans";
-mubBot.filters.beggerWords[7] = "gimme fans";
+mubBot.misc.tacos = ["crispy taco","mexican taco","vegetarian taco","spicy taco","meatlover taco","cheese taco","wet hamburger","taco shell","delicious taco","gross taco"];
 
-mubBot.misc.tacos[0] = "crispy taco";
-mubBot.misc.tacos[1] = "mexican taco";
-mubBot.misc.tacos[2] = "vegetarian taco";
-mubBot.misc.tacos[3] = "spicy taco";
-mubBot.misc.tacos[4] = "meatlover taco";
-mubBot.misc.tacos[5] = "cheese taco";
-mubBot.misc.tacos[6] = "wet hamburger";
-mubBot.misc.tacos[7] = "taco shell";
-mubBot.misc.tacos[8] = "delicious taco";
-mubBot.misc.tacos[9] = "gross taco";
+mubBot.autoSkip = [];
 
 mubBot.pubVars.skipOnExceed;
 mubBot.pubVars.command = false;
 
-API.on(API.CHAT, chatEvent);
 API.on(API.HISTORY_UPDATE, historyUpdateEvent);
-
-function chatEvent(data){
-    botMethods.chatEvent(data);
-}
 
 function historyUpdateEvent(data){
     setTimeout(function(){ botMethods.historyUpdateEvent(data); }, 500);
@@ -105,6 +66,7 @@ botMethods.load = function(){
     toSave = JSON.parse(localStorage.getItem("mubBotSave"));
     mubBot.moderators = toSave.moderators;
     mubBot.settings = toSave.settings;
+    mubBot.autoSkip = toSave.autoSkip
     mubBot.moderators.tempTrust = [];
 };
 
@@ -131,29 +93,6 @@ botMethods.checkHistory = function(){
     return caught;
 };
 
-botMethods.getPermissions = function(id){
-    for(var i = 0; i < mubBot.moderators.creators.length; i++){
-        if(mubBot.moderators.creators[i] === id) return 4;
-    }
-
-    for(var i = 0; i < mubBot.moderators.admins.length; i++){
-        if(mubBot.moderators.admins[i] === id) return 3;
-    }
-
-    for(var i = 0; i < mubBot.moderators.trusted.length; i++){
-        if(mubBot.moderators.trusted[i] === id) return 2;
-    }
-
-    for(var i = 0; i < mubBot.moderators.tempTrust.length; i++){
-        if(mubBot.moderators.tempTrust[i] === id) return 1;
-    }
-
-    if(API.getUser(id).permission > 1 && API.getUser(id).permission < 4 && mubBot.settings.staffMeansAccess) return 2;
-    if(API.getUser(id).permission > 3 && mubBot.settings.staffMeansAccess) return 3;
-
-    return 0;
-};
-
 botMethods.getID = function(username){
     var users = API.getUsers();
     var result = "";
@@ -167,6 +106,9 @@ botMethods.getID = function(username){
     return "notFound";
 };
 
+botMethods.cleanString = function(string){
+    return string.replace(/&#39;/g, "'").replace(/&amp;/g, "&").replace(/&#34;/g, "\"").replace(/&#59;/g, ";").replace(/&lt;/g, "<").replace(/&gt;/g, ">");
+}
 
 botMethods.historyUpdateEvent = function(data){
     clearTimeout(mubBot.pubVars.skipOnExceed);
@@ -193,548 +135,731 @@ botMethods.historyUpdateEvent = function(data){
     }
 };
 
-botMethods.chatEvent = function(data){
-    if (API.getMedia().cid == 'bzwBtnTRnRU' && data.message.indexOf('nana') > -1) API.moderateDeleteChat(data.chatID);
-    
-    command = false; var chatCommand = "";
-    var permission = botMethods.getPermissions(data.fromID);
-    if(data.message.indexOf("!") === 0) command = true;
-    if(command){
-        chatCommand = data.message.substring(1);
-        var commands = chatCommand.split(" ");
-        commands.push("undefined");
-
-        for(var i = 2; i < commands.length; i++){
-            if(commands[i] !== "undefined") commands[1] = commands[1] + " " + commands[i];
+API.on(API.CHAT, function(data){
+    if(data.message.indexOf('!') === 0){
+        var msg = data.message, from = data.from, fromID = data.fromID;
+        var command = msg.substring(1).split(' ');
+        if(command[2] != undefined){
+            for(var i = 2; i<command.length; i++){
+                command[1] = command[1] + ' ' + command[i];
+            }
         }
+        if(mubBot.misc.ready || mubBot.admins.indexOf(fromID) > -1 || API.getUser(data.fromID).permission > 1){
+        switch(command[0].toLowerCase()){
+            case "marco":
+                API.sendChat("Polo");
+                    if(mubBot.admins.indexOf(fromID) > -1 ||API.getUser(fromID).permission < 2){
+                    mubBot.misc.ready = false;
+                setTimeout(function(){ mubBot.misc.ready = true; }, mubBot.settings.cooldown * 1000);
+                }
+                break;
+            case "weird":
+            case "weirdday":
+            case "wierd":
+            case "wierdday":
+                if(command[1] === "undefined"){
+                    API.sendChat("Weird Songs - http://playmc.pw/plug/WeirdDay.html");
+                }else if(command[1].indexOf("@") > -1){
+                    PI.sendChat(command[1]+" Weird Songs - http://playmc.pw/plug/WeirdDay.html");
+                }else{
+                    API.sendChat("Weird Songs - http://playmc.pw/plug/WeirdDay.html");
+                }
+                if(mubBot.admins.indexOf(fromID) > -1 ||API.getUser(fromID).permission < 2){
+                    mubBot.misc.ready = false;
+                    setTimeout(function(){ mubBot.misc.ready = true; }, mubBot.settings.cooldown * 1000);
+                 }
+                break;
 
-        if(mubBot.misc.ready || permission > 2 || API.getUser(data.fromID).permission > 1){
-            switch(commands[0].toLowerCase()){
-                case "weird" || "weirdday" || "wierd" || "wierdday":
-                    if(commands[1] === "undefined"){
-                        API.sendChat("Weird Songs - http://playmc.pw/plug/WeirdDay.html");
-                    }else if(commands[1].indexOf("@") > -1){
-                        API.sendChat(commands[1]+" Weird Songs - http://playmc.pw/plug/WeirdDay.html");
-                    }else{
-                        API.sendChat("Weird Songs - http://playmc.pw/plug/WeirdDay.html");
-                    }
-                    break;
-                case "weirdday":
-                    if(commands[1] === "undefined"){
-                        API.sendChat("Weird Songs - http://playmc.pw/plug/WeirdDay.html");
-                    }else if(commands[1].indexOf("@") > -1){
-                        API.sendChat(commands[1]+" Weird Songs - http://playmc.pw/plug/WeirdDay.html");
-                    }else{
-                        API.sendChat("Weird Songs - http://playmc.pw/plug/WeirdDay.html");
-                    }
-                    break;
-                case "wierd":
-                    if(commands[1] === "undefined"){
-                        API.sendChat("Weird Songs - http://playmc.pw/plug/WeirdDay.html");
-                    }else if(commands[1].indexOf("@") > -1){
-                        API.sendChat(commands[1]+" Weird Songs - http://playmc.pw/plug/WeirdDay.html");
-                    }else{
-                        API.sendChat("Weird Songs - http://playmc.pw/plug/WeirdDay.html");
-                    }
-                    break;
-                case "wierdday":
-                    if(commands[1] === "undefined"){
-                        API.sendChat("Weird Songs - http://playmc.pw/plug/WeirdDay.html");
-                    }else if(commands[1].indexOf("@") > -1){
-                        API.sendChat(commands[1]+" Weird Songs - http://playmc.pw/plug/WeirdDay.html");
-                    }else{
-                        API.sendChat("Weird Songs - http://playmc.pw/plug/WeirdDay.html");
-                    }
-                    break;
-                case "rules":
-                    if(commands[1] === "undefined"){
-                        API.sendChat("Room Rules - http://goo.gl/GBl4e");
-                    }else if(commands[1].indexOf("@") > -1){
-                        API.sendChat(commands[1]+" Room Rules - http://goo.gl/GBl4e");
-                    }else{
-                        API.sendChat("Room Rules - http://goo.gl/GBl4e");
-                    }
-                    break;
-                case "theme":
-                    if(commands[1] === "undefined"){
-                        API.sendChat("In this room, only music related to My Little Pony: Friendship is Magic is allowed. This includes PMVs.");
-                    }else if(commands[1].indexOf("@") > -1){
-                        API.sendChat(commands[1]+" In this room, only music related to My Little Pony: Friendship is Magic is allowed. This includes PMVs.");
-                    }else{
-                        API.sendChat("In this room, only music related to My Little Pony: Friendship is Magic is allowed. This includes PMVs.");
-                    }
-                    break;
-                case "commands":
-                    if(commands[1] === "undefined"){
-                        API.sendChat("Bot Commands - http://playmc.pw/plug/commands.html");
-                    }else if(commands[1].indexOf("@") > -1){
-                        API.sendChat(commands[1]+" Bot Commands - http://playmc.pw/plug/commands.html");
-                    }else{
-                        API.sendChat("Bot Commands - http://playmc.pw/plug/commands.html");
-                    }
-                    break;
-                case "wiki":
-                    var r = data.message.substring(6).replace(/ /g, "_");
-                    $.getJSON("http://jsonp.appspot.com/?callback=?&url=" + escape("http://en.wikipedia.org/w/api.php?action=query&prop=links&format=json&titles="+r.replace(/ /g,"_")),
-                        function(wikiData){
-                            if (!wikiData || !wikiData.query || !wikiData.query.pages) // there's an error. pssh, don't let anyone know ;)
-                                return API.sendChat("@"+data.from+" http://en.wikipedia.org/wiki/"+r+" (NOT GUARANTEED TO BE CORRECT)");
-                            if (wikiData.query.pages[-1]) {
-                                API.sendChat("@"+data.from+" article not found");
-                            } else {
-                                for (var i in wikiData.query.pages)
-                                    // note: the #... is just to make the url look nicer
-                                    return API.sendChat("@"+data.from+" https://en.wikipedia.org/wiki/?curid="+i+"#"+escape(wikiData.query.pages[i].title) );
-                            }
-                        }
-                    );
-                    break;
-                case "linkify":
-                    if(commands[1] === "undefined"){
-                        API.sendChat("@" + data.from + " You need to put a link!");
-                    }else if(commands[1].toLowerCase().indexOf("plug.dj") === -1 && commands[1].toLowerCase().indexOf("bug.dj") === -1){
-                        API.sendChat("http://"+commands[1]);
-                    }else{
-                        API.sendChat("Nice try! Advertising is not allowed in this room.");
-                    }
-                    break;
+            case "rules":
+                if(command[1] === "undefined"){
+                    API.sendChat("Room Rules - http://goo.gl/GBl4e");
+                }else if(command[1].indexOf("@") > -1){
+                    API.sendChat(command[1]+" Room Rules - http://goo.gl/GBl4e");
+                }else{
+                    API.sendChat("Room Rules - http://goo.gl/GBl4e");
+                }
+                if(mubBot.admins.indexOf(fromID) > -1 ||API.getUser(fromID).permission < 2){
+                    mubBot.misc.ready = false;
+                    setTimeout(function(){ mubBot.misc.ready = true; }, mubBot.settings.cooldown * 1000);
+                 }
+                break;
 
-                case "songlink":
-                    if(API.getMedia().format == 1){
-                        API.sendChat("@" + data.from + " " + "http://youtu.be/" + API.getMedia().cid);
-                    }else{
-                        var id = API.getMedia().cid;
-                        SC.get('/tracks', { ids: id,}, function(tracks) {
-                            API.sendChat("@"+data.from+" "+tracks[0].permalink_url);
-                        });
-                    }
-                    break;
+            case "theme":
+                if(command[1] === "undefined"){
+                    API.sendChat("In this room, only music related to My Little Pony: Friendship is Magic is allowed. This includes PMVs.");
+                }else if(command[1].indexOf("@") > -1){
+                    API.sendChat(command[1]+" In this room, only music related to My Little Pony: Friendship is Magic is allowed. This includes PMVs.");
+                }else{
+                    API.sendChat("In this room, only music related to My Little Pony: Friendship is Magic is allowed. This includes PMVs.");
+                }
+                if(mubBot.admins.indexOf(fromID) > -1 ||API.getUser(fromID).permission < 2){
+                    mubBot.misc.ready = false;
+                    setTimeout(function(){ mubBot.misc.ready = true; }, mubBot.settings.cooldown * 1000);
+                 }
+                break;
 
-                case "meh":
-                    if(permission > 0) $("#button-vote-negative").click();
-                    break;
-                case "steam":
-                    API.sendChat('@'+data.from+' http://steamcommunity.com/groups/plugfim#');
-                    break;
+            case "commands":
+                if(command[1] === "undefined"){
+                    API.sendChat("Bot Commands - http://playmc.pw/plug/commands.html");
+                }else if(command[1].indexOf("@") > -1){
+                    API.sendChat(command[1]+" Bot Commands - http://playmc.pw/plug/commands.html");
+                }else{
+                    API.sendChat("Bot Commands - http://playmc.pw/plug/commands.html");
+                }
+                                if(mubBot.admins.indexOf(fromID) > -1 ||API.getUser(fromID).permission < 2){
+                    mubBot.misc.ready = false;
+                    setTimeout(function(){ mubBot.misc.ready = true; }, mubBot.settings.cooldown * 1000);
+                 }
+                break;
 
-                case "woot":
-                    if(permission > 0) $("#button-vote-positive").click();
-                    break;
-
-                case "skipthis":
-                    API.getUser(data.fromID).permission > 1 ? API.moderateForceSkip() : API.sendChat("This commands requires being a room bouncer or of higher rank!");
-                    break;
-
-                case "temp":
-                    if(permission > 2){
-                        if(commands[1] === "undefined"){
-                            API.sendChat("@" + data.from + ", you must put a username.");
+            case "wiki":
+                var r = data.message.substring(6).replace(/ /g, "_");
+                $.getJSON("http://jsonp.appspot.com/?callback=?&url=" + escape("http://en.wikipedia.org/w/api.php?action=query&prop=links&format=json&titles="+r.replace(/ /g,"_")),
+                    function(wikiData){
+                        if (!wikiData || !wikiData.query || !wikiData.query.pages) // there's an error. pssh, don't let anyone know ;)
+                            return API.sendChat("@"+data.from+" http://en.wikipedia.org/wiki/"+r+" (NOT GUARANTEED TO BE CORRECT)");
+                        if (wikiData.query.pages[-1]) {
+                            API.sendChat("@"+data.from+" article not found");
                         }else{
-                            if(commands[1].indexOf("@") === 0) commands[1] = commands[1].substring(1);
-                            var ID = botMethods.getID(commands[1]);
-                            if(ID !== "notFound"){
-                                mubBot.moderators.tempTrust.push(ID);
-                                API.sendChat("Congratulations on earning temporary trust, @" + API.getUser(ID).username + "!");
-                            }else{
-                                API.sendChat("This user could not be found in the room.");
-                            }
+                            for (var i in wikiData.query.pages)
+                                // note: the #... is just to make the url look nicer
+                                return API.sendChat("@"+data.from+" https://en.wikipedia.org/wiki/?curid="+i+"#"+escape(wikiData.query.pages[i].title) );
                         }
+                    }
+                );
+                                if(mubBot.admins.indexOf(fromID) > -1 ||API.getUser(fromID).permission < 2){
+                    mubBot.misc.ready = false;
+                    setTimeout(function(){ mubBot.misc.ready = true; }, mubBot.settings.cooldown * 1000);
+                 }
+                break;
+
+            case "steam":
+                if(command[1] === "undefined"){
+                    API.sendChat("http://steamcommunity.com/groups/plugfim#");
+                }else if(command[1].indexOf("@") > -1){
+                    API.sendChat(command[1]+" http://steamcommunity.com/groups/plugfim#");
+                }else{
+                    API.sendChat("http://steamcommunity.com/groups/plugfim#");
+                }
+                                if(mubBot.admins.indexOf(fromID) > -1 ||API.getUser(fromID).permission < 2){
+                    mubBot.misc.ready = false;
+                    setTimeout(function(){ mubBot.misc.ready = true; }, mubBot.settings.cooldown * 1000);
+                 }
+                break;
+
+            case "skype":
+                if(command[1] === "undefined"){
+                    API.sendChat("http://goo.gl/NjSO6j");
+                }else if(command[1].indexOf("@") > -1){
+                    API.sendChat(command[1]+" http://goo.gl/NjSO6j");
+                }else{
+                    API.sendChat("http://goo.gl/NjSO6j");
+                }
+                                if(mubBot.admins.indexOf(fromID) > -1 ||API.getUser(fromID).permission < 2){
+                    mubBot.misc.ready = false;
+                    setTimeout(function(){ mubBot.misc.ready = true; }, mubBot.settings.cooldown * 1000);
+                 }
+                break;
+
+            case "linkify":
+                if(command[1] === "undefined"){
+                    API.sendChat("@" + data.from + " You need to put a link!");
+                }else if(command[1].toLowerCase().indexOf("plug.dj") === -1 && command[1].toLowerCase().indexOf("bug.dj") === -1){
+                    API.sendChat("http://"+command[1]);
+                }else{
+                    API.sendChat("Nice try! Advertising is not allowed in this room.");
+                }
+                                if(mubBot.admins.indexOf(fromID) > -1 ||API.getUser(fromID).permission < 2){
+                    mubBot.misc.ready = false;
+                    setTimeout(function(){ mubBot.misc.ready = true; }, mubBot.settings.cooldown * 1000);
+                 }
+                break;
+
+            case "songlink":
+                if(API.getMedia().format == 1){
+                    API.sendChat("@" + data.from + " " + "http://youtu.be/" + API.getMedia().cid);
+                }else{
+                    var id = API.getMedia().cid;
+                    SC.get('/tracks', { ids: id,}, function(tracks) {
+                        API.sendChat("@"+data.from+" "+tracks[0].permalink_url);
+                    });
+                }
+                                if(mubBot.admins.indexOf(fromID) > -1 ||API.getUser(fromID).permission < 2){
+                    mubBot.misc.ready = false;
+                    setTimeout(function(){ mubBot.misc.ready = true; }, mubBot.settings.cooldown * 1000);
+                 }
+                break;
+
+            case "mubplug":
+                API.sendChat("http://pastebin.com/GwwFEAhX");
+                                if(mubBot.admins.indexOf(fromID) > -1 ||API.getUser(fromID).permission < 2){
+                    mubBot.misc.ready = false;
+                    setTimeout(function(){ mubBot.misc.ready = true; }, mubBot.settings.cooldown * 1000);
+                 }
+                break;
+
+            }
+        }
+    }
+});
+
+API.on(API.CHAT, function(data){
+    if(data.message.indexOf('!') === 0){
+        var msg = data.message, from = data.from, fromID = data.fromID;
+        var command = msg.substring(1).split(' ');
+        if(command[2] != undefined){
+            for(var i = 2; i<command.length; i++){
+                command[1] = command[1] + ' ' + command[i];
+            }
+        }
+        if(mubBot.misc.ready || mubBot.admins.indexOf(fromID) > -1 || API.getUser(fromID).permission > 1){
+        switch(command[0].toLowerCase()){
+            case "meh":
+                if(API.getUser(data.fromID).permission > 1 || mubBot.admins.indexOf(fromID) > -1) $("#button-vote-negative").click();
+                break;
+
+            case "woot":
+                if(API.getUser(data.fromID).permission > 1 || mubBot.admins.indexOf(fromID) > -1)  $("#button-vote-positive").click();
+                break;
+
+            case "skipthis":
+                API.getUser(data.fromID).permission > 1 ? API.moderateForceSkip() : API.sendChat("This commands requires being a room bouncer or of higher rank!");
+                break;
+
+            case "lockskip":
+                if( API.getUser(data.fromID).permission > 1){
+                    API.moderateRoomProps(true, true);
+                    mubBot.misc.lockSkipping = true;
+                    mubBot.misc.lockSkipped = API.getDJs()[0].id;
+                    setTimeout(function(){ API.moderateRemoveDJ(mubBot.misc.lockSkipped); }, 500);
+                }else{
+                    API.sendChat("This command requires bouncer or higher!");
+                }
+                break;
+
+            case "historyfilter":
+            case "hf":
+                if(API.getUser(fromID).permission > 1 || mubBot.admins.indexOf(fromID) > -1) mubBot.settings.historyFilter ? API.sendChat("History filter is enabled") : API.sendChat("History filter is disabled");
+                break;
+
+            case "swearfilter":
+            case "sf":
+                if(API.getUser(fromID).permission > 1 || mubBot.admins.indexOf(fromID) > -1) mubBot.settings.swearFilter ? API.sendChat("Swearing filter is enabled") : API.sendChat("Swearing filter is disabled");
+                break;
+
+            case "racismfilter":
+            case "rf":
+                if(API.getUser(fromID).permission > 1 || mubBot.admins.indexOf(fromID) > -1) mubBot.settings.racismFilter ? API.sendChat("Racism filter is enabled") : API.sendChat("Racism filter is disabled");
+                break;
+
+            case "beggerfilter":
+            case "bf":
+                if(API.getUser(fromID).permission > 1 || mubBot.admins.indexOf(fromID) > -1) mubBot.settings.beggerFilter ? API.sendChat("Begger filter is enabled") : API.sendChat("Begger filter is disabled");
+                break;
+
+            case "tsf":
+                if(API.getUser(fromID).permission > 1 || mubBot.admins.indexOf(fromID) > -1){
+                    if(mubBot.settings.swearFilter){
+                        mubBot.settings.swearFilter = false;
+                        API.sendChat("Bot will no longer filter swearing.");
                     }else{
-                        API.sendChat("Only admins can grant access to others.");
+                        mubBot.settings.swearFilter = true;
+                        API.sendChat("Bot will now filter swearing.");
                     }
-                    break;
+                }
+                break;
 
-                case "trust":
-                    if(permission > 3){
-                        if(commands[1] === "undefined"){
-                            API.sendChat("@" + data.from + ", you must put a username.");
-                        }else{
-                            if(commands[1].indexOf("@") === 0) commands[1] = commands[1].substring(1);
-                            var ID = botMethods.getID(commands[1]);
-                            if(ID !== "notFound"){
-                                mubBot.moderators.trusted.push(ID);
-                                API.sendChat("Congratulations on earning trust, @" + API.getUser(ID).username + "!!!");
-                            }else{
-                                API.sendChat("This user could not be found in the room.");
-                            }
-                        }
+            case "trf":
+                if(API.getUser(fromID).permission > 1 || mubBot.admins.indexOf(fromID) > -1){
+                    if(mubBot.settings.racismFilter){
+                        mubBot.settings.racismFilter = false;
+                        API.sendChat("Bot will no longer filter racism.");
                     }else{
-                        API.sendChat("Only bot creators can grant access to others.");
+                        mubBot.settings.racismFilter = true;
+                        API.sendChat("Bot will now filter racism.");
                     }
-                    botMethods.save();
-                    break;
+                }
+                break;
 
-                case "access":
-                    if(commands[1] !== "undefined"){
-                        if(commands[1].indexOf("@") === 0) commands[1] = commands[1].substring(1);
-                        if(permission > 0){
-
-                            var userPermission = botMethods.getPermissions(botMethods.getID(commands[1]));
-                            userPermission === 0 ? API.sendChat("This user has no bot permissions") : API.sendChat("This user has level " + userPermission + " access");
-
-                        }else{
-                            API.sendChat("You must be at least a trusted bot user to check others access levels!");
-                        }
+            case "tbf":
+                if(API.getUser(fromID).permission > 1 || mubBot.admins.indexOf(fromID) > -1){
+                    if(mubBot.settings.beggerFilter){
+                        mubBot.settings.beggerFilter = false;
+                        API.sendChat("Bot will no longer filter fan begging.");
                     }else{
-                        API.sendChat("@" + data.from + ", you have level " + permission + " access");
+                        mubBot.settings.beggerFilter = true;
+                        API.sendChat("Bot will now filter fan begging.");
                     }
-                    break;
-
-                case "historyfilter":
-                case "hf":
-                    if(permission > 0) mubBot.settings.historyFilter ? API.sendChat("History filter is enabled") : API.sendChat("History filter is disabled");
-                    break;
-
-                case "swearfilter":
-                case "sf":
-                    if(permission > 0) mubBot.settings.swearFilter ? API.sendChat("Swearing filter is enabled") : API.sendChat("Swearing filter is disabled");
-                    break;
-
-                case "racismfilter":
-                case "rf":
-                    if(permission > 0) mubBot.settings.racismFilter ? API.sendChat("Racism filter is enabled") : API.sendChat("Racism filter is disabled");
-                    break;
-
-                case "beggerfilter":
-                case "bf":
-                    if(permission > 0) mubBot.settings.beggerFilter ? API.sendChat("Begger filter is enabled") : API.sendChat("Begger filter is disabled");
-                    break;
-
-                case "tsf":
-                    if(permission > 2){
-                        if(mubBot.settings.swearFilter){
-                            mubBot.settings.swearFilter = false;
-                            API.sendChat("Bot will no longer filter swearing.");
-                        }else{
-                            mubBot.settings.swearFilter = true;
-                            API.sendChat("Bot will now filter swearing.");
-                        }
+                }
+                break;
+            case "thf":
+                if(API.getUser(fromID).permission > 1 || mubBot.admins.indexOf(fromID) > -1){
+                    if(mubBot.settings.historyFilter){
+                        mubBot.settings.historyFilter = false;
+                        API.sendChat("Bot will no longer skip songs that are in the room history.");
+                    }else{
+                        mubBot.settings.historyFilter = true;
+                        API.sendChat("Bot will now skip songs that are in the room history.");
                     }
-                    break;
+                }
+                break;
 
-                case "trf":
-                    if(permission > 2){
-                        if(mubBot.settings.racismFilter){
-                            mubBot.settings.racismFilter = false;
-                            API.sendChat("Bot will no longer filter racism.");
-                        }else{
-                            mubBot.settings.racismFilter = true;
-                            API.sendChat("Bot will now filter racism.");
-                        }
+            case "version":
+                API.sendChat("mubBot user shell version " + mubBot.misc.version);
+                                if(mubBot.admins.indexOf(fromID) > -1 ||API.getUser(fromID).permission < 2){
+                    mubBot.misc.ready = false;
+                    setTimeout(function(){ mubBot.misc.ready = true; }, mubBot.settings.cooldown * 1000);
+                 }
+                break;
+
+            case "origin":
+            case "author":
+            case "authors":
+            case "creator":
+                API.sendChat(mubBot.misc.origin);
+                                if(mubBot.admins.indexOf(fromID) > -1 ||API.getUser(fromID).permission < 2){
+                    mubBot.misc.ready = false;
+                    setTimeout(function(){ mubBot.misc.ready = true; }, mubBot.settings.cooldown * 1000);
+                 }
+                break;
+
+            case "status":
+                if(API.getUser(fromID).permission > 1 || mubBot.admins.indexOf(fromID) > -1){
+                    var response = "";
+                    var currentTime = new Date().getTime();
+                    var minutes = Math.floor((currentTime - joined) / 60000);
+                    var hours = 0;
+                    while(minutes > 60){
+                        minutes = minutes - 60;
+                        hours++;
                     }
-                    break;
+                    hours == 0 ? response = "Running for " + minutes + "m " : response = "Running for " + hours + "h " + minutes + "m";
+                    response = response + " | Begger filter: "+mubBot.settings.beggerFilter;
+                    response = response + " | Swear filter: "+mubBot.settings.swearFilter;
+                    response = response + " | Racism filter: "+mubBot.settings.racismFilter;
+                    response = response + " | History filter: "+mubBot.settings.historyFilter;
+                    response = response + " | MaxLength: " + mubBot.settings.maxLength + "m";
+                    response = response + " | Cooldown: " + mubBot.settings.cooldown + "s";
+                    response = response + " | Mod access: " + mubBot.settings.staffMeansAccess;
+                    response = response + " | RuleSkip: "+ mubBot.settings.ruleSkip;
+                    API.sendChat(response);
+                }
+                break;
 
-                case "tbf":
-                    if(permission > 2){
-                        if(mubBot.settings.beggerFilter){
-                            mubBot.settings.beggerFilter = false;
-                            API.sendChat("Bot will no longer filter fan begging.");
-                        }else{
-                            mubBot.settings.beggerFilter = true;
-                            API.sendChat("Bot will now filter fan begging.");
-                        }
+            case "maxlength":
+                if(API.getUser(fromID).permission > 1 || mubBot.admins.indexOf(fromID) > -1){
+                    if(command[1] === "undefined"){
+                        API.sendChat("Current max song length is " + mubBot.settings.maxLength + " minutes.");
                     }
-                    break;
-
-                case "die":
-                    if(API.getUser(data.fromID).permission > 2){
-                        API.off(API.CHAT, chatEvent);
-                        API.off(API.HISTORY_UPDATE, historyUpdateEvent)
-                        API.sendChat("Bot is now dead!");
-                    }else {
-                        API.sendChat("This commands requires being a room bouncer or of higher rank!");
+                    if(command[1] === "disable"){
+                        mubBot.settings.maxLength = 9999999999;
+                        API.sendChat("Max length is now (almost) infinite");
+                    }else if(command[1] !== "undefined"){
+                        mubBot.settings.maxLength = command[1];
+                        API.sendChat("New max song length is " + mubBot.settings.maxLength + " minutes.");
                     }
-                    break;
-                case "thf":
-                    if(permission > 2){
-                        if(mubBot.settings.historyFilter){
-                            mubBot.settings.historyFilter = false;
-                            API.sendChat("Bot will no longer skip songs that are in the room history.");
-                        }else{
-                            mubBot.settings.historyFilter = true;
-                            API.sendChat("Bot will now skip songs that are in the room history.");
-                        }
-                    }
-                    break;
+                }
+                break;
 
-                case "version":
-                    API.sendChat("mubBot user shell version " + mubBot.misc.version);
-                    break;
-
-                case "marco":
-                    API.sendChat("Polo");
-                    break;
-
-                case "origin":
-                case "author":
-                case "authors":
-                case "creator":
-                    API.sendChat(mubBot.misc.origin);
-                    break;
-
-                case "status":
-                    if(permission > 0){
-                        var response = "";
-                        var currentTime = new Date().getTime();
-                        var minutes = Math.floor((currentTime - joined) / 60000);
-                        var hours = 0;
-                        while(minutes > 60){
-                            minutes = minutes - 60;
-                            hours++;
-                        }
-                        hours == 0 ? response = "Running for " + minutes + " minutes - " : response = "Running for " + hours + "h " + minutes + "m - ";
-                        mubBot.settings.beggerFilter ? response = response + "Begger filter is enabled! - " : response = response + "Begger filter is disabled! - ";
-                        mubBot.settings.swearFilter ? response = response + "Swear filter is enabled! - " : response = response + "Swear filter is disabled! - ";
-                        mubBot.settings.racismFilter ? response = response + "Racism filter is enabled! - " : response = response + "Racism filter is disabled! - ";
-                        mubBot.settings.historyFilter ? response = response + "History filter is enabled! - " : response = response + "History filter is disabled! - ";
-                        response = response + "MaxLength is " + mubBot.settings.maxLength + " minutes - ";
-                        response = response + "Cooldown is " + mubBot.settings.cooldown + " seconds - ";
-                        response = response + "Mod access is " + mubBot.settings.staffMeansAccess;
-                        API.sendChat(response);
-                    }
-                    break;
-
-                case "maxlength":
-                    if(permission > 2){
-                        if(commands[1] === "undefined"){
-                            API.sendChat("Current max song length is " + mubBot.settings.maxLength + " minutes.");
-                        }
-                        if(commands[1] === "disable"){
-                            mubBot.settings.maxLength = 9999999999;
-                            API.sendChat("Max length is now (almost) infinite");
-                        }else if(commands[1] !== "undefined"){
-                            mubBot.settings.maxLength = commands[1];
-                            API.sendChat("New max song length is " + mubBot.settings.maxLength + " minutes.");
-                        }
-                    }
-                    break;
-
-                case "cooldown":
-                    if(permission > 2){
-                        if(commands[1] === "undefined"){
-                            API.sendChat("Current command cooldown is " + mubBot.settings.cooldown + " seconds.");
-                        }
-                        if(commands[1] === "disable"){
-                            mubBot.settings.cooldown = 0.001;
-                            API.sendChat("Command cooldown disabled");
-                        }else if(commands[1] !== "undefined"){
-                            mubBot.settings.cooldown = commands[1];
-                            API.sendChat("New command cooldown is " + mubBot.settings.cooldown + " seconds.");
-                        }
-                    }
-                    break;
-
-                case "taco":
+            case "cooldown":
+                if(API.getUser(fromID).permission > 1 || mubBot.admins.indexOf(fromID) > -1){
                     if(commands[1] === "undefined"){
-                        var crowd = API.getUsers();
-                        var randomUser = Math.floor(Math.random() * crowd.length);
-                        var randomTaco = Math.floor(Math.random() * mubBot.misc.tacos.length);
-                        var randomSentence = Math.floor(Math.random() * 3);
-                        switch(randomSentence){
-                            case 0:
-                                API.sendChat("@" + crowd[randomUser].username + ", take this " + mubBot.misc.tacos[randomTaco] + ", you bitch!");
-                                break;
-                            case 1:
-                                API.sendChat("@" + crowd[randomUser].username + ", quickly! Eat this " + mubBot.misc.tacos[randomTaco] + " before I do!");
-                                break;
-                            case 2:
-                                API.sendChat("One free " + mubBot.misc.tacos[randomTaco] + " for you, @" + crowd[randomUser].username + ". :3");
-                                break;
-                            case 3:
-                                API.sendChat("/me throws a " + mubBot.misc.tacos[randomTaco] + " at @" + crowd[randomUser].username + "!");
-                                break;
-                        }
+                        API.sendChat("Current command cooldown is " + mubBot.settings.cooldown + " seconds.");
+                    }
+                    if(commands[1] === "disable"){
+                        mubBot.settings.cooldown = 0.001;
+                        API.sendChat("Command cooldown disabled");
+                    }else if(commands[1] !== "undefined"){
+                        mubBot.settings.cooldown = commands[1];
+                        API.sendChat("New command cooldown is " + mubBot.settings.cooldown + " seconds.");
+                    }
+                }
+                break;
+
+            case "modaccess":
+                if(API.getUser(fromID).permission > 1 || mubBot.admins.indexOf(fromID) > -1){
+                    mubBot.settings.staffMeansAccess ? API.sendChat("Staff currently has bot access.") : API.sendChat("Staff doesn't have bot access.");
+                }
+                break;
+
+            case "togglemodaccess":
+            case "tma":
+                if(API.getUser(fromID).permission > 1 || mubBot.admins.indexOf(fromID) > -1){
+                    if(mubBot.settings.staffMeansAccess){
+                        mubBot.settings.staffMeansAccess = false;
+                        API.sendChat("Staff no longer have bot access.");
                     }else{
-                        if(commands[1].indexOf("@") === 0) commands[1] = commands[1].substring(1);
-                        var randomTaco = Math.floor(Math.random() * mubBot.misc.tacos.length);
-                        var randomSentence = Math.floor(Math.random() * 3);
-                        switch(randomSentence){
-                            case 0:
-                                API.sendChat("@" + commands[1].replace(/&#39;/g, "'").replace(/&amp;/g, "&") + ", take this " + mubBot.misc.tacos[randomTaco] + ", you bitch!");
-                                break;
-                            case 1:
-                                API.sendChat("@" + commands[1].replace(/&#39;/g, "'").replace(/&amp;/g, "&") + ", quickly! Eat this " + mubBot.misc.tacos[randomTaco] + " before I do!");
-                                break;
-                            case 2:
-                                API.sendChat("One free " + mubBot.misc.tacos[randomTaco] + " for you, @" + commands[1].replace(/&#39;/g, "'").replace(/&amp;/g, "&") + ". :3");
-                                break;
-                            case 3:
-                                API.sendChat("/me throws a " + mubBot.misc.tacos[randomTaco] + " at @" + commands[1].replace(/&#39;/g, "'").replace(/&amp;/g, "&") + "!");
-                                break;
-                        }
+                        mubBot.settings.staffMeansAccess = true;
+                        API.sendChat("Staff now has bot access.");
                     }
-                    break;
-                case "hug":
-                    if(commands[1] === "undefined"){
-                        var crowd = API.getUsers();
-                        var randomUser = Math.floor(Math.random() * crowd.length);
-                            API.sendChat("/me hugs @" + crowd[randomUser].username);
-                    }else{
-                        if(commands[1].indexOf("@") === 0) commands[1] = commands[1].substring(1);
-                            API.sendChat('/me hugs @'+commands[1].replace(/&#39;/g, "'").replace(/&amp;/g, "&"));
-                    }
-                    break;
-                  case "cookie":
-                    if(commands[1] === "undefined"){
-                        var crowd = API.getUsers();
-                        var randomUser = Math.floor(Math.random() * crowd.length);
-                        var randomSentence = Math.floor(Math.random() * 3);
-                        switch(randomSentence){
-                            case 0:
-                                API.sendChat("/me throws a STICK OF DYNAMITE at @"+crowd[randomUser].username);
-                                break;
-                            case 1:
-                                API.sendChat("/me drowns @"+crowd[randomUser].username+" in batter");
-                                break;
-                            case 2:
-                                API.sendChat("/me hands an anthrax laced cookie to @"+crowd[randomUser].username);
-                                break;
-                            case 3:
-                                API.sendChat("/me shows @"+crowd[randomUser].username+" the power of friendship. BY SLAPPING THEM WITH A COOKIE");
-                                break;
-                        }
-                    }else{
-                        if(commands[1].indexOf("@") === 0) commands[1] = commands[1].substring(1);
-                        var randomSentence = Math.floor(Math.random() * 3);
-                        switch(randomSentence){
-                            case 0:
-                                API.sendChat("/me throws a STICK OF DYNAMITE at @"+commands[1].replace(/&#39;/g, "'").replace(/&amp;/g, "&"));
-                                break;
-                            case 1:
-                                API.sendChat("/me drowns @"+commands[1].replace(/&#39;/g, "'").replace(/&amp;/g, "&")+" in batter");
-                                break;
-                            case 2:
-                                API.sendChat("/me hands an anthrax laced cookie to @"+commands[1].replace(/&#39;/g, "'").replace(/&amp;/g, "&"));
-                                break;
-                            case 3:
-                                API.sendChat("/me shows @"+commands[1].replace(/&#39;/g, "'").replace(/&amp;/g, "&")+" the power of friendship. BY SLAPPING THEM WITH A COOKIE");
-                                break;
-                        }
-                    }
-                    break;
-                case "modaccess":
-                    if(permission > 0){
-                        mubBot.settings.staffMeansAccess ? API.sendChat("Staff currently has bot access.") : API.sendChat("Staff doesn't have bot access.");
-                    }
-                    break;
+                }
+                break;
 
-                case "togglemodaccess":
-                case "tma":
-                    if(permission > 2){
-                        if(mubBot.settings.staffMeansAccess){
-                            mubBot.settings.staffMeansAccess = false;
-                            API.sendChat("Staff no longer have bot access.");
-                        }else{
-                            mubBot.settings.staffMeansAccess = true;
-                            API.sendChat("Staff now has bot access.");
-                        }
-                    }
-                    break;
+            case "interactive":
+                if(API.getUser(fromID).permission > 1 || mubBot.admins.indexOf(fromID) > -1){
+                    mubBot.settings.interactive ? API.sendChat("Bot is interactive.") : API.sendChat("Bot is not interactive.");
+                }
+                break;
 
-                case "interactive":
-                    if(permission > 0){
-                        mubBot.settings.interactive ? API.sendChat("Bot is interactive.") : API.sendChat("Bot is not interactive.");
-                    }
-                    break;
-
-                case "toggleinteractive":
-                case "ti":
-                    if(permission > 0){
-                        if(mubBot.settings.interactive){
-                            mubBot.settings.interactive = false;
-                            API.sendChat("Bot will no longer interact.");
-                        }else{
-                            mubBot.settings.interactive = true;
-                            API.sendChat("Bot will now interact.");
-                        }
-                    }
-                    break;
-
-                case "save":
-                    if(permission > 2){
-                        botMethods.save();
-                        API.sendChat("Settings saved.");
-                    }
-                    break;
-
-                case "stfu":
-                    if(permission > 0){
+            case "toggleinteractive":
+            case "ti":
+                if(API.getUser(fromID).permission > 1 || mubBot.admins.indexOf(fromID) > -1){
+                    if(mubBot.settings.interactive){
                         mubBot.settings.interactive = false;
-                        API.sendChat("Yessir!");
-                    }
-                    break;
-
-                case "changelog":
-                    if(permission > 0){
-                        API.sendChat("New in version " + mubBot.misc.version + " - " + mubBot.misc.changelog)
-                    }
-                    break;
-
-                case "lockskip":
-                    if( API.getUser(data.fromID).permission > 1){
-                        API.moderateRoomProps(true, true);
-                        mubBot.misc.lockSkipping = true;
-                        mubBot.misc.lockSkipped = API.getDJs()[0].id;
-                        setTimeout(function(){ API.moderateRemoveDJ(mubBot.misc.lockSkipped); }, 500);
+                        API.sendChat("Bot will no longer interact.");
                     }else{
-                        API.sendChat("This command requires level 2 bot access!");
+                        mubBot.settings.interactive = true;
+                        API.sendChat("Bot will now interact.");
                     }
-                    break;
+                }
+                break;
 
-                case "run":
-                    if(permission > 3){
-                        a = commands[1].replace(/&#34;/g, "\"").replace(/&#59;/g, ";");
-                        console.log(a);
-                        eval(a);
+            case "save":
+                if(API.getUser(fromID).permission > 1 || mubBot.admins.indexOf(fromID) > -1){
+                    botMethods.save();
+                    API.sendChat("Settings saved.");
+                }
+                break;
+
+            case "stfu":
+                if(API.getUser(fromID).permission > 1 || mubBot.admins.indexOf(fromID) > -1){
+                    mubBot.settings.interactive = false;
+                    API.sendChat("Yessir!");
+                }
+                break;
+
+            case "changelog":
+                if(API.getUser(fromID).permission > 1 || mubBot.admins.indexOf(fromID) > -1){
+                    API.sendChat("New in version " + mubBot.misc.version + " - " + mubBot.misc.changelog)
+                }
+                break;
+
+            }
+        }
+    }
+});
+
+API.on(API.CHAT, function(data){
+    if(data.message.indexOf('!') === 0){
+        var msg = data.message, from = data.from, fromID = data.fromID;
+        var command = msg.substring(1).split(' ');
+        if(command[2] != undefined){
+            for(var i = 2; i<command.length; i++){
+                command[1] = command[1] + ' ' + command[i];
+            }
+        }
+        if(mubBot.misc.ready || mubBot.admins.indexOf(fromID) > -1 ||API.getUser(fromID).permission > 1){
+        switch(command[0].toLowerCase()){
+            case "taco":
+                if(typeof command[1] == "undefined"){
+                    var crowd = API.getUsers();
+                    var randomUser = Math.floor(Math.random() * crowd.length);
+                    var randomTaco = Math.floor(Math.random() * mubBot.misc.tacos.length);
+                    var randomSentence = Math.floor(Math.random() * 3);
+                    switch(randomSentence){
+                        case 0:
+                            API.sendChat("@" + crowd[randomUser].username + ", take this " + mubBot.misc.tacos[randomTaco] + ", you bitch!");
+                            break;
+                        case 1:
+                            API.sendChat("@" + crowd[randomUser].username + ", quickly! Eat this " + mubBot.misc.tacos[randomTaco] + " before I do!");
+                            break;
+                        case 2:
+                            API.sendChat("One free " + mubBot.misc.tacos[randomTaco] + " for you, @" + crowd[randomUser].username + ". :3");
+                            break;
+                        case 3:
+                            API.sendChat("/me throws a " + mubBot.misc.tacos[randomTaco] + " at @" + crowd[randomUser].username + "!");
+                            break;
                     }
-                    break;
+                }else{
+                    if(command[1].indexOf("@") === 0) command[1] = command[1].substring(1);
+                    var randomTaco = Math.floor(Math.random() * mubBot.misc.tacos.length);
+                    var randomSentence = Math.floor(Math.random() * 3);
+                    switch(randomSentence){
+                        case 0:
+                            API.sendChat("@" + botMethods.cleanString(command[1]) + ", take this " + mubBot.misc.tacos[randomTaco] + ", you bitch!");
+                            break;
+                        case 1:
+                            API.sendChat("@" + botMethods.cleanString(command[1]) + ", quickly! Eat this " + mubBot.misc.tacos[randomTaco] + " before I do!");
+                            break;
+                        case 2:
+                            API.sendChat("One free " + mubBot.misc.tacos[randomTaco] + " for you, @" + botMethods.cleanString(command[1]) + ". :3");
+                            break;
+                        case 3:
+                            API.sendChat("/me throws a " + mubBot.misc.tacos[randomTaco] + " at @" + botMethods.cleanString(command[1]) + "!");
+                            break;
+                    }
+                }
+                                if(mubBot.admins.indexOf(fromID) > -1 || API.getUser(fromID).permission < 2){
+                    mubBot.misc.ready = false;
+                    setTimeout(function(){ mubBot.misc.ready = true; }, mubBot.settings.cooldown * 1000);
+                 }
+                break;
+            case "hug":
+                if(typeof command[1] == "undefined"){
+                    var crowd = API.getUsers();
+                    var randomUser = Math.floor(Math.random() * crowd.length);
+                    var randomSentence = Math.floor(Math.random() * 3);
+                    switch(randomSentence){
+                        case 0:
+                            API.sendChat("Hugs? Forget that!");
+                            setTimeout(function(){
+                                API.sendChat("/me grabs @"+crowd[randomUser].username+" 's ass");
+                            }, 650);
+                            break;
+                        case 1:
+                            API.sendChat("/me gives @"+crowd[randomUser].username+" a big bear hug");
+                            break;
+                        case 2:
+                            API.sendChat("/me gives @"+crowd[randomUser].username+" a soft, furry hug");
+                            break;
+                        case 3:
+                            API.sendChat("/me gives @"+crowd[randomUser].username+" an awkward hug");
+                            break;
+                    }
+                }else{
+                    if(command[1].indexOf("@") === 0) command[1] = command[1].substring(1);
+                    var crowd = API.getUsers();
+                    var randomUser = Math.floor(Math.random() * crowd.length);
+                    var randomSentence = Math.floor(Math.random() * 3);
+                    switch(randomSentence){
+                        case 0:
+                            API.sendChat("Hugs? Forget that!");
+                            setTimeout(function(){
+                                API.sendChat("/me grabs @"+botMethods.cleanString(command[1])+" 's ass");
+                            }, 650);
+                            break;
+                        case 1:
+                            API.sendChat("/me gives @"+botMethods.cleanString(command[1])+" a big bear hug");
+                            break;
+                        case 2:
+                            API.sendChat("/me gives @"+botMethods.cleanString(command[1])+" a soft, furry hug");
+                            break;
+                        case 3:
+                            API.sendChat("/me gives @"+botMethods.cleanString(command[1])+" an awkward hug");
+                            break;
+                    }
+                }
+                                if(mubBot.admins.indexOf(fromID) > -1 ||API.getUser(fromID).permission < 2){
+                    mubBot.misc.ready = false;
+                    setTimeout(function(){ mubBot.misc.ready = true; }, mubBot.settings.cooldown * 1000);
+                 }
+                break;
+            case "cookie":
+                if(typeof command[1] == "undefined"){
+                    var crowd = API.getUsers();
+                    var randomUser = Math.floor(Math.random() * crowd.length);
+                    var randomSentence = Math.floor(Math.random() * 3);
+                    switch(randomSentence){
+                        case 0:
+                            API.sendChat("/me throws a STICK OF DYNAMITE at @"+crowd[randomUser].username);
+                            break;
+                        case 1:
+                            API.sendChat("/me drowns @"+crowd[randomUser].username+" in batter");
+                            break;
+                        case 2:
+                            API.sendChat("/me hands an anthrax laced cookie to @"+crowd[randomUser].username);
+                            break;
+                        case 3:
+                            API.sendChat("/me shows @"+crowd[randomUser].username+" the power of friendship. BY SLAPPING THEM WITH A COOKIE");
+                            break;
+                    }
+                }else{
+                    if(command[1].indexOf("@") === 0) command[1] = command[1].substring(1);
+                    var randomSentence = Math.floor(Math.random() * 3);
+                    switch(randomSentence){
+                        case 0:
+                            API.sendChat("/me throws a STICK OF DYNAMITE at @"+botMethods.cleanString(command[1]));
+                            break;
+                        case 1:
+                            API.sendChat("/me drowns @"+botMethods.cleanString(command[1])+" in batter");
+                            break;
+                        case 2:
+                            API.sendChat("/me hands an anthrax laced cookie to @"+botMethods.cleanString(command[1]));
+                            break;
+                        case 3:
+                            API.sendChat("/me shows @"+botMethods.cleanString(command[1])+" the power of friendship. BY SLAPPING THEM WITH A COOKIE");
+                            break;
+                    }
+                }
+                                if(mubBot.admins.indexOf(fromID) > -1 ||API.getUser(fromID).permission < 2){
+                    mubBot.misc.ready = false;
+                    setTimeout(function(){ mubBot.misc.ready = true; }, mubBot.settings.cooldown * 1000);
+                 }
+                break;
 
-                case "mubplug":
-                    API.sendChat("http://bit.ly/mubPlug");
-                    break;
+            case "run":
+                if(mubBot.admins.indexOf(fromID) > -1){
+                    a = botMethods.cleanString(command[1]);
+                    console.log(a);
+                    eval(a);
+                }
+                break;
 
             }
         }
-        if(permission < 2 || API.getUser(data.fromID).permission < 2){
-        mubBot.misc.ready = false;
-        setTimeout(function(){ mubBot.misc.ready = true; }, mubBot.settings.cooldown * 1000);
-        }
-    }else{
-        // swearing
-        for(var s = 0; s < mubBot.filters.swearWords.length; s++){
-            if(data.message.toLowerCase().indexOf(mubBot.filters.swearWords[s]) > -1 && mubBot.settings.swearFilter){
-                API.moderateDeleteChat(data.chatID);
-            }
-        }
+    }
+});
 
-        // racism
-        for(var a = 0; a < mubBot.filters.racistWords.length; a++){
-            if(data.message.toLowerCase().indexOf(mubBot.filters.racistWords[a]) > -1 && mubBot.settings.racismFilter){
-                API.moderateDeleteChat(data.chatID);
-            }
-        }
+API.on(API.CHAT, function(data){
+    if(data.message.indexOf('!rule') === 0){
+        var msg = data.message, from = data.from, fromID = data.fromID;
+        var command = msg.substring(1).split(' ');
 
-        // begging
-        for(var a = 0; a < mubBot.filters.beggerWords.length; a++){
-            if(data.message.toLowerCase().indexOf(mubBot.filters.beggerWords[a]) > -1 && mubBot.settings.beggerFilter){
-                API.moderateDeleteChat(data.chatID);
-            }
+        if(mubBot.misc.ready || mubBot.admins.indexOf(fromID) > -1 ||API.getUser(fromID).permission > 1){
+        switch(command[1]){
+            case '1':
+                API.sendChat('Only Brony/My Little Pony related music and PMV’s can be played in this room');
+            break;
+            case '2':
+                API.sendChat('All non-pony PMV’s are subject to being skipped if they are just pictures or simple loops');
+            break;
+            case '3':
+                API.sendChat('Mashups/mixes/loops with little to no effort are subject to being skipped');
+            break;
+            case '4':
+                API.sendChat('Any song played that is currently in the history will be skipped');
+            break;
+            case '5':
+                API.sendChat('Advertising rooms, websites, etc. without moderator approval is grounds for being kicked');
+            break;
+            case '6':
+                API.sendChat('No songs over 10 minutes. (some songs a little bit over may be allowed, ask a mod)');
+            break;
+            case '7':
+                API.sendChat('Spamming in chat will result in kicked');
+            break;
+            case '8':
+                API.sendChat('FOR THE LOVE OF CELESTIA, CONTROL THE CANTERLOCK');
+            break;
+            case '9':
+                API.sendChat('There is a no tolerance policy for fighting');
+            break;
+            case '10':
+                API.sendChat('All visitors to the room must be treated equally and fairly by all');
+            break;
+            case '11':
+                API.sendChat('Do not ask for, bouncer/manager/host positions');
+            break;
+            case '12':
+                API.sendChat('Respect other users and moderators, continuous disrespect will result in being kicked');
+            break;
+            case '13':
+                API.sendChat('No R34/clop/porn/gore. This includes links, songs, and chat. (If you want to post this stuff anywhere, talk to a moderator about being added to the Skype group, you can post it there with proper tags [NSFW/NSFL])');
+            break;
+            case '14':
+                API.sendChat('No playing episodes/non-music shorts unless you’re the (co)host or were giving permission to play a episode/non-music short by a (co)host');
+            break;
+            case '15':
+                API.sendChat('When posting links, please add NSFW for anything suggestive (anything saucy, porn, gore, or clop is NOT allowed). Add Spoiler tags when necessary as well');
+            break;
+            case '16':
+                API.sendChat('Swearing is allowed in moderation. Racist and derogatory slurs can result in being kicked');
+            break;
+            case '17':
+                API.sendChat('Only moderators may ask who mehed or why');
+            break;
+            case '18':
+                API.sendChat('Impersonating other artists, users, etc. can result in being kicked');
+            break;
+            case '19':
+                API.sendChat('If you\'re going to autojoin, be responsive when someone @mentions you, otherwise you risk being kicked');
+            break;
+            case '20':
+                API.sendChat('Using multiple accounts to DJ or enter the booth or waitlist is not allowed');
+                break;
+            case '21':
+                API.sendChat('Don\'t spam emotes, don\'t use overly large emotes, and don\'t use emotes in your name (Referring to ponymotes)');
+            break;
+            case '22':
+                API.sendChat('Do not ask for fans');
+            break;
+            case '23':
+                API.sendChat('Songs such as Nigel, Pingas, etc. are subject to being skipped on any day but Sunday. !weird for full list');
+            break;
+            case '24':
+                API.sendChat('Don’t RP (roleplay) excessively in plug chat, keep it in Skype instead');
+            break;
+            case '25':
+                API.sendChat('If you have a complaint, do not argue in the chat where everyone can see, instead submit a complaint to the form (http://bit.ly/145oLLW) or take it up with a moderator on Skype. (if you don’t have Skype ask for another form of contact)');
+            break;
+            case '26':
+                API.sendChat('Don’t use excessively long or offensive names');
+            break;
+            case '27':
+                API.sendChat('Have fun and enjoy yourselves!');
+            break;
+            case '34':
+                API.sendChat('hue hue hue');
+            break;
+            default:
+                API.sendChat('Unkown rule!');
+            break;
         }
+        }
+    }
+});
 
-        if(mubBot.misc.ready && mubBot.settings.interactive){
-            if(data.message.toLowerCase().indexOf("who made this bot") > -1) API.sendChat(mubBot.misc.origin);
-            if(data.message.toLowerCase().indexOf("stupid bot") > -1) API.sendChat("Thanks, it means a lot coming from a dyslexic kid who fails to spell their name.");
-            if(data.message.toLowerCase().indexOf("sorry") > -1) API.sendChat("It's alright, @" + data.from + ", I forgive you!");
+API.on(API.CHAT, function(data){
+
+    msg = data.message.toLowerCase(), chatID = data.chatID;
+
+    if(mubBot.filters.swearWords.indexOf(msg) > -1 && mubBot.settings.swearFilter){
+        API.moderateDeleteChat(chatID);
+    }
+    if(mubBot.filters.racistWords.indexOf(msg) > -1 && mubBot.settings.swearFilter){
+        API.moderateDeleteChat(chatID);
+    }
+    if(mubBot.filters.beggerWords.indexOf(msg) > -1 && mubBot.settings.swearFilter){
+        API.moderateDeleteChat(chatID);
+    }
+
+});
+
+API.on(API.CHAT, function(data){
+msg = data.message.toLowerCase(), chatID = data.chatID, fromID = data.fromID;
+    if(mubBot.misc.ready || mubBot.admins.indexOf(fromID) > -1 ||API.getUser(fromID).permission > 1){
+        if(msg.indexOf(':eyeroll:') > -1){
+            API.sendChat('/me ¬_¬');
+                            if(mubBot.admins.indexOf(fromID) > -1 ||API.getUser(fromID).permission < 2){
+                    mubBot.misc.ready = false;
+                    setTimeout(function(){ mubBot.misc.ready = true; }, mubBot.settings.cooldown * 1000);
+                 }
         }
+        if(msg.indexOf(':notamused:') > -1){
+            API.sendChat('/me ಠ_ಠ');
+                            if(mubBot.admins.indexOf(fromID) > -1 ||API.getUser(fromID).permission < 2){
+                    mubBot.misc.ready = false;
+                    setTimeout(function(){ mubBot.misc.ready = true; }, mubBot.settings.cooldown * 1000);
+                 }
+        }
+        if(msg.indexOf(':yuno:') > -1){
+            API.sendChat('/me ლ(ಥ益ಥლ');
+                            if(mubBot.admins.indexOf(fromID) > -1 ||API.getUser(fromID).permission < 2){
+                    mubBot.misc.ready = false;
+                    setTimeout(function(){ mubBot.misc.ready = true; }, mubBot.settings.cooldown * 1000);
+                 }
+        }
+    }
+
+});
+
+/*API.on(API.DJ_ADVANCE, DJ_ADVANCE);
+function DJ_ADVANCE(data){
+    if(mubBot.settings.ruleSkip && mubBot.autoSkip.indexOf(data.id)){
 
     }
-};
+}*/
+
 botMethods.loadStorage();
 console.log("Running mubBot User Shell version " + mubBot.misc.version);
 
-
+setTimeout(function(){
     $.getScript('http://connect.soundcloud.com/sdk.js');
+}, 1000);
 
+setTimeout(function(){
     SC.initialize({
         client_id: 'eae62c8e7a30564e9831b9e43f1d484a'
-});
+    });
+}, 3000);
+
