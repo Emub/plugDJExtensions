@@ -11,9 +11,9 @@ toSave.settings = mubBot.settings;
 toSave.moderators = mubBot.moderators;
 toSave.autoSkip = mubBot.autoSkip;
 
-mubBot.misc.version = "2.0.00";
+mubBot.misc.version = "2.0.01";
 mubBot.misc.origin = "This bot was created by Emub and DerpTheBass alone, and it is copyrighted!";
-mubBot.misc.changelog = "Rewrote the whole bot, basically";
+mubBot.misc.changelog = "Added !hug";
 mubBot.misc.ready = true;
 mubBot.misc.lockSkipping = false;
 mubBot.misc.lockSkipped = "0";
@@ -157,7 +157,7 @@ API.on(API.CHAT, function(data){
             case "weirdday":
             case "wierd":
             case "wierdday":
-                if(command[1] === "undefined"){
+                if(typeof command[1] === "undefined"){
                     API.sendChat("Weird Songs - http://playmc.pw/plug/WeirdDay.html");
                 }else if(command[1].indexOf("@") > -1){
                     PI.sendChat(command[1]+" Weird Songs - http://playmc.pw/plug/WeirdDay.html");
@@ -171,7 +171,7 @@ API.on(API.CHAT, function(data){
                 break;
 
             case "rules":
-                if(command[1] === "undefined"){
+                if(typeof command[1] === "undefined"){
                     API.sendChat("Room Rules - http://goo.gl/GBl4e");
                 }else if(command[1].indexOf("@") > -1){
                     API.sendChat(command[1]+" Room Rules - http://goo.gl/GBl4e");
@@ -185,7 +185,7 @@ API.on(API.CHAT, function(data){
                 break;
 
             case "theme":
-                if(command[1] === "undefined"){
+                if(typeof command[1] === "undefined"){
                     API.sendChat("In this room, only music related to My Little Pony: Friendship is Magic is allowed. This includes PMVs.");
                 }else if(command[1].indexOf("@") > -1){
                     API.sendChat(command[1]+" In this room, only music related to My Little Pony: Friendship is Magic is allowed. This includes PMVs.");
@@ -199,7 +199,7 @@ API.on(API.CHAT, function(data){
                 break;
 
             case "commands":
-                if(command[1] === "undefined"){
+                if(typeof command[1] === "undefined"){
                     API.sendChat("Bot Commands - http://playmc.pw/plug/commands.html");
                 }else if(command[1].indexOf("@") > -1){
                     API.sendChat(command[1]+" Bot Commands - http://playmc.pw/plug/commands.html");
@@ -234,7 +234,7 @@ API.on(API.CHAT, function(data){
                 break;
 
             case "steam":
-                if(command[1] === "undefined"){
+                if(typeof command[1] === "undefined"){
                     API.sendChat("http://steamcommunity.com/groups/plugfim#");
                 }else if(command[1].indexOf("@") > -1){
                     API.sendChat(command[1]+" http://steamcommunity.com/groups/plugfim#");
@@ -248,7 +248,7 @@ API.on(API.CHAT, function(data){
                 break;
 
             case "skype":
-                if(command[1] === "undefined"){
+                if(typeof command[1] === "undefined"){
                     API.sendChat("http://goo.gl/NjSO6j");
                 }else if(command[1].indexOf("@") > -1){
                     API.sendChat(command[1]+" http://goo.gl/NjSO6j");
@@ -262,7 +262,7 @@ API.on(API.CHAT, function(data){
                 break;
 
             case "linkify":
-                if(command[1] === "undefined"){
+                if(typeof command[1] === "undefined"){
                     API.sendChat("@" + data.from + " You need to put a link!");
                 }else if(command[1].toLowerCase().indexOf("plug.dj") === -1 && command[1].toLowerCase().indexOf("bug.dj") === -1){
                     API.sendChat("http://"+command[1]);
@@ -800,6 +800,12 @@ API.on(API.CHAT, function(data){
 });
 
 API.on(API.CHAT, function(data){
+    var msg = data.message
+
+
+});
+
+API.on(API.CHAT, function(data){
 
     msg = data.message.toLowerCase(), chatID = data.chatID;
 
@@ -843,12 +849,12 @@ msg = data.message.toLowerCase(), chatID = data.chatID, fromID = data.fromID;
 
 });
 
-/*API.on(API.DJ_ADVANCE, DJ_ADVANCE);
+API.on(API.DJ_ADVANCE, DJ_ADVANCE);
 function DJ_ADVANCE(data){
-    if(mubBot.settings.ruleSkip && mubBot.autoSkip.indexOf(data.id)){
-
+    if(mubBot.settings.ruleSkip && typeof array[data.id] !== undefined){
+        switch()
     }
-}*/
+
 
 botMethods.loadStorage();
 console.log("Running mubBot User Shell version " + mubBot.misc.version);
