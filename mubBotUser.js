@@ -11,7 +11,7 @@ toSave.settings = mubBot.settings;
 toSave.moderators = mubBot.moderators;
 toSave.autoSkip = mubBot.autoSkip;
 
-mubBot.misc.version = "2.0.04";
+mubBot.misc.version = "2.0.05";
 mubBot.misc.origin = "This bot was created by Emub and DerpTheBass alone, and it is copyrighted!";
 mubBot.misc.changelog = "Added !hug";
 mubBot.misc.ready = true;
@@ -456,13 +456,13 @@ API.on(API.CHAT, function(data){
 
             case "maxlength":
                 if(API.getUser(fromID).permission > 1 || mubBot.admins.indexOf(fromID) > -1){
-                    if(typeof command[1] == "undefined"){
+                    if(typeof command[1] == undefined){
                         API.sendChat("Current max song length is " + mubBot.settings.maxLength + " minutes.");
                     }
                     if(command[1] === "disable"){
                         mubBot.settings.maxLength = 9999999999;
                         API.sendChat("Max length is now (almost) infinite");
-                    }else if(command[1] !== "undefined"){
+                    }else if(typeof command[1] !== undefined){
                         mubBot.settings.maxLength = command[1];
                         API.sendChat("New max song length is " + mubBot.settings.maxLength + " minutes.");
                     }
@@ -472,13 +472,13 @@ API.on(API.CHAT, function(data){
 
             case "cooldown":
                 if(API.getUser(fromID).permission > 1 || mubBot.admins.indexOf(fromID) > -1){
-                    if(typeof command[1] == "undefined"){
+                    if(typeof command[1] == undefined){
                         API.sendChat("Current command cooldown is " + mubBot.settings.cooldown + " seconds.");
                     }
                     if(command[1] === "disable"){
                         mubBot.settings.cooldown = 0.001;
                         API.sendChat("Command cooldown disabled");
-                    }else if(command[1] !== "undefined"){
+                    }else if(typeof command[1] !== undefined){
                         mubBot.settings.cooldown = command[1];
                         API.sendChat("New command cooldown is " + mubBot.settings.cooldown + " seconds.");
                     }
