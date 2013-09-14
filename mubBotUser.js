@@ -340,21 +340,25 @@ API.on(API.CHAT, function(data){
             case "historyfilter":
             case "hf":
                 if(API.getUser(fromID).permission > 1 || mubBot.admins.indexOf(fromID) > -1) mubBot.settings.historyFilter ? API.sendChat("History filter is enabled") : API.sendChat("History filter is disabled");
+                botMethods.save();
                 break;
 
             case "swearfilter":
             case "sf":
                 if(API.getUser(fromID).permission > 1 || mubBot.admins.indexOf(fromID) > -1) mubBot.settings.swearFilter ? API.sendChat("Swearing filter is enabled") : API.sendChat("Swearing filter is disabled");
+                botMethods.save();
                 break;
 
             case "racismfilter":
             case "rf":
                 if(API.getUser(fromID).permission > 1 || mubBot.admins.indexOf(fromID) > -1) mubBot.settings.racismFilter ? API.sendChat("Racism filter is enabled") : API.sendChat("Racism filter is disabled");
+                botMethods.save();
                 break;
 
             case "beggerfilter":
             case "bf":
                 if(API.getUser(fromID).permission > 1 || mubBot.admins.indexOf(fromID) > -1) mubBot.settings.beggerFilter ? API.sendChat("Begger filter is enabled") : API.sendChat("Begger filter is disabled");
+                botMethods.save();
                 break;
 
             case "tsf":
@@ -367,6 +371,7 @@ API.on(API.CHAT, function(data){
                         API.sendChat("Bot will now filter swearing.");
                     }
                 }
+                botMethods.save();
                 break;
 
             case "trf":
@@ -379,6 +384,7 @@ API.on(API.CHAT, function(data){
                         API.sendChat("Bot will now filter racism.");
                     }
                 }
+                botMethods.save();
                 break;
 
             case "tbf":
@@ -391,6 +397,7 @@ API.on(API.CHAT, function(data){
                         API.sendChat("Bot will now filter fan begging.");
                     }
                 }
+                botMethods.save();
                 break;
             case "thf":
                 if(API.getUser(fromID).permission > 1 || mubBot.admins.indexOf(fromID) > -1){
@@ -402,6 +409,7 @@ API.on(API.CHAT, function(data){
                         API.sendChat("Bot will now skip songs that are in the room history.");
                     }
                 }
+                botMethods.save();
                 break;
 
             case "version":
@@ -459,21 +467,23 @@ API.on(API.CHAT, function(data){
                         API.sendChat("New max song length is " + mubBot.settings.maxLength + " minutes.");
                     }
                 }
+                botMethods.save();
                 break;
 
             case "cooldown":
                 if(API.getUser(fromID).permission > 1 || mubBot.admins.indexOf(fromID) > -1){
-                    if(commands[1] === "undefined"){
+                    if(command[1] === "undefined"){
                         API.sendChat("Current command cooldown is " + mubBot.settings.cooldown + " seconds.");
                     }
-                    if(commands[1] === "disable"){
+                    if(command[1] === "disable"){
                         mubBot.settings.cooldown = 0.001;
                         API.sendChat("Command cooldown disabled");
-                    }else if(commands[1] !== "undefined"){
-                        mubBot.settings.cooldown = commands[1];
+                    }else if(command[1] !== "undefined"){
+                        mubBot.settings.cooldown = command[1];
                         API.sendChat("New command cooldown is " + mubBot.settings.cooldown + " seconds.");
                     }
                 }
+                botMethods.save();
                 break;
 
             case "modaccess":
@@ -493,6 +503,7 @@ API.on(API.CHAT, function(data){
                         API.sendChat("Staff now has bot access.");
                     }
                 }
+                botMethods.save();
                 break;
 
             case "interactive":
@@ -512,6 +523,7 @@ API.on(API.CHAT, function(data){
                         API.sendChat("Bot will now interact.");
                     }
                 }
+                botMethods.save();
                 break;
 
             case "save":
@@ -526,6 +538,7 @@ API.on(API.CHAT, function(data){
                     mubBot.settings.interactive = false;
                     API.sendChat("Yessir!");
                 }
+                botMethods.save();
                 break;
 
             case "changelog":
