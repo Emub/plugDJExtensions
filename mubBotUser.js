@@ -486,10 +486,9 @@ API.on(API.CHAT, function(data){
                         API.sendChat('Maxlength disabled');
                     }else{
                         mubBot.settings.maxLength = command[1];
-                        API.sendChat('New maxlength is '+mubBot.settings.mexLength+' minutes');
+                        API.sendChat('New maxlength is '+mubBot.settings.maxLength+' minutes');
                     }
                 }
-                console.log(command[1])
                 botMethods.save();
                 break;
 
