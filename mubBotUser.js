@@ -11,7 +11,7 @@ toSave.settings = mubBot.settings;
 toSave.moderators = mubBot.moderators;
 toSave.autoSkip = mubBot.autoSkip;
 
-mubBot.misc.version = "2.0.08";
+mubBot.misc.version = "2.0.09";
 mubBot.misc.origin = "This bot was created by Emub and DerpTheBass alone, and it is copyrighted!";
 mubBot.misc.changelog = "Added !hug";
 mubBot.misc.ready = true;
@@ -810,8 +810,11 @@ API.on(API.CHAT, function(data){
             case '34':
                 API.sendChat('hue hue hue');
             break;
+            case '99':
+                API.sendChat('Just no..');
+            break;
             default:
-                API.sendChat('Unkown rule!');
+                API.sendChat('Unknown rule!');
             break;
         }
         }
