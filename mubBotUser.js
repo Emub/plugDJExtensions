@@ -11,7 +11,7 @@ toSave.settings = mubBot.settings;
 toSave.moderators = mubBot.moderators;
 toSave.autoSkip = mubBot.autoSkip;
 
-mubBot.misc.version = "2.0.07";
+mubBot.misc.version = "2.0.08";
 mubBot.misc.origin = "This bot was created by Emub and DerpTheBass alone, and it is copyrighted!";
 mubBot.misc.changelog = "Added !hug";
 mubBot.misc.ready = true;
@@ -456,14 +456,18 @@ API.on(API.CHAT, function(data){
 
             case "cooldown":
                 if(API.getUser(fromID).permission > 1 || mubBot.admins.indexOf(fromID) > -1){
-                    if(typeof command[1] !== "undefined"){
-                        mubBot.settings.cooldown = command[1];
-                        API.sendChat('New cooldown is '+mubBot.settings.cooldown+' seconds');
-                    }else if(command[1] === 'disable'){
+                    if(typeof command[1] == "undefined"){
+                        if(mubBot.settings.cooldown != 0.0001){
+                        API.sendChat('Cooldown is '+mubBot.settings.cooldown+' seconds');
+                    }else{
+                        API.sendChat('Cooldown is disabled');
+                    }
+                    }else if(command[1] == "disable"){
                         mubBot.settings.cooldown = 0.0001;
                         API.sendChat('Cooldown disabled');
                     }else{
-                        API.sendChat('Current cooldown is '+mubBot.settings.cooldown+' seconds');
+                        mubBot.settings.cooldown = command[1];
+                        API.sendChat('New cooldown is '+mubBot.settings.cooldown+' seconds');
                     }
                 }
                 botMethods.save();
@@ -471,16 +475,21 @@ API.on(API.CHAT, function(data){
 
             case "maxlength":
                 if(API.getUser(fromID).permission > 1 || mubBot.admins.indexOf(fromID) > -1){
-                    if(typeof command[1] !== "undefined"){
-                        mubBot.settings.maxLength = command[1];
-                        API.sendChat('New maxlength is '+mubBot.settings.mexlength+' minutes');
-                    }else if(command[1] === 'disable'){
+                    if(typeof command[1] == "undefined"){
+                        if(mubBot.settings.maxLength != 1e+50){
+                        API.sendChat('Maxlength is '+mubBot.settings.mexlength+' minutes');
+                    }else{
+                        API.sendChat('Maxlength is disabled');
+                    }
+                    }else if(command[1] == "disable"){
                         mubBot.settings.maxLength = 1e+50;
                         API.sendChat('Maxlength disabled');
                     }else{
-                        API.sendChat('Current maxlength is '+mubBot.settings.maxlength+' seconds');
+                        mubBot.settings.maxLength = command[1];
+                        API.sendChat('New maxlength is '+mubBot.settings.mexLength+' minutes');
                     }
                 }
+                console.log(command[1])
                 botMethods.save();
                 break;
 
