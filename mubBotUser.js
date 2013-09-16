@@ -1,4 +1,5 @@
 var mubBot = {};
+var ruleSkip = {}
 mubBot.misc = {};
 mubBot.settings = {};
 mubBot.moderators = {};
@@ -9,9 +10,9 @@ mubBot.pubVars = {};
 toSave = {};
 toSave.settings = mubBot.settings;
 toSave.moderators = mubBot.moderators;
-toSave.autoSkip = mubBot.autoSkip;
+toSave.ruleSkip = ruleSkip;
 
-mubBot.misc.version = "2.0.09";
+mubBot.misc.version = "2.0.10";
 mubBot.misc.origin = "This bot was created by Emub and DerpTheBass alone, and it is copyrighted!";
 mubBot.misc.changelog = "Added !hug";
 mubBot.misc.ready = true;
@@ -51,8 +52,6 @@ mubBot.filters.beggerWords = ["fan4fan","fan me","fan pls","fan please","fan 4 f
 
 mubBot.misc.tacos = ["crispy taco","mexican taco","vegetarian taco","spicy taco","meatlover taco","cheese taco","wet hamburger","taco shell","delicious taco","gross taco"];
 
-mubBot.autoSkip = [];
-
 mubBot.pubVars.skipOnExceed;
 mubBot.pubVars.command = false;
 
@@ -66,7 +65,7 @@ botMethods.load = function(){
     toSave = JSON.parse(localStorage.getItem("mubBotSave"));
     mubBot.moderators = toSave.moderators;
     mubBot.settings = toSave.settings;
-    mubBot.autoSkip = toSave.autoSkip
+    ruleSkip = toSave.ruleSkip
     mubBot.moderators.tempTrust = [];
 };
 
@@ -139,7 +138,7 @@ API.on(API.CHAT, function(data){
     if(data.message.indexOf('!') === 0){
         var msg = data.message, from = data.from, fromID = data.fromID;
         var command = msg.substring(1).split(' ');
-        if(command[2] != undefined){
+        if(typeof command[2] != "undefined"){
             for(var i = 2; i<command.length; i++){
                 command[1] = command[1] + ' ' + command[i];
             }
@@ -307,7 +306,7 @@ API.on(API.CHAT, function(data){
     if(data.message.indexOf('!') === 0){
         var msg = data.message, from = data.from, fromID = data.fromID;
         var command = msg.substring(1).split(' ');
-        if(command[2] != undefined){
+        if(typeof command[2] != "undefined"){
             for(var i = 2; i<command.length; i++){
                 command[1] = command[1] + ' ' + command[i];
             }
@@ -477,7 +476,7 @@ API.on(API.CHAT, function(data){
                 if(API.getUser(fromID).permission > 1 || mubBot.admins.indexOf(fromID) > -1){
                     if(typeof command[1] == "undefined"){
                         if(mubBot.settings.maxLength != 1e+50){
-                        API.sendChat('Maxlength is '+mubBot.settings.mexlength+' minutes');
+                        API.sendChat('Maxlength is '+mubBot.settings.maxLength+' minutes');
                     }else{
                         API.sendChat('Maxlength is disabled');
                     }
@@ -562,7 +561,7 @@ API.on(API.CHAT, function(data){
     if(data.message.indexOf('!') === 0){
         var msg = data.message, from = data.from, fromID = data.fromID;
         var command = msg.substring(1).split(' ');
-        if(command[2] != undefined){
+        if(typeof command[2] != "undefined"){
             for(var i = 2; i<command.length; i++){
                 command[1] = command[1] + ' ' + command[i];
             }
@@ -720,7 +719,7 @@ API.on(API.CHAT, function(data){
 });
 
 API.on(API.CHAT, function(data){
-    if(data.message.indexOf('!rule') === 0){
+    if(data.message.indexOf('!rule ') === 0){
         var msg = data.message, from = data.from, fromID = data.fromID;
         var command = msg.substring(1).split(' ');
 
@@ -822,9 +821,37 @@ API.on(API.CHAT, function(data){
 });
 
 API.on(API.CHAT, function(data){
-    var msg = data.message
-
-
+    var msg = data.message, fromID = data.fromID;
+    command = msg.substring(1).split(' ');
+    if(typeof command[3] != "undefined"){
+        for(var i = 3; i<command.length; i++){
+            command[2] = command[2] + ' ' + command[i];
+        }
+    }
+if(API.getUser(data.fromID).permission > 1){
+    switch(command[0]){
+        case 'ruleskip':
+            if(command[1].length === 13 && command[1].indexOf(':') === 1 && command[1].indexOf(1) === 0){
+                ruleSkip[command[1]] = {id: command[1], rule: command[2]};
+                $.getJSON("http://gdata.youtube.com/feeds/api/videos/"+command[1].substring(2)+"?v=2&alt=jsonc&callback=?", function(json){
+                API.sendChat(json.data.title+' added to ruleskip');
+                });
+                console.log('true')
+            }else if(command[1].length === 10 && command[1].indexOf(':') === 1 && command[1].indexOf(2) === 0){
+                ruleSkip[command[1]] = {id: command[1], rule: command[2]};
+                SC.get('/tracks', { ids: command[1].substring(2),}, function(tracks) {
+                    API.sendChat(tracks[0].title+' added to ruleskip');
+                });
+                console.log('true 2')
+            }else{
+                ruleSkip[API.getMedia().id] = {id: API.getMedia().id, rule: command[1]};
+                API.sendChat(API.getMedia().author+ ' - ' +API.getMedia().title+' added to ruleskip');
+                API.moderateForceSkip();
+                console.log('false')
+            }
+        break;
+    }
+}
 });
 
 API.on(API.CHAT, function(data){
@@ -871,11 +898,37 @@ msg = data.message.toLowerCase(), chatID = data.chatID, fromID = data.fromID;
 
 });
 
-/*API.on(API.DJ_ADVANCE, DJ_ADVANCE);
+API.on(API.DJ_ADVANCE, DJ_ADVANCE);
 function DJ_ADVANCE(data){
-    if(mubBot.settings.ruleSkip && typeof array[data.id] !== undefined){
-        switch()
-    }*/
+    if(mubBot.settings.ruleSkip && typeof ruleSkip[data.media.id] != "undefined"){
+        switch(ruleSkip[data.media.id].rule){
+            case 1:
+                API.sendChat('@'+data.dj.username+' Only Brony/My Little Pony related music and PMV’s can be played in this room');
+                API.moderateForceSkip();
+            break;
+            case 2:
+                API.sendChat('@'+data.dj.username+' All non-pony PMV’s are subject to being skipped if they are just pictures or simple loops');
+            break;
+            case 3:
+                API.sendChat('@'+data.dj.username+' Mashups/mixes/loops with little to no effort are subject to being skipped');
+            break;
+            case 13:
+                API.sendChat('@'+data.dj.username+' No R34/clop/porn/gore. This includes links, songs, and chat. (If you want to post this stuff anywhere, talk to a moderator about being added to the Skype group, you can post it there with proper tags [NSFW/NSFL])');
+            break;
+            case 14:
+                API.sendChat('@'+data.dj.username+' No playing episodes/non-music shorts unless you’re the (co)host or were giving permission to play a episode/non-music short by a (co)host');
+            break;
+            case 99:
+                API.sendChat('@'+data.dj.username+' Just no..');
+                API.moderateForceSkip();
+            break;
+            default:
+                API.sendChat('@'+data.dj.username+' '+ruleSkip[data.media.id].rule);
+                API.moderateForceSkip();
+            break;
+        }
+    }
+}
 
 
 botMethods.loadStorage();
