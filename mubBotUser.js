@@ -212,6 +212,9 @@ API.on(API.CHAT, function(data){
                 break;
 
             case "wiki":
+                if(typeof command[1] == "undefined"){
+                    API.sendChat("@"+data.from+" https://en.wikipedia.org/wiki/Special:Random");
+                }else{
                 var r = data.message.substring(6).replace(/ /g, "_");
                 $.getJSON("http://jsonp.appspot.com/?callback=?&url=" + escape("http://en.wikipedia.org/w/api.php?action=query&prop=links&format=json&titles="+r.replace(/ /g,"_")),
                     function(wikiData){
@@ -226,6 +229,7 @@ API.on(API.CHAT, function(data){
                         }
                     }
                 );
+                }
                                 if(mubBot.admins.indexOf(fromID) == -1 || API.getUser(fromID).permission < 2){
                     mubBot.misc.ready = false;
                     setTimeout(function(){ mubBot.misc.ready = true; }, mubBot.settings.cooldown * 1000);
