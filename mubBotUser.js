@@ -12,7 +12,7 @@ toSave.settings = mubBot.settings;
 toSave.moderators = mubBot.moderators;
 toSave.ruleSkip = ruleSkip;
 
-mubBot.misc.version = "2.0.14";
+mubBot.misc.version = "2.0.13";
 mubBot.misc.origin = "This bot was created by Emub and DerpTheBass alone, and it is copyrighted!";
 mubBot.misc.changelog = "Added !hug";
 mubBot.misc.ready = true;
@@ -55,7 +55,7 @@ mubBot.misc.tacos = ["crispy taco","mexican taco","vegetarian taco","spicy taco"
 mubBot.pubVars.skipOnExceed;
 mubBot.pubVars.command = false;
 
-API.on(API.DJ_ADVANCE, djAdvanceEvent);
+API.on(API.HISTORY_UPDATE, historyUpdateEvent);
 
 function historyUpdateEvent(data){
     setTimeout(function(){ botMethods.historyUpdateEvent(data); }, 500);
@@ -109,7 +109,7 @@ botMethods.cleanString = function(string){
     return string.replace(/&#39;/g, "'").replace(/&amp;/g, "&").replace(/&#34;/g, "\"").replace(/&#59;/g, ";").replace(/&lt;/g, "<").replace(/&gt;/g, ">");
 }
 
-botMethods.djAdvanceEvent = function(data){
+botMethods.historyUpdateEvent = function(data){
     clearTimeout(mubBot.pubVars.skipOnExceed);
     if(mubBot.misc.lockSkipping){
         API.moderateAddDJ(mubBot.misc.lockSkipped);
