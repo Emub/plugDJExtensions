@@ -12,7 +12,7 @@ toSave.settings = mubBot.settings;
 toSave.moderators = mubBot.moderators;
 toSave.ruleSkip = ruleSkip;
 
-mubBot.misc.version = "2.0.11";
+mubBot.misc.version = "2.0.12";
 mubBot.misc.origin = "This bot was created by Emub and DerpTheBass alone, and it is copyrighted!";
 mubBot.misc.changelog = "Added !hug";
 mubBot.misc.ready = true;
@@ -858,17 +858,17 @@ API.on(API.CHAT, function(data){
 msg = data.message.toLowerCase(), chatID = data.chatID;
 
     for(var i = 0; i < mubBot.filters.swearWords.length; i++){
-        if(msg.indexOf(mubBot.filters.swearWords[i]) > -1 && mubBot.settings.swearFilter){
+        if(msg.indexOf(mubBot.filters.swearWords[i].toLowerCase()) > -1 && mubBot.settings.swearFilter){
             API.moderateDeleteChat(chatID);
         }
     }
     for(var i = 0; i < mubBot.filters.racistWords.length; i++){
-        if(msg.indexOf(mubBot.filters.racistWords[i]) > -1 && mubBot.settings.racismFilter){
+        if(msg.indexOf(mubBot.filters.racistWords[i].toLowerCase()) > -1 && mubBot.settings.racismFilter){
             API.moderateDeleteChat(chatID);
         }
     }
     for(var i = 0; i < mubBot.filters.beggerWords.length; i++){
-        if(msg.indexOf(mubBot.filters.beggerWords[i]) > -1 && mubBot.settings.beggerFilter){
+        if(msg.indexOf(mubBot.filters.beggerWords[i].toLowerCase()) > -1 && mubBot.settings.beggerFilter){
             API.moderateDeleteChat(chatID);
         }
     }
