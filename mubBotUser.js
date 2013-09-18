@@ -455,6 +455,7 @@ API.on(API.CHAT, function(data){
                     response = response + " | Cooldown: " + mubBot.settings.cooldown + "s";
                     response = response + " | Mod access: " + mubBot.settings.staffMeansAccess;
                     response = response + " | RuleSkip: "+ mubBot.settings.ruleSkip;
+                    response = response + " | Removed Video Filter: "+ mubBot.settings.removedFilter;
                     API.sendChat(response);
                 }
                 break;
