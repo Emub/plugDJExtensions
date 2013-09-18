@@ -48,7 +48,7 @@ mubBot.filters.swearWords = ["fuck","shit","bitch","cunt","twat","fag","queer","
 
 mubBot.filters.racistWords = ["nigger","kike","spick","porchmonkey","camel jockey","towelhead","towel head","chink","gook","porch monkey"];
 
-mubBot.filters.beggerWords = ["fan4fan","fan me","fan pls","fan please","fan 4 fan","fan back","give me fans","gimme fans","fan back"];
+mubBot.filters.beggerWords = ["fan4fan","fan me","fan pls","fans please","fan please","fan 4 fan","fan back","give me fans","gimme fans","fan back"];
 
 mubBot.misc.tacos = ["crispy taco","mexican taco","vegetarian taco","spicy taco","meatlover taco","cheese taco","wet hamburger","taco shell","delicious taco","gross taco"];
 
@@ -948,6 +948,4 @@ setTimeout(function(){
         client_id: 'eae62c8e7a30564e9831b9e43f1d484a'
     });
 }, 3000);
-
-API.sendChat('/me Running mubBot '+mubBot.misc.version);
 
