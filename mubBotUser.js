@@ -949,3 +949,5 @@ setTimeout(function(){
     });
 }, 3000);
 
+API.sendChat('/me Running mubBot '+mubBot.misc.version);
+
