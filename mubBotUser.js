@@ -12,7 +12,7 @@ toSave.settings = mubBot.settings;
 toSave.moderators = mubBot.moderators;
 toSave.ruleSkip = ruleSkip;
 
-mubBot.misc.version = "2.0.14";
+mubBot.misc.version = "2.0.15";
 mubBot.misc.origin = "This bot was created by Emub and DerpTheBass alone, and it is copyrighted!";
 mubBot.misc.changelog = "Added !hug";
 mubBot.misc.ready = true;
@@ -340,7 +340,8 @@ API.on(API.CHAT, function(data){
                     API.sendChat("This command requires bouncer or higher!");
                 }
                 break;
-
+            case 'removedfilter':
+                if(API.getUser(fromID).permission > 1 || mubBot.admins.indexOf(fromID) > -1) mubBot.settings.historyFilter ? API.sendChat("History filter is enabled") : API.sendChat("History filter is disabled");
             case "historyfilter":
             case "hf":
                 if(API.getUser(fromID).permission > 1 || mubBot.admins.indexOf(fromID) > -1) mubBot.settings.historyFilter ? API.sendChat("History filter is enabled") : API.sendChat("History filter is disabled");
@@ -454,7 +455,6 @@ API.on(API.CHAT, function(data){
                     response = response + " | Cooldown: " + mubBot.settings.cooldown + "s";
                     response = response + " | Mod access: " + mubBot.settings.staffMeansAccess;
                     response = response + " | RuleSkip: "+ mubBot.settings.ruleSkip;
-                    response = response + " | Removed Video Filter: "+mubBot.settings.removedFilter;
                     API.sendChat(response);
                 }
                 break;
@@ -939,9 +939,8 @@ function DJ_ADVANCE(data){
             break;
         }
     }
-    response = '';
     $.getJSON('http://gdata.youtube.com/feeds/api/videos/'+data.media.cid+'?v=2&alt=jsonc&callback=?', function(json){response = json.data});
-    if(typeof response === "undefined" && mubBot.settings.removedFilter){
+    if(typeof response === 'undefined' && data.media.format != 2 && mubBot.settings.removedFilter){
         API.sendChat('@'+data.dj.username+' Your video was unavailable');
         API.moderateForceSkip();
     }
