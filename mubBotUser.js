@@ -12,7 +12,7 @@ toSave.settings = mubBot.settings;
 toSave.moderators = mubBot.moderators;
 toSave.ruleSkip = ruleSkip;
 
-mubBot.misc.version = "2.0.12";
+mubBot.misc.version = "2.0.13";
 mubBot.misc.origin = "This bot was created by Emub and DerpTheBass alone, and it is copyrighted!";
 mubBot.misc.changelog = "Added !hug";
 mubBot.misc.ready = true;
@@ -795,7 +795,7 @@ API.on(API.CHAT, function(data){
                 API.sendChat('Songs such as Nigel, Pingas, etc. are subject to being skipped on any day but Sunday. !weird for full list');
             break;
             case '24':
-                API.sendChat('Don’t RP (roleplay) excessively in plug chat, keep it in Skype instead');
+                API.sendChat('Don\'t RP (roleplay) excessively in plug chat, keep it in Skype instead');
             break;
             case '25':
                 API.sendChat('If you have a complaint, do not argue in the chat where everyone can see, instead submit a complaint to the form (http://bit.ly/145oLLW) or take it up with a moderator on Skype. (if you don’t have Skype ask for another form of contact)');
@@ -949,3 +949,4 @@ setTimeout(function(){
     });
 }, 3000);
 
+API.sendChat('/me Running mubBot '+mubBot.misc.version);
