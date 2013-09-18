@@ -12,7 +12,7 @@ toSave.settings = mubBot.settings;
 toSave.moderators = mubBot.moderators;
 toSave.ruleSkip = ruleSkip;
 
-mubBot.misc.version = "2.0.15";
+mubBot.misc.version = "2.0.16";
 mubBot.misc.origin = "This bot was created by Emub and DerpTheBass alone, and it is copyrighted!";
 mubBot.misc.changelog = "Added !hug";
 mubBot.misc.ready = true;
@@ -341,7 +341,13 @@ API.on(API.CHAT, function(data){
                 }
                 break;
             case 'removedfilter':
-                if(API.getUser(fromID).permission > 1 || mubBot.admins.indexOf(fromID) > -1) mubBot.settings.historyFilter ? API.sendChat("History filter is enabled") : API.sendChat("History filter is disabled");
+                if(API.getUser(fromID).permission > 1 || mubBot.admins.indexOf(fromID) > -1) mubBot.settings.removedFilter ? API.sendChat("Removed video filter is enabled") : API.sendChat("Removed video is disabled");
+                break;
+            case 'trf':
+            case 'toggleremovedfilter':
+                mubBot.settings.removedFilter = !mubBot.settings.removedFilter;
+                if(API.getUser(fromID).permission > 1 || mubBot.admins.indexOf(fromID) > -1) mubBot.settings.removedFilter ? API.sendChat("Removed video filter is enabled") : API.sendChat("Removed video is disabled");
+                break;
             case "historyfilter":
             case "hf":
                 if(API.getUser(fromID).permission > 1 || mubBot.admins.indexOf(fromID) > -1) mubBot.settings.historyFilter ? API.sendChat("History filter is enabled") : API.sendChat("History filter is disabled");
@@ -941,10 +947,12 @@ function DJ_ADVANCE(data){
         }
     }
     $.getJSON('http://gdata.youtube.com/feeds/api/videos/'+data.media.cid+'?v=2&alt=jsonc&callback=?', function(json){response = json.data});
-    if(typeof response === 'undefined' && data.media.format != 2 && mubBot.settings.removedFilter){
-        API.sendChat('@'+data.dj.username+' Your video was unavailable');
-        API.moderateForceSkip();
+    setTimeout(function(){
+            if(typeof response === 'undefined' && data.media.format != 2 && mubBot.settings.removedFilter){
+        API.sendChat('/me This video may be unavailable!!!');
+        //API.moderateForceSkip();
     }
+    }, 1500)
 }
 
 
@@ -961,4 +969,4 @@ setTimeout(function(){
     });
 }, 3000);
 
-API.sendChat('/me Running mubBot '+mubBot.misc.version);
+API.sendChat('/me Running mubBot '+mubBot.misc.version)
