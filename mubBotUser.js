@@ -12,7 +12,7 @@ toSave.settings = mubBot.settings;
 toSave.moderators = mubBot.moderators;
 toSave.ruleSkip = ruleSkip;
 
-mubBot.misc.version = "2.0.13";
+mubBot.misc.version = "2.0.14";
 mubBot.misc.origin = "This bot was created by Emub and DerpTheBass alone, and it is copyrighted!";
 mubBot.misc.changelog = "Added !hug";
 mubBot.misc.ready = true;
@@ -40,6 +40,7 @@ mubBot.settings.racismFilter = true;
 mubBot.settings.beggerFilter = true;
 mubBot.settings.interactive = true;
 mubBot.settings.ruleSkip = true;
+mubBot.settings.removedFilter = true;
 
                         //Emub                      DerpTheBass                 [#808]                          eBot
 mubBot.admins = ["50aeaf683e083e18fa2d187e", "50aeb07e96fba52c3ca04ca8", "50aeb607c3b97a2cb4c35ac1", "51264d96d6e4a966883b0702"];
@@ -936,6 +937,12 @@ function DJ_ADVANCE(data){
                 API.moderateForceSkip();
             break;
         }
+    }
+    response = '';
+    $.getJSON('http://gdata.youtube.com/feeds/api/videos/'+data.media.cid+'?v=2&alt=jsonc&callback=?', function(json){response = json.data});
+    if(typeof response === "undefined" && mubBot.settings.removedFilter){
+        API.sendChat('@'+data.dj.username+' Your video was unavailable');
+        API.moderateForceSkip();
     }
 }
 
