@@ -12,7 +12,7 @@ toSave.settings = mubBot.settings;
 toSave.moderators = mubBot.moderators;
 toSave.ruleSkip = ruleSkip;
 
-mubBot.misc.version = "2.0.16";
+mubBot.misc.version = "2.0.17";
 mubBot.misc.origin = "This bot was created by Emub and DerpTheBass alone, and it is copyrighted!";
 mubBot.misc.changelog = "Added !hug";
 mubBot.misc.ready = true;
@@ -21,6 +21,8 @@ mubBot.misc.lockSkipped = "0";
 mubBot.misc.tacos = new Array();
 
 joined = new Date().getTime();
+
+cancel = false;
 
 mubBot.filters.swearWords = new Array();
 mubBot.filters.racistWords = new Array();
@@ -122,14 +124,18 @@ botMethods.historyUpdateEvent = function(data){
     if(botMethods.checkHistory() > 0 && mubBot.settings.historyFilter){
         if(API.getUser().permission < 2){
             API.sendChat("This song is in the history! You should make me a mod so that I could skip it!");
-        }else{
+        }else if(!cancel){
             API.sendChat("@" + API.getDJs()[0].username + ", playing songs that are in the history isn't allowed, please check next time! Skipping..");
-            setTimeout(function(){API.moderateForceSkip()}, 1500)
+            setTimeout(function(){
+                API.moderateForceSkip();
+            }, 2500)
         }
     }else if(song.duration > mubBot.settings.maxLength * 60){
         mubBot.pubVars.skipOnExceed = setTimeout( function(){
+        if(!cancel){
             API.sendChat("@"+API.getDJs()[0].username+" You have now played for as long as this room allows, time to let someone else have the booth!");
             API.moderateForceSkip();
+        }
         }, mubBot.settings.maxLength * 60000);
         //API.sendChat("@"+API.getDJs()[0].username+" This song will be skipped " + mubBot.settings.maxLength + " minutes from now because it exceeds the max song length.");
     }
@@ -328,6 +334,11 @@ API.on(API.CHAT, function(data){
 
             case "skipthis":
                 API.getUser(data.fromID).permission > 1 ? API.moderateForceSkip() : API.sendChat("This commands requires being a room bouncer or of higher rank!");
+                break;
+
+            case 'cancel':
+                cancel = true; 
+                API.sendChat('AutoSkip cancelled');
                 break;
 
             case "lockskip":
@@ -949,10 +960,12 @@ function DJ_ADVANCE(data){
     $.getJSON('http://gdata.youtube.com/feeds/api/videos/'+data.media.cid+'?v=2&alt=jsonc&callback=?', function(json){response = json.data});
     setTimeout(function(){
             if(typeof response === 'undefined' && data.media.format != 2 && mubBot.settings.removedFilter){
-        API.sendChat('/me This video may be unavailable!!!');
+        API.sendChat('/me This video may be unavailable!!');
         //API.moderateForceSkip();
     }
-    }, 1500)
+    }, 1500);
+
+    cancel = false;
 }
 
 
