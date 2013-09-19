@@ -699,10 +699,10 @@ API.on(API.CHAT, function(data){
                             API.sendChat("/me drowns @"+crowd[randomUser].username+" in batter");
                             break;
                         case 2:
-                            API.sendChat("/me hands an anthrax laced cookie to @"+crowd[randomUser].username);
+                            API.sendChat("/me shows @"+crowd[randomUser].username+" the power of friendship. BY SLAPPING THEM WITH A COOKIE");
                             break;
                         case 3:
-                            API.sendChat("/me shows @"+crowd[randomUser].username+" the power of friendship. BY SLAPPING THEM WITH A COOKIE");
+                            API.sendChat("/me hands an anthrax laced cookie to @"+crowd[randomUser].username);
                             break;
                     }
                 }else{
