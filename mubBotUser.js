@@ -12,7 +12,7 @@ toSave.settings = mubBot.settings;
 toSave.moderators = mubBot.moderators;
 toSave.ruleSkip = ruleSkip;
 
-mubBot.misc.version = "2.0.18";
+mubBot.misc.version = "2.0.19";
 mubBot.misc.origin = "This bot was created by Emub and DerpTheBass alone, and it is copyrighted!";
 mubBot.misc.changelog = "Added !hug";
 mubBot.misc.ready = true;
@@ -858,13 +858,23 @@ if(API.getUser(data.fromID).permission > 1){
             if(command[1].length === 13 && command[1].indexOf(':') === 1 && command[1].indexOf(1) === 0){
                 ruleSkip[command[1]] = {id: command[1], rule: command[2]};
                 $.getJSON("http://gdata.youtube.com/feeds/api/videos/"+command[1].substring(2)+"?v=2&alt=jsonc&callback=?", function(json){
-                API.sendChat(json.data.title+' added to ruleskip');
+                setTimeout(function(){
+                    if(typeof json.data.title !== undefined){
+                    API.sendChat(json.data.title+' added to ruleskip');
+                }else{
+                    API.sendChat('Added to ruleskip');
+                }
+                }, 500)
                 });
                 console.log('true')
             }else if(command[1].length === 10 && command[1].indexOf(':') === 1 && command[1].indexOf(2) === 0){
                 ruleSkip[command[1]] = {id: command[1], rule: command[2]};
                 SC.get('/tracks', { ids: command[1].substring(2),}, function(tracks) {
+                    if(typeof tracks[0].title !== undefined){
                     API.sendChat(tracks[0].title+' added to ruleskip');
+                }else{
+                    API.sendChat('Added to ruleskip');
+                }
                 });
                 console.log('true 2')
             }else{
