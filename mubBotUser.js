@@ -12,7 +12,7 @@ toSave.settings = mubBot.settings;
 toSave.moderators = mubBot.moderators;
 toSave.ruleSkip = ruleSkip;
 
-mubBot.misc.version = "2.0.17";
+mubBot.misc.version = "2.0.18";
 mubBot.misc.origin = "This bot was created by Emub and DerpTheBass alone, and it is copyrighted!";
 mubBot.misc.changelog = "Added !hug";
 mubBot.misc.ready = true;
@@ -931,23 +931,23 @@ API.on(API.DJ_ADVANCE, DJ_ADVANCE);
 function DJ_ADVANCE(data){
     if(mubBot.settings.ruleSkip && typeof ruleSkip[data.media.id] != "undefined"){
         switch(ruleSkip[data.media.id].rule){
-            case 1:
+            case '1':
                 API.sendChat('@'+data.dj.username+' Only Brony/My Little Pony related music and PMV’s can be played in this room');
                 API.moderateForceSkip();
             break;
-            case 2:
+            case '2':
                 API.sendChat('@'+data.dj.username+' All non-pony PMV’s are subject to being skipped if they are just pictures or simple loops');
             break;
-            case 3:
+            case '3':
                 API.sendChat('@'+data.dj.username+' Mashups/mixes/loops with little to no effort are subject to being skipped');
             break;
-            case 13:
+            case '13':
                 API.sendChat('@'+data.dj.username+' No R34/clop/porn/gore. This includes links, songs, and chat. (If you want to post this stuff anywhere, talk to a moderator about being added to the Skype group, you can post it there with proper tags [NSFW/NSFL])');
             break;
-            case 14:
+            case '14':
                 API.sendChat('@'+data.dj.username+' No playing episodes/non-music shorts unless you’re the (co)host or were giving permission to play a episode/non-music short by a (co)host');
             break;
-            case 99:
+            case '99':
                 API.sendChat('@'+data.dj.username+' Just no..');
                 API.moderateForceSkip();
             break;
