@@ -64,7 +64,7 @@ function historyUpdateEvent(data){
 botMethods.skip = function(){
     setTimeout(function(){
         if(!cancel) API.moderateForceSkip();
-    }, 2500);
+    }, 3000);
 };
 
 botMethods.load = function(){
@@ -125,6 +125,7 @@ botMethods.historyUpdateEvent = function(data){
     if(botMethods.checkHistory() > 0 && mubBot.settings.historyFilter){
         if(API.getUser().permission < 2){
             API.sendChat("This song is in the history! You should make me a mod so that I could skip it!");
+        }else if(API.getUser().permission > 1){
             API.sendChat("@" + API.getDJs()[0].username + ", playing songs that are in the history isn't allowed, please check next time! Skipping..");
             botMethods.skip()
         }else if(song.duration > mubBot.settings.maxLength * 60){
