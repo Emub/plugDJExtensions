@@ -12,7 +12,7 @@ toSave.settings = mubBot.settings;
 toSave.moderators = mubBot.moderators;
 toSave.ruleSkip = ruleSkip;
 
-mubBot.misc.version = "2.0.22";
+mubBot.misc.version = "2.0.23";
 mubBot.misc.origin = "This bot was created by Emub and DerpTheBass alone, and it is copyrighted!";
 mubBot.misc.changelog = "Fixed some stuff with skipping and saving";
 mubBot.misc.ready = true;
@@ -859,7 +859,7 @@ botMethods.historyUpdateEvent = function(data){
                                 API.sendChat('Added to ruleskip');
                             }
                         });
-                    }else if(typeof ruleSkip[API.getMedia().id] !== 'undefined'){
+                    }else if(typeof ruleSkip[API.getMedia().id] === 'undefined'){
                     ruleSkip[API.getMedia().id] = {id: API.getMedia().id, rule: command[1]};
                     API.sendChat(API.getMedia().author+ ' - ' +API.getMedia().title+' added to ruleskip');
                     API.moderateForceSkip();
