@@ -12,7 +12,7 @@ toSave.settings = mubBot.settings;
 toSave.moderators = mubBot.moderators;
 toSave.ruleSkip = ruleSkip;
 
-mubBot.misc.version = "2.0.21";
+mubBot.misc.version = "2.0.22";
 mubBot.misc.origin = "This bot was created by Emub and DerpTheBass alone, and it is copyrighted!";
 mubBot.misc.changelog = "Fixed some stuff with skipping and saving";
 mubBot.misc.ready = true;
@@ -839,7 +839,7 @@ botMethods.historyUpdateEvent = function(data){
         if(API.getUser(data.fromID).permission > 1){
             switch(command[0]){
                 case 'ruleskip':
-                    if(command[1].length === 13 && command[1].indexOf(':') === 1 && command[1].indexOf(1) === 0 && typeof ruleSkip[command[1]] !== 'undefined'){
+                    if(command[1].length === 13 && command[1].indexOf(':') === 1 && command[1].indexOf(1) === 0 && typeof ruleSkip[command[1]] === 'undefined'){
                         ruleSkip[command[1]] = {id: command[1], rule: command[2]};
                         $.getJSON("http://gdata.youtube.com/feeds/api/videos/"+command[1].substring(2)+"?v=2&alt=jsonc&callback=?", function(json){
                             setTimeout(function(){
