@@ -12,9 +12,9 @@ toSave.settings = mubBot.settings;
 toSave.moderators = mubBot.moderators;
 toSave.ruleSkip = ruleSkip;
 
-mubBot.misc.version = "2.0.24";
+mubBot.misc.version = "2.0.25";
 mubBot.misc.origin = "This bot was created by Emub and DerpTheBass alone, and it is copyrighted!";
-mubBot.misc.changelog = "Fixed some stuff with skipping and saving";
+mubBot.misc.changelog = "Fixed saving for ruleskipdelete";
 mubBot.misc.ready = true;
 mubBot.misc.lockSkipping = false;
 mubBot.misc.lockSkipped = "0";
@@ -888,6 +888,8 @@ botMethods.historyUpdateEvent = function(data){
                     }else{
                         API.sendChat(API.getMedia().id+' was not in the ruleskip array!');
                     }
+                    botMethods.save()
+                break;
             }
         }
     });
