@@ -12,7 +12,7 @@ toSave.settings = mubBot.settings;
 toSave.moderators = mubBot.moderators;
 toSave.ruleSkip = ruleSkip;
 
-mubBot.misc.version = "2.0.23";
+mubBot.misc.version = "2.0.24";
 mubBot.misc.origin = "This bot was created by Emub and DerpTheBass alone, and it is copyrighted!";
 mubBot.misc.changelog = "Fixed some stuff with skipping and saving";
 mubBot.misc.ready = true;
@@ -64,7 +64,7 @@ function historyUpdateEvent(data){
 botMethods.skip = function(){
     setTimeout(function(){
         if(!cancel) API.moderateForceSkip();
-    }, 3000);
+    }, 3500);
 };
 
 botMethods.load = function(){
@@ -163,7 +163,7 @@ botMethods.historyUpdateEvent = function(data){
                         if(typeof command[1] == "undefined"){
                             API.sendChat("Weird Songs - http://playmc.pw/plug/WeirdDay.html");
                         }else if(command[1].indexOf("@") > -1){
-                            PI.sendChat(command[1]+" Weird Songs - http://playmc.pw/plug/WeirdDay.html");
+                            API.sendChat(command[1]+" Weird Songs - http://playmc.pw/plug/WeirdDay.html");
                         }else{
                             API.sendChat("Weird Songs - http://playmc.pw/plug/WeirdDay.html");
                         }
