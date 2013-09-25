@@ -12,9 +12,9 @@ toSave.settings = mubBot.settings;
 toSave.moderators = mubBot.moderators;
 toSave.ruleSkip = ruleSkip;
 
-mubBot.misc.version = "2.0.25";
+mubBot.misc.version = "2.0.26";
 mubBot.misc.origin = "This bot was created by Emub and DerpTheBass alone, and it is copyrighted!";
-mubBot.misc.changelog = "Fixed saving for ruleskipdelete";
+mubBot.misc.changelog = "Changed history update to dj advance";
 mubBot.misc.ready = true;
 mubBot.misc.lockSkipping = false;
 mubBot.misc.lockSkipped = "0";
@@ -55,10 +55,10 @@ mubBot.pubVars.command = false;
 
 Array.prototype.remove=function(){var c,f=arguments,d=f.length,e;while(d&&this.length){c=f[--d];while((e=this.indexOf(c))!==-1){this.splice(e,1)}}return this};
 
-API.on(API.HISTORY_UPDATE, historyUpdateEvent);
+API.on(API.DJ_ADVANCE, djAdvanceEvent);
 
-function historyUpdateEvent(data){
-    setTimeout(function(){ botMethods.historyUpdateEvent(data); }, 500);
+function djAdvanceEvent(data){
+    setTimeout(function(){ botMethods.djAdvanceEvent(data); }, 500);
 }
 
 botMethods.skip = function(){
@@ -113,7 +113,7 @@ botMethods.cleanString = function(string){
     return string.replace(/&#39;/g, "'").replace(/&amp;/g, "&").replace(/&#34;/g, "\"").replace(/&#59;/g, ";").replace(/&lt;/g, "<").replace(/&gt;/g, ">");
 };
 
-botMethods.historyUpdateEvent = function(data){
+botMethods.djAdvanceEvent = function(data){
     clearTimeout(mubBot.pubVars.skipOnExceed);
     if(mubBot.misc.lockSkipping){
         API.moderateAddDJ(mubBot.misc.lockSkipped);
@@ -840,7 +840,7 @@ botMethods.historyUpdateEvent = function(data){
         if(API.getUser(data.fromID).permission > 1){
             switch(command[0]){
                 case 'ruleskip':
-                    if(command[1].length === 13 && command[1].indexOf(':') === 1 && command[1].indexOf(1) === 0 && typeof ruleSkip[command[1]] === 'undefined'){
+                    if(command[1].length === 13 && command[1].indexOf(':') === 1 && command[1].indexOf(1) === 0){
                         ruleSkip[command[1]] = {id: command[1], rule: command[2]};
                         $.getJSON("http://gdata.youtube.com/feeds/api/videos/"+command[1].substring(2)+"?v=2&alt=jsonc&callback=?", function(json){
                             setTimeout(function(){
@@ -851,7 +851,7 @@ botMethods.historyUpdateEvent = function(data){
                                 }
                             }, 500)
                         });
-                    }else if(command[1].length === 10 && command[1].indexOf(':') === 1 && command[1].indexOf(2) === 0 && typeof ruleSkip[command[1]] === 'undefined'){
+                    }else if(command[1].length === 10 && command[1].indexOf(':') === 1 && command[1].indexOf(2) === 0){
                         ruleSkip[command[1]] = {id: command[1], rule: command[2]};
                         SC.get('/tracks', {ids: command[1].substring(2)}, function(tracks) {
                             if(typeof tracks[0].title !== 'undefined'){
