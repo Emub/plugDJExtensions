@@ -12,9 +12,9 @@ toSave.settings = mubBot.settings;
 toSave.moderators = mubBot.moderators;
 toSave.ruleSkip = ruleSkip;
 
-mubBot.misc.version = "2.0.27";
+mubBot.misc.version = "2.0.28";
 mubBot.misc.origin = "This bot was created by Emub and DerpTheBass alone, and it is copyrighted!";
-mubBot.misc.changelog = "Added a secondary check for history";
+mubBot.misc.changelog = "Added !help command!";
 mubBot.misc.ready = true;
 mubBot.misc.lockSkipping = false;
 mubBot.misc.lockSkipped = "0";
@@ -178,6 +178,10 @@ botMethods.djAdvanceEvent = function(data){
                             setTimeout(function(){ mubBot.misc.ready = true; }, mubBot.settings.cooldown * 1000);
                         }
                         break;
+
+                    case "help":
+                        API.sendChat("New user guide: http://imgur.com/a/UzrFn");
+                    break;
 
                     case "rules":
                         if(typeof command[1] == "undefined"){
