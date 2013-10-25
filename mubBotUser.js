@@ -12,9 +12,9 @@ toSave.settings = mubBot.settings;
 toSave.moderators = mubBot.moderators;
 toSave.ruleSkip = ruleSkip;
 
-mubBot.misc.version = "2.0.28";
+mubBot.misc.version = "2.0.29";
 mubBot.misc.origin = "This bot was created by Emub and DerpTheBass alone, and it is copyrighted!";
-mubBot.misc.changelog = "Added !help command!";
+mubBot.misc.changelog = "Added !irc";
 mubBot.misc.ready = true;
 mubBot.misc.lockSkipping = false;
 mubBot.misc.lockSkipped = "0";
@@ -196,6 +196,21 @@ botMethods.djAdvanceEvent = function(data){
                             setTimeout(function(){ mubBot.misc.ready = true; }, mubBot.settings.cooldown * 1000);
                         }
                         break;
+                        
+                    case "irc":
+                        if(typeof command[1] == "undefined"){
+                            API.sendChat("IRC - http://derpthebass.com/IRC/");
+                        }else if(command[1].indexOf("@") > -1){
+                            API.sendChat(command[1]+" IRC - http://derpthebass.com/IRC/");
+                        }else{
+                            API.sendChat("IRC - http://derpthebass.com/IRC/");
+                        }
+                        if(mubBot.admins.indexOf(fromID) == -1 || API.getUser(fromID).permission < 2){
+                            mubBot.misc.ready = false;
+                            setTimeout(function(){ mubBot.misc.ready = true; }, mubBot.settings.cooldown * 1000);
+                        }
+                        break;
+
 
                     case "theme":
                         if(typeof command[1] == "undefined"){
