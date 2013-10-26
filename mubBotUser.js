@@ -1027,5 +1027,8 @@ botMethods.djAdvanceEvent = function(data){
             client_id: 'eae62c8e7a30564e9831b9e43f1d484a'
         });
     }, 3000);
+    
+    //really fast autorefresh
+    console.log = function(data){if (data === 'sio disconnect') location.reload();}
 
     API.sendChat('/me Running mubBot '+mubBot.misc.version)
