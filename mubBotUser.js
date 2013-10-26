@@ -12,7 +12,7 @@ toSave.settings = mubBot.settings;
 toSave.moderators = mubBot.moderators;
 toSave.ruleSkip = ruleSkip;
 
-mubBot.misc.version = "2.0.29";
+mubBot.misc.version = "2.0.30";
 mubBot.misc.origin = "This bot was created by Emub and DerpTheBass alone, and it is copyrighted!";
 mubBot.misc.changelog = "Added !irc";
 mubBot.misc.ready = true;
@@ -113,6 +113,7 @@ botMethods.cleanString = function(string){
 };
 
 botMethods.djAdvanceEvent = function(data){
+    $('#button-vote-positive').click();
     clearTimeout(mubBot.pubVars.skipOnExceed);
     if(mubBot.misc.lockSkipping){
         API.moderateAddDJ(mubBot.misc.lockSkipped);
@@ -346,14 +347,14 @@ botMethods.djAdvanceEvent = function(data){
             }
             if(mubBot.misc.ready || mubBot.admins.indexOf(fromID) > -1 || API.getUser(fromID).permission > 1){
                 switch(command[0].toLowerCase()){
-                    /* commented out because the bot isn't running on a dedicated bot account
+                    
                      case "meh":
                      if(API.getUser(data.fromID).permission > 1 || mubBot.admins.indexOf(fromID) > -1) $("#button-vote-negative").click();
                      break;
 
                      case "woot":
                      if(API.getUser(data.fromID).permission > 1 || mubBot.admins.indexOf(fromID) > -1)  $("#button-vote-positive").click();
-                     break;*/
+                     break;
 
                     case "skip":
                     if(API.getUser(data.fromID).permission > 1){
