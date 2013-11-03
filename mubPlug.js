@@ -1,5 +1,5 @@
 $(function(){
-    var version = "1.914";
+    var version = "1.915";
     var customGreen = "#5bd708"; var bassPlugBlue = "#58FAF4";
     function initialize(){
 
@@ -633,14 +633,14 @@ $(function(){
 
     function userJoin(user){
         if(mubOptions.joinAlerts){
-            sendChatUpdate(user.username+" just joined the room!", "", bassPlugBlue);
+            sendChatUpdate(_.escape(user.username) + " just joined the room!", "", bassPlugBlue);
         }
         updateUserlist();
     }
 
     function userLeave(user){
         if(mubOptions.leaveAlerts){
-            sendChatUpdate(user.username+" just left the room!", "", bassPlugBlue);
+            sendChatUpdate(_.escape(user.username) + " just left the room!", "", bassPlugBlue);
         }
         updateUserlist();
     }
@@ -652,7 +652,7 @@ $(function(){
             $("#usersPara").html( users.length + " users in room");
             for(var usersWritten = 0; usersWritten < users.length; usersWritten++){
                 var userPara = $('<p>'); var userParaSpan = $('<span>'); var userParaImage = $('<img>'); var userParaName = $('<span>'); var userCurateImage = $('<img>');
-                userParaName.html(users[usersWritten].username).attr("id", users[usersWritten].username + "Entry").attr("class", "userParaName").attr("onClick", "mentionName(this)");
+                userParaName.html(_.escape(users[usersWritten].username)).attr("id", users[usersWritten].username + "Entry").attr("class", "userParaName").attr("onClick", "mentionName(this)");
                 userPara.attr("class", "userListParagraph");
                 switch(users[usersWritten].permission){
                     case 1:
@@ -721,7 +721,7 @@ $(function(){
     }
 
     function assignCurateIcon(obj){
-        if(mubOptions.curateAlerts) sendChatUpdate(obj.user.username + ' Just curated: "' + API.getMedia().title + '"', "", "yellow");
+        if(mubOptions.curateAlerts) sendChatUpdate(_.escape(obj.user.username) + ' Just curated: "' + API.getMedia().title + '"', "", "yellow");
         updateUserlist();
     }
 
