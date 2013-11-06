@@ -1,5 +1,5 @@
 $(function(){
-    var version = "1.915";
+    var version = "1.916";
     var customGreen = "#5bd708"; var bassPlugBlue = "#58FAF4";
     function initialize(){
 
@@ -10,11 +10,7 @@ $(function(){
         $('body').prepend('<div id="firstRun">Since it is the first time you\'re running mubPlug, your settings have not been setup yet. Simply click on the settings button (located on the booth) and set your desired options. These will always be saved unless you clear your browser\'s storage and you can change them at any time.<p> If you experience any bugs or have a request you can submit an issue to <a style="color: #77E9FF" href="http://goo.gl/X0X6NN" target="_blank">http://goo.gl/X0X6NN</a>.</p> This message will not be shown again unless you clear your browser\'s storage. <p>- DerpTheBass</p></div>');
         $('body').prepend('<div id="firstRunExit">X</div>');
 
-        var chatPosition     = $("#chat").position();
-        var chatPositionLeft = chatPosition.left;
-        var chatWidth        = $("#chat").width();
-        var UIPosition       = chatPositionLeft + 170 + "px";
-        var UI               = $('<div>');
+        var UI               = $('<div>', { id: "mubPlugUI" }).appendTo("#dj-console");
         var userList         = $('<div>');
         userList.attr("id", "mubPlug-userlist").attr("class", "sidebar");
         var userListHeader   = $('<div>');
@@ -142,8 +138,6 @@ $(function(){
         var halloOption12 = $('<option>'); halloOption12.html("Female wolf").attr("value", "12");
         var halloOption13 = $('<option>'); halloOption13.html("Disco zombie").attr("value", "13");
 
-        UI.attr("id", "mubPlugUI").css("left", UIPosition);
-
         var windowWidth = $(window).width();
         var settingsPositionLeft = windowWidth - 800;
 
@@ -181,7 +175,7 @@ $(function(){
         userListHeader.append(userListHeaderTitle).append(userlistHideButton);
         userList.append(userListHeader).append(usersPara).append(waitlistPara).append(userListDiv);
 
-        $("body").append(UI).append(userList);
+        $("body").append(userList);
 
         settingsWindowHeader.append(settingsWindowHeaderTitle).append(settingsWindowCloseButton);
         settingsWindow.append(settingsWindowHeader).append(settingsWindowTable);
@@ -1015,5 +1009,5 @@ $(function(){
                 break;
         }}, 10000);
 
-    checkStuff()
+    checkStuff();
 });
