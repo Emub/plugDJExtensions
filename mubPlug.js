@@ -1,5 +1,5 @@
 $(function(){
-    var version = "1.916";
+    var version = "1.917";
     var customGreen = "#5bd708"; var bassPlugBlue = "#58FAF4";
     function initialize(){
 
@@ -585,7 +585,6 @@ $(function(){
     });
 
     function sendChatUpdate(text, color, textcolor, id, link, cursor, clickToDelete, cross){
-        scroll = $('#chat-messages').scrollTop() > $('#chat-messages')[0].scrollHeight - $('#chat-messages').height() - 20;
         var chatUpdate, spanChatUpdate, crossImage;
         var crossHoverSrc = "http://i.imgur.com/y3886Cy.png";
         var crossSrc = "http://i.imgur.com/XT5fWnB.png";
@@ -614,8 +613,9 @@ $(function(){
         }else if(cross != false){
             chatUpdate.append(crossImage);
         }
-        $("#chat-messages").append(chatUpdate);
-        scroll && $('#chat-messages').scrollTop($('#chat-messages')[0].scrollHeight);
+        $("#chat-messages").append(chatUpdate).animate({
+            scrollTop: $("#chat-messages")[0].scrollHeight
+        }, 400);
     }
 
     API.on(API.HISTORY_UPDATE, checkStuff);
