@@ -1031,4 +1031,4 @@ botMethods.djAdvanceEvent = function(data){
     //really fast autorefresh
     console.log = function(data){if (data === 'sio disconnect') location.reload();}
 
-    API.sendChat('/me Running mubBot '+mubBot.misc.version)
+
