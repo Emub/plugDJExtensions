@@ -163,7 +163,7 @@ botMethods.djAdvanceEvent = function(data){
                             setTimeout(function(){ mubBot.misc.ready = true; }, mubBot.settings.cooldown * 1000);
                         }
                         break;
-                    case "weird":
+                   /* case "weird":
                     case "weirdday":
                     case "wierd":
                     case "wierdday":
@@ -180,7 +180,7 @@ botMethods.djAdvanceEvent = function(data){
                         }
                         break;
 
-                    case "help":
+                    /*case "help":
                         API.sendChat("New user guide: http://imgur.com/a/UzrFn");
                     break;
 
@@ -213,7 +213,7 @@ botMethods.djAdvanceEvent = function(data){
                         break;
 
 
-                    case "theme":
+                    /*case "theme":
                         if(typeof command[1] == "undefined"){
                             API.sendChat("In this room, only music related to My Little Pony: Friendship is Magic is allowed. This includes PMVs.");
                         }else if(command[1].indexOf("@") > -1){
@@ -225,7 +225,7 @@ botMethods.djAdvanceEvent = function(data){
                             mubBot.misc.ready = false;
                             setTimeout(function(){ mubBot.misc.ready = true; }, mubBot.settings.cooldown * 1000);
                         }
-                        break;
+                        break;*/
 
                     case "commands":
                         if(typeof command[1] == "undefined"){
@@ -608,7 +608,7 @@ botMethods.djAdvanceEvent = function(data){
                             var crowd = API.getUsers();
                             var randomUser = Math.floor(Math.random() * crowd.length);
                             var randomTaco = Math.floor(Math.random() * mubBot.misc.tacos.length);
-                            var randomSentence = Math.floor(Math.random() * 3);
+                            var randomSentence = Math.floor(Math.random() * 4);
                             switch(randomSentence){
                                 case 0:
                                     API.sendChat("@" + crowd[randomUser].username + ", take this " + mubBot.misc.tacos[randomTaco] + ", you bitch!");
@@ -626,7 +626,7 @@ botMethods.djAdvanceEvent = function(data){
                         }else{
                             if(command[1].indexOf("@") === 0) command[1] = command[1].substring(1);
                             var randomTaco = Math.floor(Math.random() * mubBot.misc.tacos.length);
-                            var randomSentence = Math.floor(Math.random() * 3);
+                            var randomSentence = Math.floor(Math.random() * 4);
                             switch(randomSentence){
                                 case 0:
                                     API.sendChat("@" + botMethods.cleanString(command[1]) + ", take this " + mubBot.misc.tacos[randomTaco] + ", you bitch!");
@@ -651,7 +651,7 @@ botMethods.djAdvanceEvent = function(data){
                         if(typeof command[1] == "undefined"){
                             var crowd = API.getUsers();
                             var randomUser = Math.floor(Math.random() * crowd.length);
-                            var randomSentence = Math.floor(Math.random() * 3);
+                            var randomSentence = Math.floor(Math.random() * 4);
                             switch(randomSentence){
                                 case 0:
                                     API.sendChat("Hugs? Forget that!");
