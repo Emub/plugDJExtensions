@@ -673,7 +673,7 @@ botMethods.djAdvanceEvent = function(data){
                             if(command[1].indexOf("@") === 0) command[1] = command[1].substring(1);
                             var crowd = API.getUsers();
                             var randomUser = Math.floor(Math.random() * crowd.length);
-                            var randomSentence = Math.floor(Math.random() * 3);
+                            var randomSentence = Math.floor(Math.random() * 4);
                             switch(randomSentence){
                                 case 0:
                                     API.sendChat("Hugs? Forget that!");
@@ -701,7 +701,7 @@ botMethods.djAdvanceEvent = function(data){
                         if(typeof command[1] == "undefined"){
                             var crowd = API.getUsers();
                             var randomUser = Math.floor(Math.random() * crowd.length);
-                            var randomSentence = Math.floor(Math.random() * 3);
+                            var randomSentence = Math.floor(Math.random() * 4);
                             switch(randomSentence){
                                 case 0:
                                     API.sendChat("/me throws a STICK OF DYNAMITE at @"+crowd[randomUser].username);
@@ -718,7 +718,7 @@ botMethods.djAdvanceEvent = function(data){
                             }
                         }else{
                             if(command[1].indexOf("@") === 0) command[1] = command[1].substring(1);
-                            var randomSentence = Math.floor(Math.random() * 3);
+                            var randomSentence = Math.floor(Math.random() * 4);
                             switch(randomSentence){
                                 case 0:
                                     API.sendChat("/me throws a STICK OF DYNAMITE at @"+botMethods.cleanString(command[1]));
