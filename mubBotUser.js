@@ -126,18 +126,18 @@ botMethods.djAdvanceEvent = function(data){
         if(API.getUser().permission < 2){
             API.sendChat("This song is in the history! You should make me a mod so that I could skip it!");
         }else if(API.getUser().permission > 1){
-            API.sendChat("@" + API.getDJs()[0].username + ", playing songs that are in the history isn't allowed, please check next time! Skipping..");
+            API.sendChat("@" + API.getDJ().username + ", playing songs that are in the history isn't allowed, please check next time! Skipping..");
             botMethods.skip()
         }else if(song.duration > mubBot.settings.maxLength * 60){
             mubBot.pubVars.skipOnExceed = setTimeout( function(){
-                API.sendChat("@"+API.getDJs()[0].username+" You have now played for as long as this room allows, time to let someone else have the booth!");
+                API.sendChat("@"+API.getDJ().username+" You have now played for as long as this room allows, time to let someone else have the booth!");
                 botMethods.skip();
             }, mubBot.settings.maxLength * 60000);
             //API.sendChat("@"+API.getDJs()[0].username+" This song will be skipped " + mubBot.settings.maxLength + " minutes from now because it exceeds the max song length.");
         }else{
             setTimeout(function(){
                 if(botMethods.checkHistory() > 0 && mubBot.settings.historyFilter){
-                    API.sendChat("@" + API.getDJs()[0].username + ", playing songs that are in the history isn't allowed, please check next time! Skipping..");
+                    API.sendChat("@" + API.getDJ().username + ", playing songs that are in the history isn't allowed, please check next time! Skipping..");
                     botMethods.skip()
                 };
             }, 1500);
@@ -361,7 +361,7 @@ botMethods.djAdvanceEvent = function(data){
                         if(typeof command[1] === "undefined"){
                             API.moderateForceSkip();
                         }else{
-                            API.sendChat('@'+API.getDJs()[0].username+' '+command[1]);
+                            API.sendChat('@'+API.getDJ().username+' '+command[1]);
                             API.moderateForceSkip();
                         }
                     }
@@ -376,7 +376,7 @@ botMethods.djAdvanceEvent = function(data){
                         if( API.getUser(data.fromID).permission > 1){
                             API.moderateRoomProps(true, true);
                             mubBot.misc.lockSkipping = true;
-                            mubBot.misc.lockSkipped = API.getDJs()[0].id;
+                            mubBot.misc.lockSkipped = API.getDJ().id;
                             setTimeout(function(){ API.moderateRemoveDJ(mubBot.misc.lockSkipped); }, 500);
                         }else{
                             API.sendChat("This command requires bouncer or higher!");
